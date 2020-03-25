@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: true
+  roles:
+    - beanstalk
+    - nginx
+    - php
+    - postgres
+    - app

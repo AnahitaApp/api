@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Athenia API" default="full-build">
+    <property name="phploc"  value="${basedir}/code/vendor/bin/phploc"/>
+    <property name="phpunit" value="${basedir}/code/vendor/bin/phpunit"/>
+
+    <target name="deploy"
+            depends="file-permissions,composer-install-no-dev,database-migrate,restart-queue"
+            description="Performs the deploy for a server."/>
+
+    <target name="full-build"
+            depends="prepare,bootprint,phploc-ci,phpunit,-check-failure"
+            description="Performs static analysis, runs the tests, and generates project documentation"/>
+
+    <target name="clean"
+            unless="clean.done"
+            description="Cleanup build artifacts">
+        <delete dir="${basedir}/build/test-coverage"/>
+        <delete dir="${basedir}/build/logs"/>
+        <delete dir="${basedir}/build/swagger"/>
+        <property name="clean.done" value="true"/>
+    </target>
+
+    <target name="prepare"
+            unless="prepare.done"
+            depends="clean"
+            description="Prepare for build">
+        <exec executable="/usr/local/bin/composer" failonerror="true" dir="${basedir}/code">
+            <arg value='install' />
+        </exec>
+        <mkdir dir="${basedir}/build/test-coverage"/>
+        <mkdir dir="${basedir}/build/logs"/>
+        <mkdir dir="${basedir}/build/swagger"/>
+        <property name="prepare.done" value="true"/>
+    </target>
+
+    <target name="bootprint"
+            description="Runs the bootprint build of swagger documentation">
+        <exec executable="bootprint">
+            <arg value="openapi" />
+            <arg value="${basedir}/docs/swagger.json" />
+            <arg value="${basedir}/build/swagger" />
+        </exec>
+    </target>
+
+    <target name="phploc"
+            unless="phploc.done"
+            description="Measure project size using PHPLOC and print human readable output. Intended for usage on the command line.">
+        <exec executable="${phploc}" taskname="phploc">
+            <arg value="--count-tests" />
+            <arg path="${basedir}/code/app" />
+            <arg path="${basedir}/code/tests" />
+        </exec>
+
+        <property name="phploc.done" value="true"/>
+    </target>
+
+    <target name="phploc-ci"
+            unless="phploc.done"
+            depends="prepare"
+            description="Measure project size using PHPLOC and log result in CSV and XML format. Intended for usage within a continuous integration environment.">
+        <exec executable="${phploc}" taskname="phploc">
+            <arg value="--count-tests" />
+            <arg value="--log-csv" />
+            <arg path="${basedir}/build/logs/phploc.csv" />
+            <arg value="--log-xml" />
+            <arg path="${basedir}/build/logs/phploc.xml" />
+            <arg path="${basedir}/code/app" />
+            <arg path="${basedir}/code/tests" />
+        </exec>
+
+        <property name="phploc.done" value="true"/>
+    </target>
+
+    <target name="phpunit"
+            unless="phpunit.done"
+            depends="prepare"
+            description="Run unit tests with PHPUnit">
+        <exec executable="${phpunit}" resultproperty="result.phpunit" taskname="phpunit">
+            <arg value="--configuration"/>
+            <arg path="${basedir}/code/phpunit.xml"/>
+            <arg value="--coverage-html"/>
+            <arg path="${basedir}/build/test-coverage"/>
+            <arg value="--coverage-clover"/>
+            <arg path="${basedir}/build/logs/clover.xml"/>
+            <arg value="--coverage-crap4j"/>
+            <arg path="${basedir}/build/logs/crap4j.xml"/>
+            <arg value="--log-junit"/>
+            <arg path="${basedir}/build/logs/junit.xml"/>
+        </exec>
+
+        <property name="phpunit.done" value="true"/>
+    </target>
+
+    <target name="-check-failure">
+        <fail message="PHPUnit did not finish successfully">
+            <condition>
+                <not>
+                    <equals arg1="${result.phpunit}" arg2="0"/>
+                </not>
+            </condition>
+        </fail>
+    </target>
+
+    <target name="composer-install-no-dev">
+        <exec executable="/usr/local/bin/composer" failonerror="true" dir="${basedir}/code">
+            <arg value='install' />
+            <arg value="--no-dev" />
+        </exec>
+    </target>
+
+    <target name="database-migrate">
+        <exec executable="./artisan" failonerror="true" dir="${basedir}/code">
+            <arg value='migrate' />
+            <arg value='--force' />
+        </exec>
+    </target>
+
+    <target name="restart-queue">
+        <exec executable="./artisan" failonerror="true" dir="${basedir}/code">
+            <arg value='queue:restart' />
+        </exec>
+    </target>
+
+    <target name="file-permissions">
+        <touch file="${basedir}/logs/debug.log"/>
+        <chmod file="${basedir}/logs/debug.log" perm="664"/>
+        <touch file="${basedir}/logs/error.log"/>
+        <chmod file="${basedir}/logs/error.log" perm="664"/>
+
+        <chmod dir="${basedir}/cache" perm="775"/>
+        <chmod dir="${basedir}/cache/file" perm="775"/>
+        <chmod dir="${basedir}/cache/views" perm="775"/>
+    </target>
+
+</project>

@@ -1,0 +1,9 @@
+---
+- name: Install Postgres Server
+  apt: name=postgresql state=present
+
+- name: Install Postgres Client
+  apt: name=postgresql-client state=present
+
+- name: Install Postgres python bindings
+  apt: name=python-psycopg2 state=present

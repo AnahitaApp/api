@@ -1,0 +1,4 @@
+postgres_user: jengu
+postgres_password: password
+test_postgres_user: test_jengu
+test_postgres_pass: testpassword
