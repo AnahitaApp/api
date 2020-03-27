@@ -10,6 +10,8 @@ use App\Models\Asset;
 use App\Models\Organization\Organization;
 use App\Models\Organization\OrganizationManager;
 use App\Models\Payment\PaymentMethod;
+use App\Models\Request\Request;
+use App\Models\Request\SafetyReport;
 use App\Models\Resource;
 use App\Models\Role;
 use App\Models\Subscription\Subscription;
@@ -141,6 +143,16 @@ class User extends BaseModelAbstract
     }
 
     /**
+     * All requests that were completed
+     *
+     * @return HasMany
+     */
+    public function completedRequests(): HasMany
+    {
+        return $this->hasMany(Request::class, 'completed_by_id');
+    }
+
+    /**
      * The articles that were created by this user
      *
      * @return HasMany
@@ -158,6 +170,26 @@ class User extends BaseModelAbstract
     public function createdIterations(): HasMany
     {
         return $this->hasMany(Iteration::class, 'created_by_id');
+    }
+
+    /**
+     * All requests this user created
+     *
+     * @return HasMany
+     */
+    public function createdRequests(): HasMany
+    {
+        return $this->hasMany(Request::class, 'created_by_id');
+    }
+
+    /**
+     * The asset that contains the identification card for the user
+     *
+     * @return BelongsTo
+     */
+    public function identificationCard() : BelongsTo
+    {
+        return $this->belongsTo(IdentificationCard::class);
     }
 
     /**
@@ -208,6 +240,16 @@ class User extends BaseModelAbstract
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class);
+    }
+
+    /**
+     * All safety reports created for a user
+     *
+     * @return HasMany
+     */
+    public function safetyReports(): HasMany
+    {
+        return $this->hasMany(SafetyReport::class);
     }
 
     /**
