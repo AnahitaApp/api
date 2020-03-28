@@ -17,3 +17,17 @@ To generate a fresh copy of swagger.json, run the following command from the roo
 `code/vendor/bin/swagger code/app --output docs/`
 
 Model definitions should all be located at the bottom of a PHP model with all available API properties listed there. Each repository should also have a comment block at the bottom of the class that defines the array variables for swagger.
+
+## Defining Routes
+
+When you want to create a new set of routes there are a number of steps that you should do. Inside of the HTTP namespace you will find that there are two very important directories `Core` and `V1`. Each of these directories contain a set of controllers. The controllers in `Core` are all abstract, and are not meant to be implemented directly. The controllers in `V1` are the controllers that should be implemented for the API, and the ones in this project are simple extensions of the ones in the `Core` directory. 
+
+The best practice is to have all of the controllers in the `Core` directory to have the majority of the required implementation with the most up to date manner of which you want to achieve your implementation. This means that your highest API version number should in most cases simply extend the abstract controllers in the core. The purpose of doing this is to make the introduction of backwards incompatible changes incredibly simple to do. 
+
+When introducing a backwards incompatible change the first step would do would be to copy your current routes into a new namespace, copy over a new implementation of the current routes file, and then define the new group within the RouteServiceProvider. Once this is complete you can then take the old implementation, which should still be within the `Core` namespace and put the deprecated functionality into any old route groups that existed before the change. 
+
+Following these steps should at all times keep the most recent version of routes as simple as possible while progressively adding to the complexity of older route groups for the purpose of legacy support.
+
+## Parent Project
+
+This project is based on Athenia core 0.27.0

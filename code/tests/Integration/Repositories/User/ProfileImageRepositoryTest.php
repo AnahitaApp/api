@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Integration\Repositories;
+namespace Tests\Integration\Repositories\User;
 
 use App\Exceptions\NotImplementedException;
 use App\Models\Asset;
@@ -13,7 +13,7 @@ use Tests\Traits\MocksApplicationLog;
 
 /**
  * Class ProfileImageRepositoryTest
- * @package Tests\Integration\Repositories
+ * @package Tests\Integration\Repositories\User
  */
 class ProfileImageRepositoryTest extends TestCase
 {
