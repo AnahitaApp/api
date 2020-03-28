@@ -22,7 +22,8 @@ class JenguInitialProject extends Migration
             $table->unsignedInteger('completed_by_id')->nullable();
             $table->foreign('completed_by_id')->references('id')->on('users');
 
-            $table->point('location');
+            $table->float('latitude');
+            $table->float('longitude');
 
             $table->text('description')->nullable();
             $table->text('drop_off_locations')->nullable();
