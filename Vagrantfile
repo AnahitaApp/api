@@ -35,7 +35,9 @@ Vagrant.configure("2") do |config|
         ]
 
         dev.vm.box = "ubuntu/bionic64"
-        dev.vm.synced_folder ".", "/vagrant", owner: "www-data", group: "www-data", mount_options: ["dmode=775,fmode=775"]
+        dev.vm.synced_folder ".", "/vagrant",
+              type:"nfs",
+              mount_options: %w{rw,async,fsc,nolock,vers=3,udp,rsize=32768,wsize=32768,hard,noatime,actimeo=2}
 
         dev.vm.provider :virtualbox do |vb|
             vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
