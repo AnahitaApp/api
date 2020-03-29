@@ -28,6 +28,8 @@ class JenguInitialProject extends Migration
             $table->text('description')->nullable();
             $table->text('drop_off_location')->nullable();
 
+            $table->boolean('completed')->default(false);
+
             $table->softDeletes();
             $table->timestamps();
         });

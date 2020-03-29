@@ -25,6 +25,7 @@ use Illuminate\Support\Carbon;
  * @property int|null $completed_by_id
  * @property float $latitude
  * @property float $longitude
+ * @property boolean $completed
  * @property string|null $description
  * @property string|null $drop_off_location
  * @property Carbon|null $deleted_at
@@ -37,6 +38,7 @@ use Illuminate\Support\Carbon;
  * @property-read Collection|LineItem[] $lineItems
  * @property-read int|null $line_items_count
  * @property-read SafetyReport $safetyReport
+ * @method static Builder|Request whereCompleted($value)
  * @method static Builder|Request whereCompletedById($value)
  * @method static Builder|Request whereCreatedAt($value)
  * @method static Builder|Request whereDeletedAt($value)
