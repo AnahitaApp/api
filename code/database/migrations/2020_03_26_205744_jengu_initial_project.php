@@ -59,6 +59,8 @@ class JenguInitialProject extends Migration
             $table->unsignedInteger('request_id');
             $table->foreign('request_id')->references('id')->on('requests');
 
+            $table->string('name', 250);
+
             $table->softDeletes();
             $table->timestamps();
         });

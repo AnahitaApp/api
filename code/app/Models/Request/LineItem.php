@@ -18,6 +18,7 @@ use Illuminate\Support\Carbon;
  * @property int $id
  * @property int|null $asset_id
  * @property int $request_id
+ * @property string $name
  * @property Carbon|null $deleted_at
  * @property mixed|null $created_at
  * @property mixed|null $updated_at
@@ -27,6 +28,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|LineItem whereCreatedAt($value)
  * @method static Builder|LineItem whereDeletedAt($value)
  * @method static Builder|LineItem whereId($value)
+ * @method static Builder|LineItem whereName($value)
  * @method static Builder|LineItem whereRequestId($value)
  * @method static Builder|LineItem whereUpdatedAt($value)
  * @method static EloquentJoinBuilder|LineItem newModelQuery()
