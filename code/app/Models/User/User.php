@@ -46,6 +46,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property string $name the full name of the user
  * @property string $password the password of the user
  * @property bool $allow_users_to_add_me
+ * @property int|null $identification_card_id
  * @property int|null $profile_image_id
  * @property string|null $about_me
  * @property string|null $stripe_customer_key
@@ -59,22 +60,29 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property-read Resource $resource
  * @property-read Collection|Asset[] $assets
  * @property-read Collection|BallotCompletion[] $ballotCompletions
+ * @property-read Collection|Request[] $completedRequests
  * @property-read Collection|Article[] $createdArticles
  * @property-read Collection|Iteration[] $createdIterations
+ * @property-read Collection|Request[] $createdRequests
+ * @property-read IdentificationCard $identificationCard
  * @property-read Collection|Message[] $messages
  * @property-read Collection|OrganizationManager[] $organizationManagers
  * @property-read Collection|PaymentMethod[] $paymentMethods
  * @property-read Collection|Role[] $roles
+ * @property-read Collection|SafetyReport[] $safetyReports
  * @property-read Collection|Subscription[] $subscriptions
  * @property-read Collection|Thread[] $threads
  * @property-read int|null $assets_count
  * @property-read int|null $ballot_completions_count
+ * @property-read int|null $completed_requests_count
  * @property-read int|null $created_articles_count
  * @property-read int|null $created_iterations_count
+ * @property-read int|null $created_requests_count
  * @property-read int|null $messages_count
  * @property-read int|null $organization_managers_count
  * @property-read int|null $payment_methods_count
  * @property-read int|null $roles_count
+ * @property-read int|null $safety_reports_count
  * @property-read int|null $subscriptions_count
  * @property-read int|null $threads_count
  * @method static Builder|User newModelQuery()
@@ -86,6 +94,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @method static Builder|User whereDeletedAt($value)
  * @method static Builder|User whereEmail($value)
  * @method static Builder|User whereId($value)
+ * @method static Builder|User whereIdentificationCardId($value)
  * @method static Builder|User whereMergedToId($value)
  * @method static Builder|User whereName($value)
  * @method static Builder|User wherePassword($value)
