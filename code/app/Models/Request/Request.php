@@ -26,7 +26,7 @@ use Illuminate\Support\Carbon;
  * @property float $latitude
  * @property float $longitude
  * @property string|null $description
- * @property string|null $drop_off_locations
+ * @property string|null $drop_off_location
  * @property Carbon|null $deleted_at
  * @property mixed|null $created_at
  * @property mixed|null $updated_at
@@ -41,7 +41,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Request whereCreatedAt($value)
  * @method static Builder|Request whereDeletedAt($value)
  * @method static Builder|Request whereDescription($value)
- * @method static Builder|Request whereDropOffLocations($value)
+ * @method static Builder|Request whereDropOffLocation($value)
  * @method static Builder|Request whereId($value)
  * @method static Builder|Request whereLatitude($value)
  * @method static Builder|Request whereLongitude($value)

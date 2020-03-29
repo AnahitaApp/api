@@ -26,7 +26,7 @@ class JenguInitialProject extends Migration
             $table->float('longitude');
 
             $table->text('description')->nullable();
-            $table->text('drop_off_locations')->nullable();
+            $table->text('drop_off_location')->nullable();
 
             $table->softDeletes();
             $table->timestamps();
