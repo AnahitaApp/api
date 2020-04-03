@@ -18,19 +18,16 @@ class PaymentTest extends TestCase
         $model = new Payment();
         $relation = $model->paymentMethod();
 
-        $this->assertInstanceOf(BelongsTo::class, $relation);
         $this->assertEquals('payment_methods.id', $relation->getQualifiedOwnerKeyName());
         $this->assertEquals('payments.payment_method_id', $relation->getQualifiedForeignKeyName());
     }
 
-    public function testSubscription()
+    public function testLineItems()
     {
         $model = new Payment();
+        $relation = $model->lineItems();
 
-        $relation = $model->subscription();
-
-        $this->assertInstanceOf(BelongsTo::class, $relation);
-        $this->assertEquals('subscriptions.id', $relation->getQualifiedOwnerKeyName());
-        $this->assertEquals('payments.subscription_id', $relation->getQualifiedForeignKeyName());
+        $this->assertEquals('payments.id', $relation->getQualifiedParentKeyName());
+        $this->assertEquals('line_items.payment_id', $relation->getQualifiedForeignKeyName());
     }
 }

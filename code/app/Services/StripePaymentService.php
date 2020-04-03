@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Contracts\Repositories\Payment\LineItemRepositoryContract;
 use App\Contracts\Repositories\Payment\PaymentRepositoryContract;
 use App\Contracts\Services\StripePaymentServiceContract;
 use App\Events\Payment\PaymentReversedEvent;
@@ -28,6 +29,11 @@ class StripePaymentService implements StripePaymentServiceContract
     private $paymentRepository;
 
     /**
+     * @var LineItemRepositoryContract
+     */
+    private $lineItemRepository;
+
+    /**
      * @var Dispatcher
      */
     private $dispatcher;
@@ -45,14 +51,18 @@ class StripePaymentService implements StripePaymentServiceContract
     /**
      * StripePaymentService constructor.
      * @param PaymentRepositoryContract $paymentRepository
+     * @param LineItemRepositoryContract $lineItemRepository
      * @param Dispatcher $dispatcher
      * @param Charges $chargeHandler
      * @param Refunds $refundHandler
      */
-    public function __construct(PaymentRepositoryContract $paymentRepository, Dispatcher $dispatcher,
-                                Charges $chargeHandler, Refunds $refundHandler)
+    public function __construct(PaymentRepositoryContract $paymentRepository,
+                                LineItemRepositoryContract $lineItemRepository,
+                                Dispatcher $dispatcher, Charges $chargeHandler,
+                                Refunds $refundHandler)
     {
         $this->paymentRepository = $paymentRepository;
+        $this->lineItemRepository = $lineItemRepository;
         $this->dispatcher = $dispatcher;
         $this->chargeHandler = $chargeHandler;
         $this->refundHandler = $refundHandler;
@@ -84,22 +94,28 @@ class StripePaymentService implements StripePaymentServiceContract
 
     /**
      * @param User $user
-     * @param float $amount
      * @param PaymentMethod $paymentMethod
      * @param string $description
-     * @param array $paymentData
+     * @param array $lineItems
      * @return BaseModelAbstract|Payment
      */
-    public function createPayment(User $user, float $amount, PaymentMethod $paymentMethod, string $description, $paymentData = []) : Payment
+    public function createPayment(User $user, PaymentMethod $paymentMethod, string $description, array $lineItems) : Payment
     {
+        $amount = 0;
+        foreach ($lineItems as $lineItem) {
+            $amount+= $lineItem['amount'];
+        }
+        $paymentData = [
+            'amount' => $amount,
+            'line_items' => $lineItems,
+        ];
+
         if ($amount > 0) {
             $chargeData = $this->captureCharge($amount, $paymentMethod, $description, $user->stripe_customer_key);
             if (isset ($chargeData['id'])) {
                 $paymentData['transaction_key'] = $chargeData['id'];
             }
         }
-
-        $paymentData['amount'] = $amount;
 
         return $this->paymentRepository->create($paymentData, $paymentMethod);
     }
@@ -118,8 +134,13 @@ class StripePaymentService implements StripePaymentServiceContract
             throw new NotImplementedException('Only stripe transactions can be refunded right now');
         }
 
+        $this->lineItemRepository->create([
+            'amount' => -$payment->amount,
+            'item_type' => 'refund',
+        ]);
         $this->paymentRepository->update($payment, [
             'refunded_at' => Carbon::now(),
+            'amount' => 0,
         ]);
 
         $this->dispatcher->dispatch(new PaymentReversedEvent($payment));
@@ -137,6 +158,14 @@ class StripePaymentService implements StripePaymentServiceContract
         if ($payment->paymentMethod->payment_method_type == 'stripe') {
 
             $this->refundHandler->create($payment->transaction_key, $amount);
+
+            $this->lineItemRepository->create([
+                'amount' => -$amount,
+                'item_type' => 'refund',
+            ]);
+            $this->paymentRepository->update($payment, [
+                'amount' => $payment->amount - $amount,
+            ]);
         } else {
             throw new NotImplementedException('Only stripe transactions can be refunded right now');
         }

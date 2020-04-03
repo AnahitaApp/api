@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
- * Class LineItem
+ * Class RequestedItem
  *
  * @package App\Models\Request
  * @property int $id
@@ -24,19 +24,19 @@ use Illuminate\Support\Carbon;
  * @property mixed|null $updated_at
  * @property-read Asset $asset
  * @property-read Request $request
- * @method static Builder|LineItem whereAssetId($value)
- * @method static Builder|LineItem whereCreatedAt($value)
- * @method static Builder|LineItem whereDeletedAt($value)
- * @method static Builder|LineItem whereId($value)
- * @method static Builder|LineItem whereName($value)
- * @method static Builder|LineItem whereRequestId($value)
- * @method static Builder|LineItem whereUpdatedAt($value)
- * @method static EloquentJoinBuilder|LineItem newModelQuery()
- * @method static EloquentJoinBuilder|LineItem newQuery()
- * @method static EloquentJoinBuilder|LineItem query()
+ * @method static Builder|RequestedItem whereAssetId($value)
+ * @method static Builder|RequestedItem whereCreatedAt($value)
+ * @method static Builder|RequestedItem whereDeletedAt($value)
+ * @method static Builder|RequestedItem whereId($value)
+ * @method static Builder|RequestedItem whereName($value)
+ * @method static Builder|RequestedItem whereRequestId($value)
+ * @method static Builder|RequestedItem whereUpdatedAt($value)
+ * @method static EloquentJoinBuilder|RequestedItem newModelQuery()
+ * @method static EloquentJoinBuilder|RequestedItem newQuery()
+ * @method static EloquentJoinBuilder|RequestedItem query()
  * @mixin Eloquent
  */
-class LineItem extends BaseModelAbstract
+class RequestedItem extends BaseModelAbstract
 {
     /**
      * An image uploaded for this line item

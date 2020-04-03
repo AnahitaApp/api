@@ -16,3 +16,10 @@ $factory->define(App\Models\Payment\Payment::class, function (Faker $faker) {
         'amount' => $faker->randomFloat(),
     ];
 });
+$factory->define(\App\Models\Payment\LineItem::class, function (Faker $faker) {
+    return [
+        'payment_id' => factory(\App\Models\Payment\Payment::class)->create()->id,
+        'item_type' => 'donation',
+        'amount' => $faker->numberBetween(0, 100),
+    ];
+});

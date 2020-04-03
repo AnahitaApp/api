@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Contracts\Repositories\Payment\LineItemRepositoryContract;
 use App\Contracts\Repositories\Payment\PaymentMethodRepositoryContract;
 use App\Contracts\Repositories\Payment\PaymentRepositoryContract;
 use App\Contracts\Repositories\User\UserRepositoryContract;
@@ -68,6 +69,7 @@ class AppServiceProvider extends ServiceProvider
             $stripe = $this->app->make('stripe');
             return new StripePaymentService(
                 $this->app->make(PaymentRepositoryContract::class),
+                $this->app->make(LineItemRepositoryContract::class),
                 $this->app->make(Dispatcher::class),
                 $stripe->charges(),
                 $stripe->refunds(),

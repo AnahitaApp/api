@@ -53,7 +53,7 @@ class JenguInitialProject extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
-        Schema::create('line_items', function (Blueprint $table) {
+        Schema::create('requested_items', function (Blueprint $table) {
             $table->increments('id');
 
             $table->unsignedInteger('asset_id')->nullable();

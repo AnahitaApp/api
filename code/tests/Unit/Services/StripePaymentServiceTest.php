@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Services;
 
+use App\Contracts\Repositories\Payment\LineItemRepositoryContract;
 use App\Contracts\Repositories\Payment\PaymentRepositoryContract;
 use App\Events\Payment\PaymentReversedEvent;
 use App\Exceptions\NotImplementedException;
@@ -29,6 +30,11 @@ class StripePaymentServiceTest extends TestCase
     private $paymentRepository;
 
     /**
+     * @var LineItemRepositoryContract|CustomMockInterface
+     */
+    private $lineItemRepository;
+
+    /**
      * @var Dispatcher|CustomMockInterface
      */
     private $dispatcher;
@@ -53,12 +59,14 @@ class StripePaymentServiceTest extends TestCase
         parent::setUp();
 
         $this->paymentRepository = mock(PaymentRepositoryContract::class);
+        $this->lineItemRepository = mock(LineItemRepositoryContract::class);
         $this->dispatcher = mock(Dispatcher::class);
         $this->chargeHandler = mock(Charges::class);
         $this->refundHandler = mock(Refunds::class);
 
         $this->service = new StripePaymentService(
             $this->paymentRepository,
+            $this->lineItemRepository,
             $this->dispatcher,
             $this->chargeHandler,
             $this->refundHandler
@@ -94,10 +102,18 @@ class StripePaymentServiceTest extends TestCase
         $this->paymentRepository->shouldReceive('create')->once()->with([
             'amount' => 35.00,
             'transaction_key' => 'tx_wegio',
-            'subscription_id' => 423,
+            'line_items' => [[
+                'item_id' => 423,
+                'item_type' => 'subscription',
+                'amount' => 35.00,
+            ]],
         ], $paymentMethod)->andReturn($payment);
 
-        $result = $this->service->createPayment($user, 35.00, $paymentMethod, 'A Description', ['subscription_id' => 423]);
+        $result = $this->service->createPayment($user, $paymentMethod, 'A Description', [[
+            'item_id' => 423,
+            'item_type' => 'subscription',
+            'amount' => 35.00,
+        ]]);
 
         $this->assertEquals($result, $payment);
     }
@@ -111,11 +127,27 @@ class StripePaymentServiceTest extends TestCase
         ]);
 
         $this->paymentRepository->shouldReceive('create')->once()->with([
-            'amount' => 0.00,
-            'subscription_id' => 423,
+            'amount' => 0,
+            'line_items' => [[
+                'item_id' => 423,
+                'item_type' => 'subscription',
+                'amount' => 35,
+            ], [
+                'item_id' => 423,
+                'item_type' => 'discount',
+                'amount' => -35,
+            ]]
         ], $paymentMethod)->andReturn($payment);
 
-        $result = $this->service->createPayment($user, 0.00, $paymentMethod, 'A Description', ['subscription_id' => 423]);
+        $result = $this->service->createPayment($user, $paymentMethod, 'A Description', [[
+            'item_id' => 423,
+            'item_type' => 'subscription',
+            'amount' => 35,
+        ], [
+            'item_id' => 423,
+            'item_type' => 'discount',
+            'amount' => -35,
+        ]]);
 
         $this->assertEquals($result, $payment);
     }
@@ -149,7 +181,8 @@ class StripePaymentServiceTest extends TestCase
 
                 return true;
             })
-            );
+        );
+        $this->lineItemRepository->shouldReceive('create')->once();
         $this->refundHandler->shouldReceive('create')->once()->with('test_key');
         $this->dispatcher->shouldReceive('dispatch')->once()
             ->with(\Mockery::on(function(PaymentReversedEvent $event) use ($payment) {
@@ -157,7 +190,7 @@ class StripePaymentServiceTest extends TestCase
 
                 return true;
             })
-            );
+        );
 
         $this->service->reversePayment($payment);
     }
@@ -184,6 +217,8 @@ class StripePaymentServiceTest extends TestCase
 
         $this->refundHandler->shouldReceive('create')->once()->with('test_key', 5);
 
+        $this->paymentRepository->shouldReceive('update')->once();
+        $this->lineItemRepository->shouldReceive('create')->once();
         $this->service->issuePartialRefund($payment, 5);
     }
 }

@@ -6,8 +6,8 @@ namespace App\Contracts\Repositories\Request;
 use App\Contracts\Repositories\BaseRepositoryContract;
 
 /**
- * Interface LineItemRepositoryContract
+ * Interface RequestedItemRepositoryContract
  * @package App\Contracts\Repositories\Request
  */
-interface LineItemRepositoryContract extends BaseRepositoryContract
+interface RequestedItemRepositoryContract extends BaseRepositoryContract
 {}

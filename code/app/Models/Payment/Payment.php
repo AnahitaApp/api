@@ -4,10 +4,11 @@ declare(strict_types=1);
 namespace App\Models\Payment;
 
 use App\Models\BaseModelAbstract;
-use App\Models\Subscription\Subscription;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -24,7 +25,8 @@ use Illuminate\Support\Carbon;
  * @property mixed|null $updated_at
  * @property Carbon|null $deleted_at
  * @property-read PaymentMethod $paymentMethod
- * @property-read Subscription[] $subscription
+ * @property-read Collection|LineItem[] $lineItems
+ * @property-read int|null $purchased_items_count
  * @method static Builder|Payment newModelQuery()
  * @method static Builder|Payment newQuery()
  * @method static Builder|Payment query()
@@ -50,6 +52,16 @@ class Payment extends BaseModelAbstract
     ];
 
     /**
+     * The items paid for
+     *
+     * @return HasMany
+     */
+    public function lineItems(): HasMany
+    {
+        return $this->hasMany(LineItem::class);
+    }
+
+    /**
      * The payment method that this payment was made with
      *
      * @return BelongsTo
@@ -57,15 +69,5 @@ class Payment extends BaseModelAbstract
     public function paymentMethod(): BelongsTo
     {
         return $this->belongsTo(PaymentMethod::class);
-    }
-
-    /**
-     * The subscriptions paid for
-     *
-     * @return BelongsTo
-     */
-    public function subscription(): BelongsTo
-    {
-        return $this->belongsTo(Subscription::class);
     }
 }

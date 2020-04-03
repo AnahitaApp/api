@@ -17,12 +17,21 @@ use Tests\TestCase;
  */
 class SubscriptionTest extends TestCase
 {
+    public function testLineItems()
+    {
+        $model = new Subscription();
+        $relation = $model->lineItems();
+
+        $this->assertEquals('line_items.item_id', $relation->getQualifiedForeignKeyName());
+        $this->assertEquals('line_items.item_type', $relation->getQualifiedMorphType());
+        $this->assertEquals('subscriptions.id', $relation->getQualifiedParentKeyName());
+    }
+
     public function testMembershipPlanRate()
     {
         $model = new Subscription();
         $relation = $model->membershipPlanRate();
 
-        $this->assertInstanceOf(BelongsTo::class, $relation);
         $this->assertEquals('membership_plan_rates.id', $relation->getQualifiedOwnerKeyName());
         $this->assertEquals('subscriptions.membership_plan_rate_id', $relation->getQualifiedForeignKeyName());
     }
@@ -32,9 +41,10 @@ class SubscriptionTest extends TestCase
         $user = new Subscription();
         $relation = $user->payments();
 
-        $this->assertInstanceOf(HasMany::class, $relation);
         $this->assertEquals('subscriptions.id', $relation->getQualifiedParentKeyName());
-        $this->assertEquals('payments.subscription_id', $relation->getQualifiedForeignKeyName());
+        $this->assertEquals('line_items.item_id', $relation->getQualifiedForeignPivotKeyName());
+        $this->assertEquals('line_items.payment_id', $relation->getQualifiedRelatedPivotKeyName());
+        $this->assertEquals('item_type', $relation->getMorphType());
     }
 
     public function testPaymentMethod()

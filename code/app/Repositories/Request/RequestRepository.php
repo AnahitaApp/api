@@ -11,9 +11,13 @@ use Psr\Log\LoggerInterface as LogContract;
  * Class RequestRepository
  * @package App\Contracts\Repositories\Request
  */
-
 class RequestRepository extends BaseRepositoryAbstract implements RequestRepositoryContract
 {
+    /**
+     * RequestRepository constructor.
+     * @param Request $model
+     * @param LogContract $log
+     */
     public function __construct(Request $model, LogContract $log)
     {
         parent::__construct($model, $log);

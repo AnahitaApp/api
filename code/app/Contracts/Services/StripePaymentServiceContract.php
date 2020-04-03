@@ -24,13 +24,12 @@ interface StripePaymentServiceContract
 
     /**
      * @param User $user
-     * @param float $amount
      * @param PaymentMethod $paymentMethod
      * @param string $description
-     * @param array $paymentData
+     * @param array $lineItems
      * @return mixed
      */
-    public function createPayment(User $user, float $amount, PaymentMethod $paymentMethod, string $description, $paymentData = []) : Payment;
+    public function createPayment(User $user, PaymentMethod $paymentMethod, string $description, array $lineItems) : Payment;
 
     /**
      * Reverses a payment, and then triggers an accompanying PaymentReversed Event
