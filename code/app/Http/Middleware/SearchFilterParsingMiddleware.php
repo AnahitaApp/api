@@ -23,31 +23,44 @@ class SearchFilterParsingMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $filter = [];
-        $search = [];
+        $cleanedFilter = [];
 
         if ($filters = $request->query('filter')) {
             if (is_array($filters)) {
                 foreach ($filters as $key => $value) {
-                    $filter = $this->processQueryEntry($filter, $key, $value);
+                    $cleanedFilter = $this->processQueryEntry($cleanedFilter, $key, $value);
                 }
             }
         }
-        if ($filter) {
-            $request->query->set('cleaned_filter', $filter);
+        if ($cleanedFilter) {
+            $request->query->set('cleaned_filter', $cleanedFilter);
         }
 
+        $cleanedSearch = [];
 
-        if ($searches = $request->query('search')) {
-            if (is_array($searches)) {
-                foreach ($searches as $key => $value) {
-                    $search = $this->processQueryEntry($search, $key, $value);
+        if ($search = $request->query('search')) {
+            if (is_array($search)) {
+                foreach ($search as $key => $searchTermContainer) {
+
+                    if (is_array($searchTermContainer)) {
+
+                        if (!isset($cleanedSearch[$key])) {
+                            $cleanedSearch[$key] = [];
+                        }
+
+                        foreach ($searchTermContainer as $individualSearch) {
+                            $cleanedSearch[$key] = $this->processQueryEntry($cleanedSearch[$key], $key, $individualSearch, );
+                        }
+                    } else {
+
+                        $cleanedSearch = $this->processQueryEntry($cleanedSearch, $key, $searchTermContainer);
+                    }
                 }
             }
         }
 
-        if ($search) {
-            $request->query->set('cleaned_search', $search);
+        if ($cleanedSearch) {
+            $request->query->set('cleaned_search', $cleanedSearch);
         }
 
         return $next($request);
