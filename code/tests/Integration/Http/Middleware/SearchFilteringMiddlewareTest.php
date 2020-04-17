@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Integration\V1\Middleware;
+namespace Tests\Integration\Middleware;
 
 use App\Models\Role;
 use App\Models\Wiki\Article;
@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 /**
  * Class SearchFilteringMiddlewareTest
- * @package Tests\Integration\V1\Middleware
+ * @package Tests\Integration\Middleware
  */
 class SearchFilteringMiddlewareTest extends TestCase
 {

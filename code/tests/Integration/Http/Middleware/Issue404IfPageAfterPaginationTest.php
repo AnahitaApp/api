@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Integration\V4\Middleware;
+namespace Tests\Integration\Middleware;
 
 use App\Models\Role;
 use App\Models\Wiki\Article;
@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 /**
  * Class Issue404IfPageAfterPaginationTest
- * @package Tests\Integration\ApiCalls
+ * @package Tests\Integration\Middleware
  */
 class Issue404IfPageAfterPaginationTest extends TestCase
 {

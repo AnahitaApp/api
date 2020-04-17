@@ -108,7 +108,7 @@ class MessageRepositoryTest extends TestCase
         $this->repository->findOrFail(1);
     }
 
-    public function testUpdateThrowsException()
+    public function testUpdateSuccess()
     {
         $dispatcher = mock(Dispatcher::class);
         $dispatcher->shouldReceive('until');

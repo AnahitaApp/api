@@ -296,6 +296,18 @@ class User extends BaseModelAbstract
     }
 
     /**
+     * Add a Role to this user
+     *
+     * @param int $roleId
+     * @return $this
+     */
+    public function removeRole(int $roleId)
+    {
+        $this->roles()->detach($roleId);
+        return $this;
+    }
+
+    /**
      * Determines whether or not the user can manage the organization.
      *
      * @param Organization $organization

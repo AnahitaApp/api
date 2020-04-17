@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Repositories\User;
 
 use App\Models\BaseModelAbstract;
+use App\Traits\CanGetAndUnset;
 use Illuminate\Contracts\Hashing\Hasher;
 use Psr\Log\LoggerInterface as LogContract;
 use App\Contracts\Repositories\User\UserRepositoryContract;
@@ -17,7 +18,7 @@ use App\Repositories\Traits\NotImplemented;
  */
 class UserRepository extends BaseRepositoryAbstract implements UserRepositoryContract
 {
-    use NotImplemented\Delete;
+    use NotImplemented\Delete, CanGetAndUnset;
 
     /**
      * @var Hasher
@@ -46,12 +47,16 @@ class UserRepository extends BaseRepositoryAbstract implements UserRepositoryCon
      */
     public function create(array $data = [], BaseModelAbstract $relatedModel = null, array $forcedValues = [])
     {
+        $roles = $this->getAndUnset($data, 'roles', []);
+
         if (isset($data['password'])) {
             $data['password'] = $this->hasher->make($data['password']);
         }
 
         /** @var User $user */
         $user = parent::create($data, $relatedModel, $forcedValues);
+
+        $user->roles()->sync($roles);
 
         return $user;
     }
@@ -66,8 +71,14 @@ class UserRepository extends BaseRepositoryAbstract implements UserRepositoryCon
      */
     public function update(BaseModelAbstract $model, array $data, array $forcedValues = []): BaseModelAbstract
     {
+        $roles = $this->getAndUnset($data, 'roles', null);
+
         if (isset($data['password'])) {
             $data['password'] = $this->hasher->make($data['password']);
+        }
+
+        if ($roles !== null) {
+            $model->roles()->sync($roles);
         }
 
         return parent::update($model, $data, $forcedValues);

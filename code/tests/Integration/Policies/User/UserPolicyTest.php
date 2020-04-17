@@ -5,7 +5,9 @@ namespace Tests\Integration\Policies\User;
 
 use App\Models\User\User;
 use App\Policies\User\UserPolicy;
+use Tests\DatabaseSetupTrait;
 use Tests\TestCase;
+use Tests\Traits\RolesTesting;
 
 /**
  * Class UserPolicyTest
@@ -13,6 +15,8 @@ use Tests\TestCase;
  */
 class UserPolicyTest extends TestCase
 {
+    use DatabaseSetupTrait, RolesTesting;
+
     public function testViewSelfPasses()
     {
         $policy = new UserPolicy();
@@ -44,11 +48,10 @@ class UserPolicyTest extends TestCase
     {
         $policy = new UserPolicy();
 
-        $loggedInUser = new User();
-        $loggedInUser->id = 5;
-        $requestedUser = new User();
-        $requestedUser->id = 9420;
+        foreach ($this->rolesWithoutAdmins() as $role) {
+            $user = $this->getUserOfRole($role);
 
-        $this->assertFalse($policy->update($loggedInUser, $requestedUser));
+            $this->assertFalse($policy->update($user, new User()));
+        }
     }
 }

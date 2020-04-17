@@ -33,7 +33,7 @@ class TestTimesListener implements TestListener
      */
     public function endTest(Test $test, float $time): void
     {
-        if (!$this->firstTest && $time * 1000 > self::TEST_LIMIT_MILLISECONDS) {
+        if (!$test instanceof IsLongTest && !$this->firstTest && $time * 1000 > self::TEST_LIMIT_MILLISECONDS) {
             $error = sprintf('%s::%s ran for %s seconds', get_class($test), $test->getName(), $time);
             print "\n\033[41m" . $error . "\033[0m\n";
         }

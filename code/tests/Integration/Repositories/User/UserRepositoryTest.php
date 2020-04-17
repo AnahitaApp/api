@@ -95,7 +95,6 @@ class UserRepositoryTest extends TestCase
         $this->repository->findOrFail(1);
     }
 
-
     public function testCreateSuccess()
     {
         $user = $this->repository->create([
@@ -121,6 +120,19 @@ class UserRepositoryTest extends TestCase
         $updated = User::find($model->id);
         $this->assertEquals('bump@butts.com', $updated->email);
         $this->assertTrue($this->hasher->check('Something secure', $updated->password));
+    }
+
+    public function testUpdateSyncsRoles()
+    {
+        $model = factory(User::class)->create();
+
+        $this->assertCount(0, $model->roles);
+
+        $this->repository->update($model, ['roles' => [Role::SUPER_ADMIN]]);
+
+        $updated = User::find($model->id);
+        $this->assertCount(1, $updated->roles);
+        $this->assertEquals(Role::SUPER_ADMIN, $updated->roles[0]->id);
     }
 
     public function testDeleteThrowsException()
