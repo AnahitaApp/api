@@ -1,20 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Contracts\Repositories\Request;
+namespace App\Repositories\Request;
 
+use App\Contracts\Repositories\Request\RequestRepositoryContract;
 use App\Models\Request\Request;
 use App\Repositories\BaseRepositoryAbstract;
 use Psr\Log\LoggerInterface as LogContract;
 
 /**
- * Class RequestRepository
+ * Class RequestRepositoryTest
  * @package App\Contracts\Repositories\Request
  */
 class RequestRepository extends BaseRepositoryAbstract implements RequestRepositoryContract
 {
     /**
-     * RequestRepository constructor.
+     * RequestRepositoryTest constructor.
      * @param Request $model
      * @param LogContract $log
      */

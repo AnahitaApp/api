@@ -1,20 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Contracts\Repositories\Request;
+namespace App\Repositories\Request;
 
+use App\Contracts\Repositories\Request\SafetyReportRepositoryContract;
 use App\Models\Request\SafetyReport;
 use App\Repositories\BaseRepositoryAbstract;
 use Psr\Log\LoggerInterface as LogContract;
 
 /**
- * Class SafetyReportRepository
+ * Class SafetyReportRepositoryTest
  * @package App\Contracts\Repositories\Request
  */
 class SafetyReportRepository extends BaseRepositoryAbstract implements SafetyReportRepositoryContract
 {
     /**
-     * SafetyReportRepository constructor.
+     * SafetyReportRepositoryTest constructor.
      * @param SafetyReport $model
      * @param LogContract $log
      */

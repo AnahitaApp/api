@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
- * Class SafetyReportRepository
+ * Class SafetyReportRepositoryTest
  *
  * @package App\Models\Request
  * @property int $id
