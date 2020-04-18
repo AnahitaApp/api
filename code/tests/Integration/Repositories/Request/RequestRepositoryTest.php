@@ -3,7 +3,10 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Repositories\Request;
 
+use App\Models\Asset;
+use App\Models\Request\RequestedItem;
 use App\Models\User\User;
+use App\Repositories\Request\RequestedItemRepository;
 use App\Repositories\Request\RequestRepository;
 use App\Models\Request\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -31,7 +34,11 @@ class RequestRepositoryTest extends TestCase
 
         $this->repository = new RequestRepository(
             new Request(),
-            $this->getGenericLogMock()
+            $this->getGenericLogMock(),
+            new RequestedItemRepository(
+                new RequestedItem(),
+                $this->getGenericLogMock(),
+            ),
         );
     }
 
@@ -69,17 +76,26 @@ class RequestRepositoryTest extends TestCase
         /** @var Request $model */
         $user = factory(User::class)->create();
         $model = $this->repository->create([
-
             'requested_by_id' => $user->id,
             'latitude' => 846,
             'longitude' => 235,
-            'completed' => true
+            'completed' => true,
+            'requested_items' => [
+                [
+                    'name' => 'An Item',
+                ],
+                [
+                    'name' => 'An Item',
+                    'asset_id' => factory(Asset::class)->create()->id,
+                ],
+            ]
         ]);
 
         $this->assertEquals($model->requested_by_id, $user->id);
         $this->assertEquals(846, $model->latitude);
         $this->assertEquals(235, $model->longitude);
         $this->assertEquals(true, $model->completed);
+        $this->assertCount(2, $model->requestedItems);
     }
 
     public function testUpdateSuccess()
@@ -87,13 +103,26 @@ class RequestRepositoryTest extends TestCase
         $model = factory(Request::class)->create([
             'completed' => true
         ]);
+        $requestedItems = factory(RequestedItem::class, 3)->create([
+            'request_id' => $model->id,
+        ]);
         $this->repository->update($model, [
-            'completed' => false
+            'completed' => false,
+            'requested_items' => [
+                [
+                    'id' => $requestedItems[2]->id,
+                ],
+                [
+                    'name' => 'An Item',
+                    'asset_id' => factory(Asset::class)->create()->id,
+                ]
+            ]
         ]);
 
         /** @var Request $updated */
         $updated = Request::find($model->id);
         $this->assertEquals(false, $updated->completed);
+        $this->assertCount(2, $updated->requestedItems);
     }
 
     public function testDeleteSuccess()

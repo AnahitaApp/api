@@ -32,7 +32,7 @@ class AssetRepositoryTest extends TestCase
         $this->repository = new AssetRepository(
             new Asset(),
             $this->getGenericLogMock(),
-            $this->app->make('filesystem'),
+            $this->app->make('filesystem')->disk('public'),
             'http://localhost',
             '/storage',
         );

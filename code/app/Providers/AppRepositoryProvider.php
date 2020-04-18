@@ -67,6 +67,7 @@ class AppRepositoryProvider extends AtheniaRepositoryProvider
             return new RequestRepository(
                 new Request(),
                 $this->app->make('log'),
+                $this->app->make(RequestedItemRepositoryContract::class),
             );
         });
         $this->app->bind(RequestedItemRepositoryContract::class, function() {
