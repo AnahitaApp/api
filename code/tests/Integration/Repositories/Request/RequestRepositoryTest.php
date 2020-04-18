@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+namespace Tests\Integration\Repositories\Request;
+
 use App\Models\User\User;
 use App\Repositories\Request\RequestRepository;
 use App\Models\Request\Request;
@@ -9,10 +11,10 @@ use Tests\DatabaseSetupTrait;
 use Tests\TestCase;
 use Tests\Traits\MocksApplicationLog;
 
-    /**
-     * Class RequestRepositoryTest
-     * @package Tests\Integration\Repositories\Organization
-     */
+/**
+ * Class RequestRepositoryTest
+ * @package Tests\Integration\Repositories\Request
+ */
 class RequestRepositoryTest extends TestCase
 {
     use DatabaseSetupTrait, MocksApplicationLog;
@@ -82,7 +84,6 @@ class RequestRepositoryTest extends TestCase
 
     public function testUpdateSuccess()
     {
-        $user = factory(User::class)->create();
         $model = factory(Request::class)->create([
             'completed' => true
         ]);
@@ -92,7 +93,7 @@ class RequestRepositoryTest extends TestCase
 
         /** @var Request $updated */
         $updated = Request::find($model->id);
-        $this->assertEquals(false, $model->completed);
+        $this->assertEquals(false, $updated->completed);
     }
 
     public function testDeleteSuccess()

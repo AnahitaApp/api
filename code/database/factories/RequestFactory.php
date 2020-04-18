@@ -10,6 +10,12 @@ $factory->define(App\Models\Request\Request::class, function (Faker $faker) {
         'completed' => $faker->boolean
     ];
 });
+$factory->define(App\Models\Request\RequestedItem::class, function (Faker $faker) {
+    return [
+        'request_id' => factory(App\Models\Request\Request::class)->create()->id,
+        'name' => $faker->name,
+    ];
+});
 $factory->define(App\Models\Request\SafetyReport::class, function (Faker $faker) {
     return [
         'request_id' => factory(App\Models\Request\Request::class)->create()->id,
