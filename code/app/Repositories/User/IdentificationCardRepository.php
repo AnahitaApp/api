@@ -6,6 +6,7 @@ namespace App\Repositories\User;
 use App\Contracts\Repositories\User\IdentificationCardRepositoryContract;
 use App\Models\User\IdentificationCard;
 use App\Repositories\AssetRepository;
+use App\Repositories\Traits\NotImplemented;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Psr\Log\LoggerInterface as LogContract;
 
@@ -15,6 +16,8 @@ use Psr\Log\LoggerInterface as LogContract;
  */
 class IdentificationCardRepository extends AssetRepository implements IdentificationCardRepositoryContract
 {
+    use NotImplemented\Update, NotImplemented\Delete, NotImplemented\FindAll;
+
     /**
      * IdentificationCardRepository constructor.
      * @param IdentificationCard $model

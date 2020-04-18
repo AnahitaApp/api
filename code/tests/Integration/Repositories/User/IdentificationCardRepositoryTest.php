@@ -5,17 +5,18 @@ namespace Tests\Integration\Repositories\User;
 
 use App\Exceptions\NotImplementedException;
 use App\Models\Asset;
-use App\Models\User\ProfileImage;
+use App\Models\User\IdentificationCard;
+use App\Repositories\User\IdentificationCardRepository;
 use App\Repositories\User\ProfileImageRepository;
 use Tests\DatabaseSetupTrait;
 use Tests\TestCase;
 use Tests\Traits\MocksApplicationLog;
 
 /**
- * Class ProfileImageRepositoryTest
+ * Class IdentificationCardRepositoryTest
  * @package Tests\Integration\Repositories\User
  */
-class ProfileImageRepositoryTest extends TestCase
+class IdentificationCardRepositoryTest extends TestCase
 {
     use DatabaseSetupTrait, MocksApplicationLog;
 
@@ -29,11 +30,11 @@ class ProfileImageRepositoryTest extends TestCase
         parent::setUp();
         $this->setupDatabase();
 
-        $this->repository = new ProfileImageRepository(
-            new ProfileImage(),
+        $this->repository = new IdentificationCardRepository(
+            new IdentificationCard(),
             $this->getGenericLogMock(),
-            $this->app->make('filesystem')->disk('public'),
-            'http://localhost',
+            $this->app->make('filesystem')->disk('local'),
+            '/local',
             '/storage',
         );
     }

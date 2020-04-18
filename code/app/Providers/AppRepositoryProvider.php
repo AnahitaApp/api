@@ -58,7 +58,7 @@ class AppRepositoryProvider extends AtheniaRepositoryProvider
             return new IdentificationCardRepository(
                 new IdentificationCard(),
                 $this->app->make('log'),
-                $this->app->make('filesystem')->disk('private'),
+                $this->app->make('filesystem')->disk('local'),
                 storage_path(),
                 "identification"
             );
