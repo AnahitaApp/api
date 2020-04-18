@@ -242,7 +242,7 @@ abstract class AtheniaRepositoryProvider extends ServiceProvider
             return new ProfileImageRepository(
                 new ProfileImage(),
                 $this->app->make('log'),
-                $this->app->make('filesystem'),
+                $this->app->make('filesystem')->disk('public'),
                 $this->app->make('config')->get('app.asset_url'),
                 "profile_images"
             );

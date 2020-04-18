@@ -43,15 +43,15 @@ class AssetRepository extends BaseRepositoryAbstract implements AssetRepositoryC
      * AssetRepository constructor.
      * @param Asset $model
      * @param LogContract $log
-     * @param Factory $fileSystem
+     * @param Filesystem $fileSystem
      * @param string $assetBaseURL
      * @param string $basePublicDirectory
      */
-    public function __construct(Asset $model, LogContract $log, Factory $fileSystem,
+    public function __construct(Asset $model, LogContract $log, Filesystem $fileSystem,
                                 string $assetBaseURL, string $basePublicDirectory)
     {
         parent::__construct($model, $log);
-        $this->publicAssets = $fileSystem->disk('public');
+        $this->publicAssets = $fileSystem;
         $this->assetBaseURL = $assetBaseURL;
         $this->basePublicDirectory = $basePublicDirectory;
     }
