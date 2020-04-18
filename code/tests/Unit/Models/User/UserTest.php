@@ -38,6 +38,15 @@ class UserTest extends TestCase
         $this->assertEquals('ballot_completions.user_id', $relation->getQualifiedForeignKeyName());
     }
 
+    public function testCompletedRequests()
+    {
+        $user = new User();
+        $relation = $user->completedRequests();
+
+        $this->assertEquals('users.id', $relation->getQualifiedParentKeyName());
+        $this->assertEquals('requests.completed_by_id', $relation->getQualifiedForeignKeyName());
+    }
+
     public function testCreatedArticles()
     {
         $user = new User();
@@ -56,6 +65,15 @@ class UserTest extends TestCase
         $this->assertInstanceOf(HasMany::class, $relation);
         $this->assertEquals('users.id', $relation->getQualifiedParentKeyName());
         $this->assertEquals('iterations.created_by_id', $relation->getQualifiedForeignKeyName());
+    }
+
+    public function testCreatedRequests()
+    {
+        $user = new User();
+        $relation = $user->createdRequests();
+
+        $this->assertEquals('users.id', $relation->getQualifiedParentKeyName());
+        $this->assertEquals('requests.created_by_id', $relation->getQualifiedForeignKeyName());
     }
 
     public function testMessages()

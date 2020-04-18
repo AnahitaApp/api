@@ -35,8 +35,8 @@ use Illuminate\Support\Carbon;
  * @property-read int|null $assets_count
  * @property-read User $completedBy
  * @property-read User $createdBy
- * @property-read Collection|RequestedItem[] $lineItems
- * @property-read int|null $line_items_count
+ * @property-read Collection|RequestedItem[] $requestedItems
+ * @property-read int|null $requested_items_count
  * @property-read SafetyReport $safetyReport
  * @method static Builder|Request whereCompleted($value)
  * @method static Builder|Request whereCompletedById($value)
@@ -91,7 +91,7 @@ class Request extends BaseModelAbstract
      *
      * @return HasMany
      */
-    public function lineItems(): HasMany
+    public function requestedItems(): HasMany
     {
         return $this->hasMany(RequestedItem::class);
     }
