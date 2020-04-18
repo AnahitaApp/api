@@ -133,4 +133,10 @@ class RequestRepositoryTest extends TestCase
 
         $this->assertNull(Request::find($model->id));
     }
+
+    public function testFindAllAroundLocationEmpty()
+    {
+        $items = $this->repository->findAllAroundLocation(0, 0, 50);
+        $this->assertEmpty($items);
+    }
 }

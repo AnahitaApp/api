@@ -61,14 +61,14 @@ abstract class BaseRepositoryAbstract implements BaseRepositoryContract
     /**
      * Builds the find all query
      *
-     * @param array $where
+     * @param array $filters
      * @param array $searches
      * @param array $orderBy
      * @param array $with
      * @param array $belongsToArray
      * @return EloquentJoinBuilder
      */
-    protected function buildFindAllQuery(array $where = [], array $searches = [], array $orderBy = [], array $with = [], array $belongsToArray = [])
+    protected function buildFindAllQuery(array $filters = [], array $searches = [], array $orderBy = [], array $with = [], array $belongsToArray = [])
     {
         /** @var EloquentJoinBuilder $result */
         $result = $this->model->with($with);
@@ -103,7 +103,7 @@ abstract class BaseRepositoryAbstract implements BaseRepositoryContract
             });
         }
 
-        foreach ($where as $key => $query) {
+        foreach ($filters as $key => $query) {
             if (is_array($query)) {
                 $result->whereJoin(...$query);
             } else {
