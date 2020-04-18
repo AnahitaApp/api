@@ -156,7 +156,7 @@ abstract class AtheniaRepositoryProvider extends ServiceProvider
             return new AssetRepository(
                 new Asset(),
                 $this->app->make('log'),
-                $this->app->make('filesystem'),
+                $this->app->make('filesystem')->disk('public'),
                 $this->app->make('config')->get('app.asset_url'),
                 "assets"
             );
