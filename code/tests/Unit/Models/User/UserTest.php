@@ -76,6 +76,16 @@ class UserTest extends TestCase
         $this->assertEquals('requests.created_by_id', $relation->getQualifiedForeignKeyName());
     }
 
+    public function testIdentificationCard()
+    {
+        $model = new User();
+
+        $relation = $model->identificationCard();
+
+        $this->assertEquals('users.identification_card_id', $relation->getQualifiedForeignKeyName());
+        $this->assertEquals('assets.id', $relation->getQualifiedOwnerKeyName());
+    }
+
     public function testMessages()
     {
         $user = new User();
