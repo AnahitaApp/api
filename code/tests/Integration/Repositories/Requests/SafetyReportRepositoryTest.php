@@ -1,15 +1,20 @@
 <?php
 declare(strict_types=1);
 
+namespace Tests\Integration\Repositories\Requests;
 
+use App\Models\Request\Request;
 use App\Models\Request\SafetyReport;
-use App\Models\User\User;
 use App\Repositories\Request\SafetyReportRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Tests\DatabaseSetupTrait;
 use Tests\TestCase;
 use Tests\Traits\MocksApplicationLog;
 
+/**
+ * Class SafetyReportRepositoryTest
+ * @package Tests\Integration\Repositories\Requests
+ */
 class SafetyReportRepositoryTest extends TestCase
 {
     use DatabaseSetupTrait, MocksApplicationLog;
@@ -61,33 +66,31 @@ class SafetyReportRepositoryTest extends TestCase
 
     public function testCreateSuccess()
     {
+        /** @var Request $request */
+        $request = factory(Request::class)->create();
         /** @var SafetyReport $model */
-        $user = factory(User::class)->create();
         $model = $this->repository->create([
-
-            'requested_by_id' => $user->id,
-            'reporter_id' => $user->id,
+            'reporter_id' => $request->requested_by_id,
             'description' => 'Violated terms of app'
-        ]);
+        ], $request);
 
-        $this->assertEquals($model->requested_by_id, $user->id);
-        $this->assertEquals($model->reporter_id, $user->id);
+        $this->assertEquals($model->request_id, $request->id);
+        $this->assertEquals($model->reporter_id, $request->requested_by_id);
         $this->assertEquals('Violated terms of app', $model->description);
     }
 
     public function testUpdateSuccess()
     {
-        $user = factory(User::class)->create();
         $model = factory(SafetyReport::class)->create([
-            'completed' => true
+            'description' => 'A Description',
         ]);
         $this->repository->update($model, [
-            'completed' => false
+            'description' => 'A New Description',
         ]);
 
         /** @var SafetyReport $updated */
         $updated = SafetyReport::find($model->id);
-        $this->assertEquals(false, $model->completed);
+        $this->assertEquals('A New Description', $updated->description);
     }
 
     public function testDeleteSuccess()

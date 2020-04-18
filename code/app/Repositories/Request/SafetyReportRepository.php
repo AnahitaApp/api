@@ -9,13 +9,13 @@ use App\Repositories\BaseRepositoryAbstract;
 use Psr\Log\LoggerInterface as LogContract;
 
 /**
- * Class SafetyReportRepositoryTest
- * @package App\Contracts\Repositories\Request
+ * Class SafetyReportRepository
+ * @package App\Repositories\Request
  */
 class SafetyReportRepository extends BaseRepositoryAbstract implements SafetyReportRepositoryContract
 {
     /**
-     * SafetyReportRepositoryTest constructor.
+     * SafetyReportRepository constructor.
      * @param SafetyReport $model
      * @param LogContract $log
      */

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Tests\Integration\Repositories\User;
 
 use App\Exceptions\NotImplementedException;
+use App\Models\Role;
 use App\Models\User\User;
 use App\Repositories\User\UserRepository;
 use Illuminate\Contracts\Hashing\Hasher;
