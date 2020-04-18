@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace App\Models\Request;
 
+use App\Contracts\Models\HasValidationRulesContract;
 use App\Models\BaseModelAbstract;
+use App\Models\Traits\HasValidationRules;
 use App\Models\User\User;
 use Eloquent;
 use Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder;
@@ -38,8 +40,10 @@ use Illuminate\Support\Carbon;
  * @method static EloquentJoinBuilder|SafetyReport query()
  * @mixin Eloquent
  */
-class SafetyReport extends BaseModelAbstract
+class SafetyReport extends BaseModelAbstract implements HasValidationRulesContract
 {
+    use HasValidationRules;
+
     /**
      * The user that created this safety report
      *
@@ -58,5 +62,20 @@ class SafetyReport extends BaseModelAbstract
     public function request(): BelongsTo
     {
         return $this->belongsTo(Request::class);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function buildModelValidationRules(...$params): array
+    {
+        return [
+            self::VALIDATION_RULES_BASE => [
+                'description' => [
+                    'required',
+                    'string',
+                ],
+            ],
+        ];
     }
 }

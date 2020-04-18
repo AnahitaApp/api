@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace App\Models\Request;
 
+use App\Contracts\Models\HasValidationRulesContract;
 use App\Models\Asset;
 use App\Models\BaseModelAbstract;
+use App\Models\Traits\HasValidationRules;
 use App\Models\User\User;
 use Eloquent;
 use Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder;
@@ -15,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
+use Illuminate\Validation\Rule;
 
 /**
  * Class Request
@@ -54,8 +57,10 @@ use Illuminate\Support\Carbon;
  * @method static EloquentJoinBuilder|Request query()
  * @mixin Eloquent
  */
-class Request extends BaseModelAbstract
+class Request extends BaseModelAbstract implements HasValidationRulesContract
 {
+    use HasValidationRules;
+
     /**
      * The assets that a user uploaded for this request
      *
@@ -104,5 +109,68 @@ class Request extends BaseModelAbstract
     public function safetyReport(): HasOne
     {
         return $this->hasOne(SafetyReport::class);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function buildModelValidationRules(...$params): array
+    {
+        return [
+            self::VALIDATION_RULES_BASE => [
+                'latitude' => [
+                    'numeric',
+                ],
+                'longitude' => [
+                    'numeric',
+                ],
+                'description' => [
+                    'string',
+                ],
+                'drop_off_location' => [
+                    'string',
+                ],
+                'requested_items' => [
+                    'array',
+                ],
+                'requested_items.*' => [
+                    'array',
+                ],
+                'requested_items.*.name' => [
+                    'string',
+                ],
+                'requested_items.*.asset_id' => [
+                    'numeric',
+                    Rule::exists('assets', 'id'),
+                ],
+                'accept' => [
+                    'boolean',
+                    'request_not_accepted'
+                ],
+                'completed' => [
+                    'boolean',
+                ],
+            ],
+            self::VALIDATION_RULES_CREATE => [
+                self::VALIDATION_PREPEND_NOT_PRESENT => [
+                    'accept',
+                    'completed',
+                ],
+                self::VALIDATION_PREPEND_REQUIRED => [
+                    'latitude',
+                    'longitude',
+                    'requested_items',
+                ],
+            ],
+            self::VALIDATION_RULES_UPDATE => [
+                self::VALIDATION_PREPEND_NOT_PRESENT => [
+                    'latitude',
+                    'longitude',
+                    'description',
+                    'drop_off_location',
+                    'requested_items',
+                ],
+            ],
+        ];
     }
 }
