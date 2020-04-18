@@ -139,4 +139,68 @@ class RequestRepositoryTest extends TestCase
         $items = $this->repository->findAllAroundLocation(0, 0, 50);
         $this->assertEmpty($items);
     }
+
+    public function testFindAllAroundLocationRespectsRadius()
+    {
+        // 100 km at the equator is between 1 and 2 unites of latitude
+        $center = factory(Request::class)->create([
+            'latitude' => 0,
+            'longitude' => 0,
+        ]);
+        $offCenter = factory(Request::class)->create([
+            'latitude' => 0.5,
+            'longitude' => 0,
+        ]);
+        factory(Request::class)->create([
+            'latitude' => 0,
+            'longitude' => -2.5,
+        ]);
+        factory(Request::class)->create([
+            'latitude' => 1.5,
+            'longitude' => 1.5,
+        ]);
+        factory(Request::class)->create([
+            'latitude' => 2.5,
+            'longitude' => 0
+        ]);
+        $items = $this->repository->findAllAroundLocation(0, 0, 100);
+        $this->assertCount(2, $items);
+        $this->assertContains($center->id, $items->pluck('id'));
+        $this->assertContains($offCenter->id, $items->pluck('id'));
+    }
+
+    public function testFindAllAroundLocationOrdersProperly()
+    {
+        $offCenter = factory(Request::class)->create([
+            'latitude' => 0.5,
+            'longitude' => 0,
+        ]);
+        $center = factory(Request::class)->create([
+            'latitude' => 0,
+            'longitude' => 0,
+        ]);
+        $furthest = factory(Request::class)->create([
+            'latitude' => 0,
+            'longitude' => -3,
+        ]);
+        // This is roughly 2.1 in latitude units
+        $middle = factory(Request::class)->create([
+            'latitude' => 1.5,
+            'longitude' => 1.5,
+        ]);
+        $north = factory(Request::class)->create([
+            'latitude' => 2.5,
+            'longitude' => 0
+        ]);
+        $items = $this->repository->findAllAroundLocation(0, 0, 1000);
+        $this->assertCount(5, $items);
+
+        $this->assertEquals([
+            $center->id,
+            $offCenter->id,
+            $middle->id,
+            $north->id,
+            $furthest->id,
+        ], $items->pluck('id')->toArray());
+    }
 }
