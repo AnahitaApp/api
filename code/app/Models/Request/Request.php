@@ -36,8 +36,8 @@ use Illuminate\Validation\Rule;
  * @property mixed|null $updated_at
  * @property-read Collection|Asset[] $assets
  * @property-read int|null $assets_count
- * @property-read User $completedBy
- * @property-read User $createdBy
+ * @property-read User|null $completedBy
+ * @property-read User $requestedBy
  * @property-read Collection|RequestedItem[] $requestedItems
  * @property-read int|null $requested_items_count
  * @property-read SafetyReport $safetyReport
@@ -86,9 +86,9 @@ class Request extends BaseModelAbstract implements HasValidationRulesContract
      *
      * @return BelongsTo
      */
-    public function createdBy(): BelongsTo
+    public function requestedBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'created_by_id');
+        return $this->belongsTo(User::class, 'requested_by_id');
     }
 
     /**

@@ -33,13 +33,13 @@ class RequestTest extends TestCase
         $this->assertEquals('requests.completed_by_id', $relation->getQualifiedForeignKeyName());
     }
 
-    public function testCreatedBy()
+    public function testRequestedBy()
     {
         $model = new Request();
-        $relation = $model->createdBy();
+        $relation = $model->requestedBy();
 
         $this->assertEquals('users.id', $relation->getQualifiedOwnerKeyName());
-        $this->assertEquals('requests.created_by_id', $relation->getQualifiedForeignKeyName());
+        $this->assertEquals('requests.requested_by_id', $relation->getQualifiedForeignKeyName());
     }
 
     public function testRequestedItems()
