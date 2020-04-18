@@ -137,4 +137,7 @@ return [
     \App\Validators\ArticleVersion\SelectedIterationBelongsToArticleValidator::KEY =>
         'The selected iteration id does not seem to be from the related article.',
 
+    \App\Validators\Request\RequestNotAcceptedValidator::KEY =>
+        'This request has already been accepted by someone else.',
+
 ];

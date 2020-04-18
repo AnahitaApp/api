@@ -6,6 +6,8 @@ namespace App\Providers;
 use App\Models\Organization\Organization;
 use App\Models\Organization\OrganizationManager;
 use App\Models\Payment\PaymentMethod;
+use App\Models\Request\Request;
+use App\Models\Request\SafetyReport;
 use App\Models\Role;
 use App\Models\Subscription\MembershipPlan;
 use App\Models\Subscription\Subscription;
@@ -34,6 +36,9 @@ class RouteServiceProvider extends ServiceProvider
         'role' => Role::class,
         'subscription' => Subscription::class,
         'user' => User::class,
+
+        'request' => Request::class,
+        'safety_report' => SafetyReport::class,
     ];
 
     /**
