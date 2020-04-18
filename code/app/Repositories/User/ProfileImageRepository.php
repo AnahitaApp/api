@@ -7,7 +7,7 @@ use App\Contracts\Repositories\User\ProfileImageRepositoryContract;
 use App\Models\User\ProfileImage;
 use App\Repositories\AssetRepository;
 use App\Repositories\Traits\NotImplemented;
-use Illuminate\Contracts\Filesystem\Factory;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Psr\Log\LoggerInterface as LogContract;
 
 /**
@@ -22,11 +22,11 @@ class ProfileImageRepository extends AssetRepository implements ProfileImageRepo
      * ProfileImageRepository constructor.
      * @param ProfileImage $model
      * @param LogContract $log
-     * @param Factory $fileSystem
+     * @param Filesystem $fileSystem
      * @param string $assetBaseURL
      * @param string $basePublicDirectory
      */
-    public function __construct(ProfileImage $model, LogContract $log, Factory $fileSystem,
+    public function __construct(ProfileImage $model, LogContract $log, Filesystem $fileSystem,
                                 string $assetBaseURL, string $basePublicDirectory)
     {
         parent::__construct($model, $log, $fileSystem, $assetBaseURL, $basePublicDirectory);
