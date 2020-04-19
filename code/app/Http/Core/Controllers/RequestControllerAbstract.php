@@ -78,11 +78,11 @@ abstract class RequestControllerAbstract extends BaseControllerAbstract
     }
 
     /**
-     * @param Requests\MembershipPlan\UpdateRequest $request
+     * @param Requests\Request\UpdateRequest $request
      * @param Request $requestModel
      * @return BaseModelAbstract
      */
-    public function update(Requests\MembershipPlan\UpdateRequest $request, Request $requestModel)
+    public function update(Requests\Request\UpdateRequest $request, Request $requestModel)
     {
         $data = $request->json()->all();
 

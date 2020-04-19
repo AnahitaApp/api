@@ -7,6 +7,7 @@ use App\Validators\ArticleVersion\SelectedIterationBelongsToArticleValidator;
 use App\Validators\ForgotPassword\TokenIsNotExpiredValidator;
 use App\Validators\ForgotPassword\UserOwnsTokenValidator;
 use App\Validators\NotPresentValidator;
+use App\Validators\Request\RequestNotAcceptedValidator;
 use App\Validators\Subscription\MembershipPlanRateIsActiveValidator;
 use App\Validators\Subscription\PaymentMethodIsOwnedByUserValidator;
 use Illuminate\Contracts\Validation\Factory;
@@ -32,5 +33,6 @@ class AppValidatorProvider extends ServiceProvider
         $validator->extend(MembershipPlanRateIsActiveValidator::KEY, MembershipPlanRateIsActiveValidator::class);
         $validator->extend(PaymentMethodIsOwnedByUserValidator::KEY, PaymentMethodIsOwnedByUserValidator::class);
         $validator->extend(SelectedIterationBelongsToArticleValidator::KEY, SelectedIterationBelongsToArticleValidator::class);
+        $validator->extend(RequestNotAcceptedValidator::KEY, RequestNotAcceptedValidator::class);
     }
 }
