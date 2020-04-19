@@ -26,5 +26,21 @@ Route::group(['prefix' => 'v1', 'as' => 'v1.'], function() {
      */
     Route::group(['middleware' => 'jwt.auth.protected'], function() {
         // Add protected routes below
+        /**
+         * Request Context
+         */
+        Route::resource('requests', 'RequestController', [
+            'except' => [
+                'create', 'edit', 'destroy'
+            ]
+        ]);
+        Route::group(['prefix' => 'requests/{request}', 'as' => 'request.'], function () {
+
+            Route::resource('safety-reports', 'Request\SafetyReportController', [
+                'only' => [
+                    'store'
+                ]
+            ]);
+        });
     });
 });
