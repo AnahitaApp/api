@@ -15,7 +15,7 @@ use App\Policies\Request\SafetyReportPolicy;
  */
 class StoreRequest extends BaseAuthenticatedRequestAbstract
 {
-    use HasNoPolicyParameters, HasNoExpands;
+    use HasNoExpands;
 
     /**
      * Get the policy action for the guard
@@ -44,5 +44,15 @@ class StoreRequest extends BaseAuthenticatedRequestAbstract
     public function rules(SafetyReport $safetyReport)
     {
         return $safetyReport->getValidationRules(SafetyReport::VALIDATION_RULES_CREATE);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getPolicyParameters(): array
+    {
+        return [
+            $this->route('request'),
+        ];
     }
 }
