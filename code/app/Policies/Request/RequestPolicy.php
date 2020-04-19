@@ -36,6 +36,18 @@ class RequestPolicy extends BasePolicyAbstract
     }
 
     /**
+     * Only people completing a request or those that created the request can view it
+     *
+     * @param User $user
+     * @param Request $request
+     * @return bool
+     */
+    public function view(User $user, Request $request)
+    {
+        return $user->id == $request->completed_by_id || $user->id == $request->requested_by_id;
+    }
+
+    /**
      * Only people who are completing a request can complete requests they are already assigned to be completing.
      * Other users can update a request only when someone else has not decided to complete it
      *

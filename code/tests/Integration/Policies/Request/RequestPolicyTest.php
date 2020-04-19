@@ -35,6 +35,39 @@ class RequestPolicyTest extends TestCase
         $this->assertTrue($policy->update(new User(), new Request()));
     }
 
+    public function testViewFails()
+    {
+        $policy = new RequestPolicy();
+
+        $user = new User();
+        $user->id = 24354;
+
+        $request = new Request([
+            'completed_by_id' => 314,
+            'requested_by_id' => 235,
+        ]);
+
+        $this->assertFalse($policy->view($user, $request));
+    }
+
+    public function testViewPasses()
+    {
+        $policy = new RequestPolicy();
+
+        $request = new Request([
+            'completed_by_id' => 314,
+            'requested_by_id' => 235,
+        ]);
+
+        $user = new User();
+        $user->id = 314;
+
+        $this->assertTrue($policy->view($user, $request));
+
+        $user->id = 235;
+        $this->assertTrue($policy->view($user, $request));
+    }
+
     public function  testUpdateFailsWhenUserIsNotCompletingTheRequest()
     {
         $policy = new RequestPolicy();
