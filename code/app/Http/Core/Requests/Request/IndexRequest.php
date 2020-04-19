@@ -16,7 +16,7 @@ use App\Policies\Request\RequestPolicy;
  */
 class IndexRequest extends BaseAuthenticatedRequestAbstract
 {
-    use HasNoRules, HasNoPolicyParameters, HasNoExpands;
+    use HasNoRules, HasNoPolicyParameters;
 
     /**
      * Get the policy action for the guard
@@ -36,5 +36,15 @@ class IndexRequest extends BaseAuthenticatedRequestAbstract
     protected function getPolicyModel(): string
     {
         return Request::class;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function allowedExpands(): array
+    {
+        return [
+            'requestedBy',
+        ];
     }
 }
