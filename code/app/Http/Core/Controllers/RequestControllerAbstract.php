@@ -73,7 +73,8 @@ abstract class RequestControllerAbstract extends BaseControllerAbstract
         $data = $request->json()->all();
         $data['requested_by_id'] = Auth::user()->id;
         $model = $this->repository->create($data);
-        return response($model, 201)->header('Location', route('v1.request.show', ['request' => $model]));
+        $model->load('requestedItems');
+        return response($model, 201)->header('Location', route('v1.requests.show', ['request' => $model]));
     }
 
     /**
