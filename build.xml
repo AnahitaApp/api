@@ -4,7 +4,7 @@
     <property name="phpunit" value="${basedir}/code/vendor/bin/phpunit"/>
 
     <target name="deploy"
-            depends="file-permissions,composer-install-no-dev,database-migrate,restart-queue"
+            depends="composer-install-no-dev,database-migrate,restart-queue"
             description="Performs the deploy for a server."/>
 
     <target name="full-build"
@@ -119,17 +119,6 @@
         <exec executable="./artisan" failonerror="true" dir="${basedir}/code">
             <arg value='queue:restart' />
         </exec>
-    </target>
-
-    <target name="file-permissions">
-        <touch file="${basedir}/logs/debug.log"/>
-        <chmod file="${basedir}/logs/debug.log" perm="664"/>
-        <touch file="${basedir}/logs/error.log"/>
-        <chmod file="${basedir}/logs/error.log" perm="664"/>
-
-        <chmod dir="${basedir}/cache" perm="775"/>
-        <chmod dir="${basedir}/cache/file" perm="775"/>
-        <chmod dir="${basedir}/cache/views" perm="775"/>
     </target>
 
 </project>
