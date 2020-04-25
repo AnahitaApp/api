@@ -14,7 +14,29 @@ use Tests\TestCase;
  */
 class RequestPolicyTest extends TestCase
 {
-    public function testAll()
+    public function testAllFailsWithConflictingRequestedUser()
+    {
+        $user = new User();
+        $user->id = 3542;
+        $requestedUser = new User();
+        $requestedUser->id = 65;
+
+        $policy = new RequestPolicy();
+
+        $this->assertFalse($policy->all($user, $requestedUser));
+    }
+
+    public function testAllPassesWithSameRequestedUser()
+    {
+        $user = new User();
+        $user->id = 3542;
+
+        $policy = new RequestPolicy();
+
+        $this->assertTrue($policy->all($user, $user));
+    }
+
+    public function testAllPassesWithoutRequestedUser()
     {
         $policy = new RequestPolicy();
 

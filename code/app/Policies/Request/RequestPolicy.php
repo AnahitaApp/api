@@ -17,11 +17,12 @@ class RequestPolicy extends BasePolicyAbstract
      * Everyone can index requests
      *
      * @param User $user
+     * @param User|null $requestedUser
      * @return bool
      */
-    public function all(User $user)
+    public function all(User $user, ?User $requestedUser = null)
     {
-        return true;
+        return $requestedUser ? $requestedUser->id === $user->id : true;
     }
 
     /**
