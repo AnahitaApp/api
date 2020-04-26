@@ -140,4 +140,7 @@ return [
     \App\Validators\Request\RequestNotAcceptedValidator::KEY =>
         'This request has already been accepted.',
 
+    \App\Validators\Request\RequestNotCanceledValidator::KEY =>
+        'This request has been canceled.',
+
 ];

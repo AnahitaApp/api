@@ -6,6 +6,7 @@ namespace Tests\Feature\Http\Request;
 use App\Models\Request\Request;
 use App\Models\Role;
 use App\Models\User\User;
+use Carbon\Carbon;
 use Tests\DatabaseSetupTrait;
 use Tests\TestCase;
 use Tests\Traits\MocksApplicationLog;
@@ -80,8 +81,7 @@ class RequestUpdateTest extends TestCase
 
         /** @var Request $updated */
         $updated = Request::find($request->id);
-
-        $this->assertTrue($updated->completed);
+        $this->assertNotNull($updated->completed_at);
     }
 
     public function testPatchNotFoundFails()
@@ -148,6 +148,28 @@ class RequestUpdateTest extends TestCase
             'message'   => 'Sorry, something went wrong.',
             'errors'    =>  [
                 'accept' => ['This request has already been accepted.'],
+            ]
+        ]);
+    }
+
+    public function testPatchFailsRequestCanceled()
+    {
+        $this->actAs(Role::APP_USER);
+
+        /** @var Request $request */
+        $request = factory(Request::class)->create([
+            'canceled_at' => Carbon::now(),
+        ]);
+
+        $response = $this->json('PATCH', static::BASE_ROUTE . $request->id, [
+            'accept' => true,
+        ]);
+
+        $response->assertStatus(400);
+        $response->assertJson([
+            'message'   => 'Sorry, something went wrong.',
+            'errors'    =>  [
+                'accept' => ['This request has been canceled.'],
             ]
         ]);
     }

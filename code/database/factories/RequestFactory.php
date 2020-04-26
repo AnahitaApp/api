@@ -7,7 +7,6 @@ $factory->define(App\Models\Request\Request::class, function (Faker $faker) {
         'requested_by_id' => factory(App\Models\User\User::class)->create()->id,
         'latitude' => $faker->latitude,
         'longitude' => $faker->longitude,
-        'completed' => $faker->boolean
     ];
 });
 $factory->define(App\Models\Request\RequestedItem::class, function (Faker $faker) {
