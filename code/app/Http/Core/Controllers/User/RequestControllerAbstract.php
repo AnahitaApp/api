@@ -7,7 +7,11 @@ use App\Contracts\Repositories\Request\RequestRepositoryContract;
 use App\Http\Core\Controllers\BaseControllerAbstract;
 use App\Http\Core\Controllers\Traits\HasIndexRequests;
 use App\Http\Core\Requests;
+use App\Models\BaseModelAbstract;
+use App\Models\Request\Request;
 use App\Models\User\User;
+use App\Traits\CanGetAndUnset;
+use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
@@ -17,7 +21,7 @@ use Illuminate\Support\Collection;
  */
 abstract class RequestControllerAbstract extends BaseControllerAbstract
 {
-    use HasIndexRequests;
+    use HasIndexRequests, CanGetAndUnset;
 
     /**
      * @var RequestRepositoryContract
@@ -47,5 +51,23 @@ abstract class RequestControllerAbstract extends BaseControllerAbstract
             $user->id,
         ];
         return $this->repository->findAll($filters, $this->search($request), $this->order($request), $this->expand($request), $this->limit($request), [], (int)$request->input('page', 1));
+    }
+
+    /**
+     * @param Requests\User\Request\UpdateRequest $request
+     * @param User $user
+     * @param Request $requestModel
+     * @return BaseModelAbstract
+     */
+    public function update(Requests\User\Request\UpdateRequest $request, User $user, Request $requestModel)
+    {
+        $data = $request->json()->all();
+
+        $canceled = (bool) $this->getAndUnset($data, 'canceled', false);
+        if ($canceled) {
+            $data['canceled_at'] = Carbon::now();
+        }
+
+        return $this->repository->update($requestModel, $data);
     }
 }

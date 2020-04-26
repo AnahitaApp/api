@@ -49,7 +49,7 @@ Route::group(['prefix' => 'v1', 'as' => 'v1.'], function() {
         Route::group(['prefix' => 'users/{user}', 'as' => 'user.'], function () {
             Route::resource('requests', 'User\RequestController', [
                 'only' => [
-                    'index',
+                    'index', 'update',
                 ],
             ]);
         });
