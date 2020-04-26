@@ -58,6 +58,6 @@ class RequestPolicy extends BasePolicyAbstract
      */
     public function update(User $user, Request $request)
     {
-        return $request->completed_by_id == null || $user->id == $request->completed_by_id;
+        return $request->requested_by_id == $user->id || $request->completed_by_id == null || $user->id == $request->completed_by_id;
     }
 }

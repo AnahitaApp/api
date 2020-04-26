@@ -40,6 +40,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Payment whereTransactionKey($value)
  * @method static Builder|Payment whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property-read int|null $line_items_count
  */
 class Payment extends BaseModelAbstract
 {

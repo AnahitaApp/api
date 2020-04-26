@@ -28,9 +28,10 @@ use Illuminate\Validation\Rule;
  * @property int|null $completed_by_id
  * @property float $latitude
  * @property float $longitude
- * @property boolean $completed
  * @property string|null $description
  * @property string|null $drop_off_location
+ * @property Carbon|null $canceled_at
+ * @property Carbon|null $completed_at
  * @property Carbon|null $deleted_at
  * @property mixed|null $created_at
  * @property mixed|null $updated_at
@@ -41,7 +42,8 @@ use Illuminate\Validation\Rule;
  * @property-read Collection|RequestedItem[] $requestedItems
  * @property-read int|null $requested_items_count
  * @property-read SafetyReport $safetyReport
- * @method static Builder|Request whereCompleted($value)
+ * @method static Builder|Request whereCanceledAt($value)
+ * @method static Builder|Request whereCompletedAt($value)
  * @method static Builder|Request whereCompletedById($value)
  * @method static Builder|Request whereCreatedAt($value)
  * @method static Builder|Request whereDeletedAt($value)
@@ -60,6 +62,14 @@ use Illuminate\Validation\Rule;
 class Request extends BaseModelAbstract implements HasValidationRulesContract
 {
     use HasValidationRules;
+
+    /**
+     * @var array
+     */
+    protected $dates = [
+        'completed_at',
+        'canceled_at',
+    ];
 
     /**
      * The assets that a user uploaded for this request
@@ -145,7 +155,11 @@ class Request extends BaseModelAbstract implements HasValidationRulesContract
                 ],
                 'accept' => [
                     'boolean',
-                    'request_not_accepted'
+                    'request_not_accepted',
+                    'request_not_canceled',
+                ],
+                'canceled' => [
+                    'boolean',
                 ],
                 'completed' => [
                     'boolean',
@@ -155,6 +169,7 @@ class Request extends BaseModelAbstract implements HasValidationRulesContract
                 self::VALIDATION_PREPEND_NOT_PRESENT => [
                     'accept',
                     'completed',
+                    'canceled',
                 ],
                 self::VALIDATION_PREPEND_REQUIRED => [
                     'latitude',

@@ -9,6 +9,7 @@ use App\Http\Core\Requests;
 use App\Models\BaseModelAbstract;
 use App\Models\Request\Request;
 use App\Traits\CanGetAndUnset;
+use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Database\Eloquent\Collection;
@@ -87,9 +88,13 @@ abstract class RequestControllerAbstract extends BaseControllerAbstract
         $data = $request->json()->all();
 
         $accept = (bool) $this->getAndUnset($data, 'accept', false);
-
         if ($accept) {
             $data['completed_by_id'] = Auth::user()->id;
+        }
+
+        $completed = (bool) $this->getAndUnset($data, 'completed', false);
+        if ($completed) {
+            $data['completed_at'] = Carbon::now();
         }
 
         return $this->repository->update($requestModel, $data);

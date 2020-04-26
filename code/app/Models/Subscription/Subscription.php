@@ -65,6 +65,8 @@ use Illuminate\Validation\Rule;
  * @method static Builder|Subscription whereSubscriberType($value)
  * @method static Builder|Subscription whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Payment\LineItem[] $lineItems
+ * @property-read int|null $line_items_count
  */
 class Subscription extends BaseModelAbstract implements HasValidationRulesContract, HasPaymentsContract
 {

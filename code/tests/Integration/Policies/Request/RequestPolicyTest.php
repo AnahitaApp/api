@@ -50,13 +50,6 @@ class RequestPolicyTest extends TestCase
         $this->assertTrue($policy->create(new User()));
     }
 
-    public function  testUpdatePassesWhenNoOneIsCompletingRequest()
-    {
-        $policy = new RequestPolicy();
-
-        $this->assertTrue($policy->update(new User(), new Request()));
-    }
-
     public function testViewFails()
     {
         $policy = new RequestPolicy();
@@ -96,12 +89,34 @@ class RequestPolicyTest extends TestCase
 
         $request = new Request([
             'completed_by_id' => 314,
+            'requested_by_id' => 3452
         ]);
 
         $this->assertFalse($policy->update(new User(), $request));
     }
 
-    public function  testUpdatePasses()
+    public function  testUpdatePassesWhenNoOneIsCompletingRequest()
+    {
+        $policy = new RequestPolicy();
+
+        $this->assertTrue($policy->update(new User(), new Request()));
+    }
+
+    public function  testUpdatePassesWhenUserCreatedTheRequest()
+    {
+        $policy = new RequestPolicy();
+
+        $request = new Request([
+            'requested_by_id' => 314,
+        ]);
+
+        $user = new User();
+        $user->id = 314;
+
+        $this->assertTrue($policy->update($user, $request));
+    }
+
+    public function  testUpdatePassesWhenUserIsCompletingTheRequest()
     {
         $policy = new RequestPolicy();
 
