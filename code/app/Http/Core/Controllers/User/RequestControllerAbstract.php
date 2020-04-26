@@ -63,8 +63,8 @@ abstract class RequestControllerAbstract extends BaseControllerAbstract
     {
         $data = $request->json()->all();
 
-        $canceled = (bool) $this->getAndUnset($data, 'canceled', false);
-        if ($canceled) {
+        $cancel = (bool) $this->getAndUnset($data, 'cancel', false);
+        if ($cancel) {
             $data['canceled_at'] = Carbon::now();
         }
 

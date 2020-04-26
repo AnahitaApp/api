@@ -158,7 +158,7 @@ class Request extends BaseModelAbstract implements HasValidationRulesContract
                     'request_not_accepted',
                     'request_not_canceled',
                 ],
-                'canceled' => [
+                'cancel' => [
                     'boolean',
                 ],
                 'completed' => [
@@ -169,7 +169,7 @@ class Request extends BaseModelAbstract implements HasValidationRulesContract
                 self::VALIDATION_PREPEND_NOT_PRESENT => [
                     'accept',
                     'completed',
-                    'canceled',
+                    'cancel',
                 ],
                 self::VALIDATION_PREPEND_REQUIRED => [
                     'latitude',

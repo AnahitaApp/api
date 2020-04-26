@@ -27,7 +27,6 @@ class UserRequestIndexTest extends TestCase
         parent::setUp();
         $this->setupDatabase();
         $this->mockApplicationLog();
-        User::unsetEventDispatcher();
     }
 
     public function testNotLoggedInUserBlocked()
