@@ -9,6 +9,7 @@ use App\Models\User\User;
 use App\Repositories\Request\RequestedItemRepository;
 use App\Repositories\Request\RequestRepository;
 use App\Models\Request\Request;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Tests\DatabaseSetupTrait;
 use Tests\TestCase;
@@ -79,7 +80,6 @@ class RequestRepositoryTest extends TestCase
             'requested_by_id' => $user->id,
             'latitude' => 846,
             'longitude' => 235,
-            'completed' => true,
             'requested_items' => [
                 [
                     'name' => 'An Item',
@@ -94,20 +94,17 @@ class RequestRepositoryTest extends TestCase
         $this->assertEquals($model->requested_by_id, $user->id);
         $this->assertEquals(846, $model->latitude);
         $this->assertEquals(235, $model->longitude);
-        $this->assertEquals(true, $model->completed);
         $this->assertCount(2, $model->requestedItems);
     }
 
     public function testUpdateSuccess()
     {
-        $model = factory(Request::class)->create([
-            'completed' => true
-        ]);
+        $model = factory(Request::class)->create();
         $requestedItems = factory(RequestedItem::class, 3)->create([
             'request_id' => $model->id,
         ]);
         $this->repository->update($model, [
-            'completed' => false,
+            'completed_at' => Carbon::now(),
             'requested_items' => [
                 [
                     'id' => $requestedItems[2]->id,
@@ -121,7 +118,7 @@ class RequestRepositoryTest extends TestCase
 
         /** @var Request $updated */
         $updated = Request::find($model->id);
-        $this->assertEquals(false, $updated->completed);
+        $this->assertNotNull($updated->completed_at);
         $this->assertCount(2, $updated->requestedItems);
     }
 
