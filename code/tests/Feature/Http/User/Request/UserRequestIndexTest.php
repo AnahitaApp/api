@@ -75,8 +75,11 @@ class UserRequestIndexTest extends TestCase
         $this->actAsUser();
 
         factory(Request::class, 6)->create();
-        factory(Request::class, 15)->create([
+        factory(Request::class, 5)->create([
             'requested_by_id' => $this->actingAs->id,
+        ]);
+        factory(Request::class, 10)->create([
+            'completed_by_id' => $this->actingAs->id,
         ]);
 
         // first page

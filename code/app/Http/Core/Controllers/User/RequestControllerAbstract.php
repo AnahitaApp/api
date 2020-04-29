@@ -44,13 +44,18 @@ abstract class RequestControllerAbstract extends BaseControllerAbstract
      */
     public function index(Requests\User\Request\IndexRequest $request, User $user)
     {
-        $filters = $this->filter($request);
-        $filters[] = [
+        $search = $this->search($request);
+        $search[] = [
             'requested_by_id',
             '=',
             $user->id,
         ];
-        return $this->repository->findAll($filters, $this->search($request), $this->order($request), $this->expand($request), $this->limit($request), [], (int)$request->input('page', 1));
+        $search[] = [
+            'completed_by_id',
+            '=',
+            $user->id,
+        ];
+        return $this->repository->findAll($this->filter($request), $search, $this->order($request), $this->expand($request), $this->limit($request), [], (int)$request->input('page', 1));
     }
 
     /**
