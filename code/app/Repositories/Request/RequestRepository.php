@@ -98,6 +98,8 @@ class RequestRepository extends BaseRepositoryAbstract implements RequestReposit
         $query->whereRaw("$distanceFormula < $radius");
         $query->orderByRaw($distanceFormula);
 
+        $query->whereNull('completed_by_id');
+
         $query->groupBy('requests.id');
 
         return $query->paginate($limit, $columns = ['*'], $pageName = 'page', $page);
