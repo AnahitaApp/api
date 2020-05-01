@@ -99,6 +99,7 @@ class RequestRepository extends BaseRepositoryAbstract implements RequestReposit
         $query->orderByRaw($distanceFormula);
 
         $query->whereNull('completed_by_id');
+        $query->whereNull('canceled_at');
 
         $query->groupBy('requests.id');
 
