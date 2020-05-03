@@ -54,6 +54,7 @@ class RetrieveRequest extends BaseAuthenticatedRequestAbstract
     public function allowedExpands(): array
     {
         return [
+            'completedBy',
             'requestedBy',
             'assets',
             'requestedItems',
