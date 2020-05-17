@@ -4,28 +4,11 @@ declare(strict_types=1);
 namespace App\Contracts\Repositories\Request;
 
 use App\Contracts\Repositories\BaseRepositoryContract;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use App\Contracts\Repositories\HasLocationRepositoryContract;
 
 /**
  * Interface RequestRepositoryContract
  * @package App\Contracts\Repositories\Request
  */
-interface RequestRepositoryContract extends BaseRepositoryContract
-{
-    /**
-     * Finds all requests around a specific location
-     *
-     * @param float $latitude
-     * @param float $longitude
-     * @param float $radius in KM
-     * @param array $filters
-     * @param array $searches
-     * @param array $orderBy
-     * @param array $with
-     * @param int $limit
-     * @param array $belongsToArray
-     * @param int $page
-     * @return LengthAwarePaginator
-     */
-    public function findAllAroundLocation(float $latitude, float $longitude, float $radius, array $filters = [], array $searches = [], array $orderBy = [], array $with = [], $limit = 10, array $belongsToArray = [], int $page = 1): LengthAwarePaginator;
-}
+interface RequestRepositoryContract extends BaseRepositoryContract, HasLocationRepositoryContract
+{}

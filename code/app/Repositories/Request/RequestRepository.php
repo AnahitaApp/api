@@ -8,8 +8,8 @@ use App\Contracts\Repositories\Request\RequestRepositoryContract;
 use App\Models\BaseModelAbstract;
 use App\Models\Request\Request;
 use App\Repositories\BaseRepositoryAbstract;
+use App\Repositories\Traits\HasLocationTrait;
 use App\Traits\CanGetAndUnset;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Psr\Log\LoggerInterface as LogContract;
 
 /**
@@ -18,7 +18,7 @@ use Psr\Log\LoggerInterface as LogContract;
  */
 class RequestRepository extends BaseRepositoryAbstract implements RequestRepositoryContract
 {
-    use CanGetAndUnset;
+    use CanGetAndUnset, HasLocationTrait;
 
     /**
      * @var RequestedItemRepositoryContract
@@ -74,35 +74,5 @@ class RequestRepository extends BaseRepositoryAbstract implements RequestReposit
         }
 
         return parent::update($model, $data, $forcedValues);
-    }
-    /**
-     * Finds all requests around a specific location
-     *
-     * @param float $latitude
-     * @param float $longitude
-     * @param float $radius in KM
-     * @param array $filters
-     * @param array $searches
-     * @param array $orderBy
-     * @param array $with
-     * @param int $limit
-     * @param array $belongsToArray
-     * @param int $page
-     * @return LengthAwarePaginator
-     */
-    public function findAllAroundLocation(float $latitude, float $longitude, float $radius, array $filters = [], array $searches = [], array $orderBy = [], array $with = [], $limit = 10, array $belongsToArray = [], int $page = 1): LengthAwarePaginator
-    {
-        $query = parent::buildFindAllQuery($filters, $searches, $orderBy, $with, $belongsToArray);
-
-        $distanceFormula = "( 6371 * acos( cos( radians($latitude) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($longitude) ) + sin( radians($latitude) ) * sin(radians(latitude)) ) )";
-        $query->whereRaw("$distanceFormula < $radius");
-        $query->orderByRaw($distanceFormula);
-
-        $query->whereNull('completed_by_id');
-        $query->whereNull('canceled_at');
-
-        $query->groupBy('requests.id');
-
-        return $query->paginate($limit, $columns = ['*'], $pageName = 'page', $page);
     }
 }
