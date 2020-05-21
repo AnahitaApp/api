@@ -35,7 +35,7 @@ abstract class BaseAssetUploadRequestAbstract extends BaseAuthenticatedRequestAb
 
         if (isset($data['file_contents']) && is_string($data['file_contents']) && $this->decodedContents === null) {
 
-            $this->decodedContents = base64_decode($data['file_contents'], true);
+            $this->decodedContents = base64_decode($data['file_contents']);
 
             if ($this->decodedContents) {
 

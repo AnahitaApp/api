@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace App\Http\Core\Controllers;
 
 use App\Contracts\Repositories\User\UserRepositoryContract;
+use App\Events\User\SignUpEvent;
 use App\Models\User\User;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -45,16 +47,23 @@ abstract class AuthenticationControllerAbstract extends BaseControllerAbstract
     protected $auth;
 
     /**
+     * @var Dispatcher
+     */
+    protected $dispatcher;
+
+    /**
      * AuthenticationController constructor.
      * @param UserRepositoryContract $userRepository
      * @param Hasher $hasher
      * @param JWTAuth $auth
+     * @param Dispatcher $dispatcher
      */
-    public function __construct(UserRepositoryContract $userRepository, Hasher $hasher, JWTAuth $auth)
+    public function __construct(UserRepositoryContract $userRepository, Hasher $hasher, JWTAuth $auth, Dispatcher $dispatcher)
     {
         $this->userRepository = $userRepository;
         $this->hasher = $hasher;
         $this->auth = $auth;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -240,6 +249,8 @@ abstract class AuthenticationControllerAbstract extends BaseControllerAbstract
 
         /** @var User $model */
         $model = $this->userRepository->create($data, null, $forcedData);
+
+        $this->dispatcher->dispatch(new SignUpEvent($model));
 
         $token = $this->auth->fromUser($model);
         return new JsonResponse([

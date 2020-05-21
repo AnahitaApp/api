@@ -27,20 +27,6 @@ class BaseAssetUploadRequestAbstractTest extends TestCase
         $this->assertEquals($data['mime_type'], 'text/plain');
     }
 
-    public function testValidationDataSkipsMimeType()
-    {
-        /** @var BaseAssetUploadRequestAbstract $request */
-        $request = $this->getMockForAbstractClass(BaseAssetUploadRequestAbstract::class);
-
-        $request->replace([
-            'file_contents' => '<svg></svg>',
-        ]);
-
-        $data = callMethod($request, 'validationData');
-
-        $this->assertNull($data['mime_type']);
-    }
-
     public function testGetDecodedContentsThrowsException()
     {
         $this->expectException(RuntimeException::class);

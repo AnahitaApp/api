@@ -44,12 +44,8 @@ class SearchFilterParsingMiddleware
 
                     if (is_array($searchTermContainer)) {
 
-                        if (!isset($cleanedSearch[$key])) {
-                            $cleanedSearch[$key] = [];
-                        }
-
                         foreach ($searchTermContainer as $individualSearch) {
-                            $cleanedSearch[$key] = $this->processQueryEntry($cleanedSearch[$key], $key, $individualSearch, );
+                            $cleanedSearch = $this->processQueryEntry($cleanedSearch, $key, $individualSearch);
                         }
                     } else {
 

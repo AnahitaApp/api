@@ -1,9 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Feature\Http\Authentication;
+namespace Tests\Feature\Http\V2\Authentication;
 
+use App\Events\User\SignUpEvent;
 use App\Models\User\User;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Support\Facades\Hash;
 use Tests\DatabaseSetupTrait;
 use Tests\TestCase;
@@ -11,7 +13,7 @@ use Tests\Traits\MocksApplicationLog;
 
 /**
  * Class UserSignUpTest
- * @package Tests\Feature\Http\Authentication
+ * @package Tests\Feature\Http\V2\Authentication
  */
 class SignUpTest extends TestCase
 {
@@ -26,10 +28,25 @@ class SignUpTest extends TestCase
 
     public function testSuccess()
     {
+        $dispatcher = mock(Dispatcher::class);
+
+        $signUpEventHit = false;
+
+        $dispatcher->shouldReceive('dispatch')->with(\Mockery::on(function ($event) use (&$signUpEventHit) {
+            if ($event instanceof SignUpEvent) {
+                $signUpEventHit = true;
+            }
+            return true;
+        }));
+
+        $this->app->bind(Dispatcher::class, function () use ($dispatcher) {
+            return $dispatcher;
+        });
+
         $properties = [
-            'email' => 'test@test.com',
-            'name' => 'Jerry McGuire',
-            'password' => 'password',
+            'email' => 'guy@smiley.com',
+            'name' => 'Steve',
+            'password' => 'complex!'
         ];
 
         $response = $this->json('POST', '/v1/auth/sign-up', $properties);
@@ -39,6 +56,8 @@ class SignUpTest extends TestCase
             'token'
         ]);
         $token = $response->json('token');
+
+        $this->assertTrue($signUpEventHit);
 
         $this->actingAs = null;
 
@@ -55,7 +74,7 @@ class SignUpTest extends TestCase
 
         $this->assertEquals($properties, [
             'email' => $model->email,
-            'name' => 'Jerry McGuire',
+            'name' => $model->name,
         ]);
 
         $this->assertTrue(Hash::check($password, $model->password));
