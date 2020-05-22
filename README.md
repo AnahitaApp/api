@@ -30,4 +30,4 @@ Following these steps should at all times keep the most recent version of routes
 
 ## Parent Project
 
-This project is based on Athenia core 0.31.0
+This project is based on Athenia core 0.32.0

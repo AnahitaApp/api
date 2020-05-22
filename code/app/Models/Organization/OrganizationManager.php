@@ -3,9 +3,11 @@ declare(strict_types=1);
 
 namespace App\Models\Organization;
 
+use App\Contracts\Models\BelongsToOrganizationContract;
 use App\Contracts\Models\HasValidationRulesContract;
 use App\Models\BaseModelAbstract;
 use App\Models\Role;
+use App\Models\Traits\BelongsToOrganization;
 use App\Models\Traits\HasValidationRules;
 use App\Models\User\User;
 use Eloquent;
@@ -41,19 +43,9 @@ use Illuminate\Validation\Rule;
  * @method static Builder|OrganizationManager whereUserId($value)
  * @mixin Eloquent
  */
-class OrganizationManager extends BaseModelAbstract implements HasValidationRulesContract
+class OrganizationManager extends BaseModelAbstract implements HasValidationRulesContract, BelongsToOrganizationContract
 {
-    use HasValidationRules;
-
-    /**
-     * The related organization
-     *
-     * @return BelongsTo
-     */
-    public function organization(): BelongsTo
-    {
-        return $this->belongsTo(Organization::class);
-    }
+    use HasValidationRules, BelongsToOrganization;
 
     /**
      * The related organization
