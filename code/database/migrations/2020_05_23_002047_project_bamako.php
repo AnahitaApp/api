@@ -34,6 +34,22 @@ class ProjectBamako extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+        Schema::table('requests', function (Blueprint $table) {
+            $table->unsignedInteger('location_id')->nullable();
+            $table->foreign('location_id')->references('id')->on('locations');
+        });
+        Schema::table('requested_items', function (Blueprint $table) {
+            $table->unsignedInteger('location_id')->nullable();
+            $table->foreign('location_id')->references('id')->on('locations');
+            $table->unsignedInteger('parent_requested_item_id')->nullable();
+            $table->foreign('parent_requested_item_id')->references('id')->on('requested_items');
+            $table->integer('available_quantity')->nullable();
+        });
+        Schema::table('assets', function (Blueprint $table) {
+            $table->dropForeign('assets_user_id_foreign');
+            $table->renameColumn('user_id', 'owner_id');
+            $table->string('owner_type')->default('user');
+        });
     }
 
     /**
@@ -43,6 +59,17 @@ class ProjectBamako extends Migration
      */
     public function down()
     {
+        Schema::table('requests', function (Blueprint $table) {
+            $table->dropForeign('requests_location_id_foreign');
+            $table->dropColumn('location_id');
+        });
+        Schema::table('requested_items', function (Blueprint $table) {
+            $table->dropForeign('requested_items_location_id_foreign');
+            $table->dropColumn('location_id');
+            $table->dropForeign('requested_items_parent_requested_item_id_foreign');
+            $table->dropColumn('parent_requested_item_id');
+            $table->dropColumn('available_quantity');
+        });
         Schema::dropIfExists('locations');
     }
 }
