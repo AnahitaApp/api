@@ -33,6 +33,15 @@ class RequestTest extends TestCase
         $this->assertEquals('requests.completed_by_id', $relation->getQualifiedForeignKeyName());
     }
 
+    public function testLocation()
+    {
+        $model = new Request();
+        $relation = $model->location();
+
+        $this->assertEquals('locations.id', $relation->getQualifiedOwnerKeyName());
+        $this->assertEquals('requests.location_id', $relation->getQualifiedForeignKeyName());
+    }
+
     public function testRequestedBy()
     {
         $model = new Request();

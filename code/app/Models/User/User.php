@@ -32,6 +32,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Contracts\Models\HasPolicyContract;
 use App\Models\BaseModelAbstract;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Validation\Rule;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -134,11 +135,11 @@ class User extends BaseModelAbstract
     /**
      * All assets this user has created
      *
-     * @return HasMany
+     * @return MorphMany
      */
-    public function assets(): HasMany
+    public function assets(): MorphMany
     {
-        return $this->hasMany(Asset::class, 'owner_id');
+        return $this->morphMany(Asset::class, 'owner');
     }
 
     /**

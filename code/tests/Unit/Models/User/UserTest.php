@@ -25,7 +25,7 @@ class UserTest extends TestCase
         $relation = $user->assets();
 
         $this->assertEquals('users.id', $relation->getQualifiedParentKeyName());
-        $this->assertEquals('assets.user_id', $relation->getQualifiedForeignKeyName());
+        $this->assertEquals('assets.owner_id', $relation->getQualifiedForeignKeyName());
     }
 
     public function testBallotCompletions()

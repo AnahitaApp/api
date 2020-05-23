@@ -12,12 +12,11 @@ use Tests\TestCase;
  */
 class AssetTest extends TestCase
 {
-    public function testUser()
+    public function testOwner()
     {
         $model = new Asset();
-        $relation = $model->user();
+        $relation = $model->owner();
 
-        $this->assertEquals('users.id', $relation->getQualifiedOwnerKeyName());
-        $this->assertEquals('assets.user_id', $relation->getQualifiedForeignKeyName());
+        $this->assertEquals('assets.owner_id', $relation->getQualifiedForeignKeyName());
     }
 }

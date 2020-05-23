@@ -21,6 +21,15 @@ class RequestedItemTest extends TestCase
         $this->assertEquals('requested_items.asset_id', $relation->getQualifiedForeignKeyName());
     }
 
+    public function testLocation()
+    {
+        $model = new RequestedItem();
+        $relation = $model->location();
+
+        $this->assertEquals('locations.id', $relation->getQualifiedOwnerKeyName());
+        $this->assertEquals('requested_items.location_id', $relation->getQualifiedForeignKeyName());
+    }
+
     public function testRequest()
     {
         $model = new RequestedItem();

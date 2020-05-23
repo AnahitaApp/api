@@ -3,27 +3,20 @@ declare(strict_types=1);
 
 namespace App\Models\Organization;
 
+use App\Contracts\Models\BelongsToOrganizationContract;
 use App\Models\BaseModelAbstract;
 use App\Models\Request\Request;
 use App\Models\Request\RequestedItem;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Traits\BelongsToOrganization;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class Location
  * @package App\Models\Organization
  */
-class Location extends BaseModelAbstract
+class Location extends BaseModelAbstract implements BelongsToOrganizationContract
 {
-    /**
-     * The organization this location belongs to
-     *
-     * @return BelongsTo
-     */
-    public function organization(): BelongsTo
-    {
-        return $this->belongsTo(Organization::class);
-    }
+    use BelongsToOrganization;
 
     /**
      * The request that have been made to this location

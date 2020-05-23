@@ -12,6 +12,15 @@ use Tests\TestCase;
  */
 class OrganizationTest extends TestCase
 {
+    public function testLocations()
+    {
+        $user = new Organization();
+        $relation = $user->locations();
+
+        $this->assertEquals('organizations.id', $relation->getQualifiedParentKeyName());
+        $this->assertEquals('locations.organization_id', $relation->getQualifiedForeignKeyName());
+    }
+
     public function testOrganizationManagers()
     {
         $user = new Organization();
