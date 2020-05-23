@@ -38,6 +38,16 @@ class Organization extends BaseModelAbstract implements HasValidationRulesContra
     use HasValidationRules;
 
     /**
+     * All locations in this organization
+     *
+     * @return HasMany
+     */
+    public function locations(): HasMany
+    {
+        return $this->hasMany(Location::class);
+    }
+
+    /**
      * All organization managers in this organization
      *
      * @return HasMany

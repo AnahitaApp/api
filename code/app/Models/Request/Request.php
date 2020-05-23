@@ -6,6 +6,7 @@ namespace App\Models\Request;
 use App\Contracts\Models\HasValidationRulesContract;
 use App\Models\Asset;
 use App\Models\BaseModelAbstract;
+use App\Models\Organization\Location;
 use App\Models\Traits\HasValidationRules;
 use App\Models\User\User;
 use Eloquent;
@@ -89,6 +90,16 @@ class Request extends BaseModelAbstract implements HasValidationRulesContract
     public function completedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'completed_by_id');
+    }
+
+    /**
+     * The location this request belongs to
+     *
+     * @return BelongsTo
+     */
+    public function location(): BelongsTo
+    {
+        return $this->belongsTo(Location::class);
     }
 
     /**

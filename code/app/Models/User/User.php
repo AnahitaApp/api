@@ -138,7 +138,7 @@ class User extends BaseModelAbstract
      */
     public function assets(): HasMany
     {
-        return $this->hasMany(Asset::class);
+        return $this->hasMany(Asset::class, 'owner_id');
     }
 
     /**

@@ -53,9 +53,9 @@ class Asset extends BaseModelAbstract implements HasValidationRulesContract
      *
      * @return BelongsTo
      */
-    public function user()
+    public function owner()
     {
-        return $this->belongsTo(User::class);
+        return $this->morphTo();
     }
 
     /**

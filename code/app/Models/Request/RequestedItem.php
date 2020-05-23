@@ -5,6 +5,7 @@ namespace App\Models\Request;
 
 use App\Models\Asset;
 use App\Models\BaseModelAbstract;
+use App\Models\Organization\Location;
 use Eloquent;
 use Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder;
 use Illuminate\Database\Eloquent\Builder;
@@ -46,6 +47,16 @@ class RequestedItem extends BaseModelAbstract
     public function asset(): BelongsTo
     {
         return $this->belongsTo(Asset::class);
+    }
+
+    /**
+     * The location this requested item is available at if any
+     *
+     * @return BelongsTo
+     */
+    public function location(): BelongsTo
+    {
+        return $this->belongsTo(Location::class);
     }
 
     /**
