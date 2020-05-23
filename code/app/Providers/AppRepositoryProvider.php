@@ -3,14 +3,17 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Contracts\Repositories\Organization\LocationRepositoryContract;
 use App\Contracts\Repositories\Request\RequestedItemRepositoryContract;
 use App\Contracts\Repositories\Request\RequestRepositoryContract;
 use App\Contracts\Repositories\Request\SafetyReportRepositoryContract;
 use App\Contracts\Repositories\User\IdentificationCardRepositoryContract;
+use App\Models\Organization\Location;
 use App\Models\Request\Request;
 use App\Models\Request\RequestedItem;
 use App\Models\Request\SafetyReport;
 use App\Models\User\IdentificationCard;
+use App\Repositories\Organization\LocationRepository;
 use App\Repositories\Request\RequestedItemRepository;
 use App\Repositories\Request\RequestRepository;
 use App\Repositories\Request\SafetyReportRepository;
@@ -31,6 +34,7 @@ class AppRepositoryProvider extends AtheniaRepositoryProvider
     {
         return [
             IdentificationCardRepositoryContract::class,
+            LocationRepositoryContract::class,
             RequestRepositoryContract::class,
             RequestedItemRepositoryContract::class,
             SafetyReportRepositoryContract::class,
@@ -61,6 +65,12 @@ class AppRepositoryProvider extends AtheniaRepositoryProvider
                 $this->app->make('filesystem')->disk('local'),
                 storage_path(),
                 "identification"
+            );
+        });
+        $this->app->bind(LocationRepositoryContract::class, function() {
+            return new LocationRepository(
+                new Location(),
+                $this->app->make('log'),
             );
         });
         $this->app->bind(RequestRepositoryContract::class, function() {

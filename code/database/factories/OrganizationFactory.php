@@ -14,3 +14,12 @@ $factory->define(App\Models\Organization\OrganizationManager::class, function (F
         'role_id' => \App\Models\Role::ORGANIZATION_ADMIN,
     ];
 });
+$factory->define(App\Models\Organization\Location::class, function (Faker $faker) {
+    return [
+        'organization_id' => factory(App\Models\Organization\Organization::class)->create()->id,
+        'name' => $faker->name,
+        'address_line_1' => $faker->address,
+        'city' => $faker->city,
+        'country' => $faker->country,
+    ];
+});

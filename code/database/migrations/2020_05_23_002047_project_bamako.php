@@ -28,8 +28,8 @@ class ProjectBamako extends Migration
             $table->string('region')->nullable();
             $table->string('country');
 
-            $table->float('latitude');
-            $table->float('longitude');
+            $table->float('latitude')->nullable();
+            $table->float('longitude')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
