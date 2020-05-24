@@ -4,19 +4,21 @@ declare(strict_types=1);
 namespace App\Models\Organization;
 
 use App\Contracts\Models\BelongsToOrganizationContract;
+use App\Contracts\Models\HasValidationRulesContract;
 use App\Models\BaseModelAbstract;
 use App\Models\Request\Request;
 use App\Models\Request\RequestedItem;
 use App\Models\Traits\BelongsToOrganization;
+use App\Models\Traits\HasValidationRules;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class Location
  * @package App\Models\Organization
  */
-class Location extends BaseModelAbstract implements BelongsToOrganizationContract
+class Location extends BaseModelAbstract implements BelongsToOrganizationContract, HasValidationRulesContract
 {
-    use BelongsToOrganization;
+    use BelongsToOrganization, HasValidationRules;
 
     /**
      * The request that have been made to this location
@@ -36,5 +38,15 @@ class Location extends BaseModelAbstract implements BelongsToOrganizationContrac
     public function requestedItems(): HasMany
     {
         return $this->hasMany(RequestedItem::class);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function buildModelValidationRules(...$params): array
+    {
+        return [
+            static::VALIDATION_RULES_BASE => []
+        ];
     }
 }
