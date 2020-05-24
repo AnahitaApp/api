@@ -46,7 +46,46 @@ class Location extends BaseModelAbstract implements BelongsToOrganizationContrac
     public function buildModelValidationRules(...$params): array
     {
         return [
-            static::VALIDATION_RULES_BASE => []
+            static::VALIDATION_RULES_BASE => [
+                'name' => [
+                    'string',
+                ],
+                'address_line_1' => [
+                    'string',
+                ],
+                'address_line_2' => [
+                    'string',
+                    'nullable',
+                ],
+                'city' => [
+                    'string',
+                ],
+                'postal_code' => [
+                    'string',
+                    'nullable',
+                ],
+                'region' => [
+                    'string',
+                    'nullable',
+                ],
+                'country' => [
+                    'string',
+                ],
+                'latitude' => [
+                    'not_present',
+                ],
+                'longitude' => [
+                    'not_present',
+                ],
+            ],
+            static::VALIDATION_RULES_UPDATE => [
+                static::VALIDATION_PREPEND_REQUIRED => [
+                    'name',
+                    'address_line_1',
+                    'city',
+                    'country',
+                ],
+            ],
         ];
     }
 }
