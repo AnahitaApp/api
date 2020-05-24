@@ -40,7 +40,7 @@ class AssetPolicy extends BasePolicyAbstract
      */
     public function update(User $loggedInUser, User $requestedUser, Asset $asset)
     {
-        return $loggedInUser->id == $requestedUser->id && $asset->user_id == $loggedInUser->id;
+        return $loggedInUser->id == $requestedUser->id && $asset->owner_type == 'user' && $asset->owner_id == $loggedInUser->id;
     }
 
     /**
@@ -51,6 +51,6 @@ class AssetPolicy extends BasePolicyAbstract
      */
     public function delete(User $loggedInUser, User $requestedUser, Asset $asset)
     {
-        return $loggedInUser->id == $requestedUser->id && $asset->user_id == $loggedInUser->id;
+        return $loggedInUser->id == $requestedUser->id && $asset->owner_type == 'user' && $asset->owner_id == $loggedInUser->id;
     }
 }

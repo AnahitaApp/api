@@ -42,7 +42,8 @@ class UserAssetUpdateTest extends TestCase
     public function testNotLoggedInUserBlocked()
     {
         $asset = factory(Asset::class)->create([
-            'user_id' => $this->user->id,
+            'owner_id' => $this->user->id,
+            'owner_type' => 'user',
         ]);
         $response = $this->json('PATCH', $this->path . $asset->id);
 
@@ -53,7 +54,8 @@ class UserAssetUpdateTest extends TestCase
     {
         $this->actAs(Role::APP_USER);
         $asset = factory(Asset::class)->create([
-            'user_id' => $this->user->id,
+            'owner_id' => $this->user->id,
+            'owner_type' => 'user',
         ]);
         $response = $this->json('PATCH', $this->path . $asset->id);
 
@@ -73,7 +75,8 @@ class UserAssetUpdateTest extends TestCase
     {
         $this->actingAs($this->user);
         $asset = factory(Asset::class)->create([
-            'user_id' => $this->user->id,
+            'owner_id' => $this->user->id,
+            'owner_type' => 'user',
             'name' => 'A Name',
         ]);
         $response = $this->json('PATCH', $this->path . $asset->id, [
@@ -90,8 +93,8 @@ class UserAssetUpdateTest extends TestCase
     {
         $this->actingAs($this->user);
         $asset = factory(Asset::class)->create([
-            'user_id' => $this->user->id,
-            'name' => 'A Name',
+            'owner_id' => $this->user->id,
+            'owner_type' => 'user',
         ]);
         $response = $this->json('PATCH', $this->path . $asset->id, [
             'file_contents' => 'regoijer',
@@ -109,7 +112,8 @@ class UserAssetUpdateTest extends TestCase
     {
         $this->actingAs($this->user);
         $asset = factory(Asset::class)->create([
-            'user_id' => $this->user->id,
+            'owner_id' => $this->user->id,
+            'owner_type' => 'user',
         ]);
         $response = $this->json('PATCH', $this->path . $asset->id, [
             'name' => 45,

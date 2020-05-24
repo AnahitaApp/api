@@ -62,7 +62,7 @@ class AssetPolicyTest extends TestCase
         $loggedInUser = factory(User::class)->create();
         $requestedUser = factory(User::class)->create();
         $asset = factory(Asset::class)->create([
-            'user_id' => $loggedInUser->id,
+            'owner_id' => $loggedInUser->id,
         ]);
 
         $this->assertFalse($policy->update($loggedInUser, $requestedUser, $asset));
@@ -84,7 +84,8 @@ class AssetPolicyTest extends TestCase
 
         $user = factory(User::class)->create();
         $asset = factory(Asset::class)->create([
-            'user_id' => $user->id,
+            'owner_id' => $user->id,
+            'owner_type' => 'user',
         ]);
 
         $this->assertTrue($policy->update($user, $user, $asset));
@@ -97,7 +98,8 @@ class AssetPolicyTest extends TestCase
         $loggedInUser = factory(User::class)->create();
         $requestedUser = factory(User::class)->create();
         $asset = factory(Asset::class)->create([
-            'user_id' => $loggedInUser->id,
+            'owner_id' => $loggedInUser->id,
+            'owner_type' => 'user',
         ]);
 
         $this->assertFalse($policy->delete($loggedInUser, $requestedUser, $asset));
@@ -119,7 +121,8 @@ class AssetPolicyTest extends TestCase
 
         $user = factory(User::class)->create();
         $asset = factory(Asset::class)->create([
-            'user_id' => $user->id,
+            'owner_id' => $user->id,
+            'owner_type' => 'user',
         ]);
 
         $this->assertTrue($policy->delete($user, $user, $asset));

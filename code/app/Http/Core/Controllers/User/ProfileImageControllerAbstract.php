@@ -100,7 +100,8 @@ abstract class ProfileImageControllerAbstract extends BaseControllerAbstract
         $data['file_contents'] = $request->getDecodedContents();
         $data['file_extension'] = $this->mimeTypes->getExtension($request->getFileMimeType());
 
-        $data['user_id'] = $user->id;
+        $data['owner_id'] = $user->id;
+        $data['owner_type'] = 'user';
 
         $model = $this->repository->create($data, $user);
         return new JsonResponse($model, 201);

@@ -78,6 +78,7 @@ class StripePaymentServiceTest extends TestCase
         $user = new User([
             'stripe_customer_key' => 'cus_test'
         ]);
+        $user->id = 436;
         $paymentMethod = new PaymentMethod([
             'payment_method_key' => 'card_test',
         ]);
@@ -101,6 +102,7 @@ class StripePaymentServiceTest extends TestCase
 
         $this->paymentRepository->shouldReceive('create')->once()->with([
             'amount' => 35.00,
+            'user_id' => 436,
             'transaction_key' => 'tx_wegio',
             'line_items' => [[
                 'item_id' => 423,
@@ -121,6 +123,7 @@ class StripePaymentServiceTest extends TestCase
     public function testCreatePaymentWithZeroCost()
     {
         $user = new User();
+        $user->id = 436;
         $paymentMethod = new PaymentMethod();
         $payment = new Payment([
             'amount' => 0.00,
@@ -128,6 +131,7 @@ class StripePaymentServiceTest extends TestCase
 
         $this->paymentRepository->shouldReceive('create')->once()->with([
             'amount' => 0,
+            'user_id' => 436,
             'line_items' => [[
                 'item_id' => 423,
                 'item_type' => 'subscription',
@@ -181,7 +185,7 @@ class StripePaymentServiceTest extends TestCase
 
                 return true;
             })
-        );
+            );
         $this->lineItemRepository->shouldReceive('create')->once();
         $this->refundHandler->shouldReceive('create')->once()->with('test_key');
         $this->dispatcher->shouldReceive('dispatch')->once()
@@ -190,7 +194,7 @@ class StripePaymentServiceTest extends TestCase
 
                 return true;
             })
-        );
+            );
 
         $this->service->reversePayment($payment);
     }

@@ -64,7 +64,7 @@ class UserAssetCreateTest extends TestCase
         Storage::disk('public')->assertExists(str_replace(config('app.asset_url'), '', $asset->url));
 
         $this->assertEquals('An Asset', $asset->name);
-        $this->assertEquals($asset->user_id, $this->user->id);
+        $this->assertEquals($asset->owner_id, $this->user->id);
     }
 
     public function testCreateFailsRequiredFieldsMissing()

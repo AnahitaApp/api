@@ -77,7 +77,12 @@ class UserAssetIndexTest extends TestCase
 
         factory(Asset::class, 6)->create();
         factory(Asset::class, 15)->create([
-            'user_id' => $this->actingAs->id,
+            'owner_id' => $this->actingAs->id,
+            'owner_type' => 'user',
+        ]);
+        factory(Asset::class, 3)->create([
+            'owner_id' => $this->actingAs->id,
+            'owner_type' => 'organization',
         ]);
 
         // first page

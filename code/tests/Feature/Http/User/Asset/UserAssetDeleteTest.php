@@ -40,7 +40,8 @@ class UserAssetDeleteTest extends TestCase
     public function testNotLoggedInUserBlocked()
     {
         $asset = factory(Asset::class)->create([
-            'user_id' => $this->user->id,
+            'owner_id' => $this->user->id,
+            'owner_type' => 'user',
         ]);
         $response = $this->json('DELETE', $this->path . $asset->id);
 
@@ -50,7 +51,8 @@ class UserAssetDeleteTest extends TestCase
     public function testIncorrectUserBlocked()
     {
         $asset = factory(Asset::class)->create([
-            'user_id' => $this->user->id,
+            'owner_id' => $this->user->id,
+            'owner_type' => 'user',
         ]);
 
         $this->actAsUser();
@@ -74,7 +76,8 @@ class UserAssetDeleteTest extends TestCase
     public function testDeleteSuccessful()
     {
         $asset = factory(Asset::class)->create([
-            'user_id' => $this->user->id,
+            'owner_id' => $this->user->id,
+            'owner_type' => 'user',
         ]);
 
         $this->actingAs($this->user);

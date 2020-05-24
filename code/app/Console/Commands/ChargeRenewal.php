@@ -14,6 +14,7 @@ use Cartalyst\Stripe\Exception\NotFoundException;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Config\Repository;
+use Illuminate\Support\Str;
 
 /**
  * Class ChargeRenewal
@@ -141,12 +142,15 @@ class ChargeRenewal extends Command
      */
     public function handle()
     {
+        $tomorrow = Carbon::now()->addDay();
         /** @var Subscription $subscription */
         foreach ($this->subscriptionRepository->findExpiring(Carbon::now()) as $subscription) {
-            if ($subscription->recurring) {
-                $this->chargeRecurring($subscription);
-            } else {
-                $this->sendExpirationEmail($subscription);
+            if (!$subscription->subscriber->currentSubscription($tomorrow)) {
+                if ($subscription->recurring) {
+                    $this->chargeRecurring($subscription);
+                } else {
+                    $this->sendExpirationEmail($subscription);
+                }
             }
         }
     }
@@ -166,7 +170,7 @@ class ChargeRenewal extends Command
         $this->sendSubscriberEmail($subscription, $this->appName . ' Membership Successfully Renewed', 'membership-renewed', [
             'membership_name' => $updatedSubscription->membershipPlanRate->membershipPlan->name,
             'membership_cost' => $updatedSubscription->formatted_cost,
-            'expiration_date' => $updatedSubscription->formatted_expires_at . ' ' . $updatedSubscription->expires_at->format('Y'),
+            'expiration_date' => $updatedSubscription->formatted_expires_at,
         ]);
     }
 
@@ -202,6 +206,9 @@ class ChargeRenewal extends Command
      */
     public function sendFailureEmail(Subscription $subscription, string $reason)
     {
+        if (!Str::endsWith($reason, '.')) {
+            $reason.= '.';
+        }
         $this->sendSubscriberEmail($subscription, $this->appName . ' Membership Renewal Failed', 'membership-renewal-failure', [
             'membership_name' => $subscription->membershipPlanRate->membershipPlan->name,
             'reason' => $reason,

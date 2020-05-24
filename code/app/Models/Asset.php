@@ -18,7 +18,8 @@ use Illuminate\Validation\Rule;
  *
  * @package App\Models
  * @property int $id
- * @property int|null $user_id
+ * @property int|null $owner_id
+ * @property string $owner_type
  * @property string $url
  * @property string|null $name
  * @property string|null $caption

@@ -29,6 +29,9 @@ abstract class AssetControllerAbstract extends BaseControllerAbstract
      */
     private $repository;
 
+    /**
+     * @var MimeTypes
+     */
     private $mimeTypes;
 
     /**
@@ -51,7 +54,20 @@ abstract class AssetControllerAbstract extends BaseControllerAbstract
      */
     public function index(Requests\User\Asset\IndexRequest $request, User $user)
     {
-        return $this->repository->findAll($this->filter($request), $this->search($request), $this->expand($request), $this->order($request), $this->limit($request), [$user], (int)$request->input('page', 1));
+        $filter = $this->filter($request);
+
+        $filter[] = [
+            'owner_id',
+            '=',
+            $user->id,
+        ];
+        $filter[] = [
+            'owner_type',
+            '=',
+            'user',
+        ];
+
+        return $this->repository->findAll($filter, $this->search($request), $this->expand($request), $this->order($request), $this->limit($request), [], (int)$request->input('page', 1));
     }
 
     /**
@@ -68,7 +84,10 @@ abstract class AssetControllerAbstract extends BaseControllerAbstract
         $data['file_contents'] = $request->getDecodedContents();
         $data['file_extension'] = $this->mimeTypes->getExtension($request->getFileMimeType());
 
-        $model = $this->repository->create($data, $user);
+        $data['owner_id'] = $user->id;
+        $data['owner_type'] = 'user';
+
+        $model = $this->repository->create($data);
         return new JsonResponse($model, 201);
     }
 
