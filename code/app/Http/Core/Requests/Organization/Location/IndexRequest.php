@@ -45,7 +45,7 @@ class IndexRequest extends BaseAuthenticatedRequestAbstract
     protected function getPolicyParameters(): array
     {
         return [
-            $this->route('location'),
+            $this->route('organization'),
         ];
     }
 }
