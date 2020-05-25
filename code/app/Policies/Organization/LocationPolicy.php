@@ -10,4 +10,9 @@ use App\Policies\BaseBelongsToOrganizationPolicyAbstract;
  * @package App\Policies\Organization
  */
 class LocationPolicy extends BaseBelongsToOrganizationPolicyAbstract
-{}
+{
+    /**
+     * @var bool
+     */
+    protected bool $requiresAdminForManagement = true;
+}

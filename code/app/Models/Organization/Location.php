@@ -78,7 +78,7 @@ class Location extends BaseModelAbstract implements BelongsToOrganizationContrac
                     'not_present',
                 ],
             ],
-            static::VALIDATION_RULES_UPDATE => [
+            static::VALIDATION_RULES_CREATE => [
                 static::VALIDATION_PREPEND_REQUIRED => [
                     'name',
                     'address_line_1',
