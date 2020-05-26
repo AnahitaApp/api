@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Models\Organization\Location;
 use App\Models\Organization\Organization;
 use App\Models\Organization\OrganizationManager;
 use App\Models\Payment\PaymentMethod;
@@ -37,6 +38,7 @@ class RouteServiceProvider extends ServiceProvider
         'subscription' => Subscription::class,
         'user' => User::class,
 
+        'location' => Location::class,
         'request' => Request::class,
         'safety_report' => SafetyReport::class,
     ];
