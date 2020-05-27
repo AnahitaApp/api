@@ -20,28 +20,11 @@ class LocationPolicyTest extends TestCase
 {
     use DatabaseSetupTrait;
 
-    public function testAllBlocksWhenNotOrganizationManager()
+    public function testAllPasses()
     {
         $policy = new LocationPolicy();
-        $organization = factory(Organization::class)->create();
-        $user = factory(User::class)->create();
 
-        $this->assertFalse($policy->all($user, $organization));
-    }
-
-    public function testAllPassesForOrganizationManager()
-    {
-        $policy = new LocationPolicy();
-        $organization = factory(Organization::class)->create();
-        $user = factory(User::class)->create();
-
-        factory(OrganizationManager::class)->create([
-            'organization_id' => $organization->id,
-            'user_id' => $user->id,
-            'role_id' => Role::ORGANIZATION_MANAGER,
-        ]);
-
-        $this->assertTrue($policy->all($user, $organization));
+        $this->assertTrue($policy->all(new User(), new Organization()));
     }
 
     public function testCreateBlocksWhenNotOrganizationManager()
