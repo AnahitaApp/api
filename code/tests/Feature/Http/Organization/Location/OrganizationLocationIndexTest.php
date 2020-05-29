@@ -50,27 +50,10 @@ class OrganizationLocationIndexTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function testNonAdminUsersBlocked()
-    {
-        foreach ($this->rolesWithoutAdmins() as $role) {
-            $this->actAs($role);
-            $organization = factory(Organization::class)->create();
-            $this->setupRoute($organization->id);
-            $response = $this->json('GET', $this->route);
-
-            $response->assertStatus(403);
-        }
-    }
-
     public function testGetPaginationResult()
     {
-        $this->actAs(Role::ORGANIZATION_MANAGER);
+        $this->actAs(Role::APP_USER);
         $organization = factory(Organization::class)->create();
-        factory(OrganizationManager::class)->create([
-            'organization_id' => $organization->id,
-            'user_id' => $this->actingAs->id,
-            'role_id' => Role::ORGANIZATION_MANAGER,
-        ]);
         $this->setupRoute($organization->id);
         factory(Location::class, 15)->create([
             'organization_id' => $organization->id,
