@@ -25,7 +25,7 @@ class LocationPolicy extends BaseBelongsToOrganizationPolicyAbstract
      * @param Organization $organization
      * @return bool
      */
-    public function all(User $user, Organization $organization)
+    public function all(User $user, ?Organization $organization = null)
     {
         return true;
     }

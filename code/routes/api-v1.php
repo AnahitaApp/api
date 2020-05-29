@@ -26,10 +26,19 @@ Route::group(['prefix' => 'v1', 'as' => 'v1.'], function() {
      */
     Route::group(['middleware' => 'jwt.auth.protected'], function() {
         // Add protected routes below
+
+        /**
+         * Location Context
+         */
+        Route::resource('locations', 'LocationController', [
+            'only' => [
+                'index',
+            ]
+        ]);
+
         /**
          * Organization Context
          */
-
         Route::group(['prefix' => 'organizations/{organization}', 'as' => 'request.'], function () {
             Route::resource('locations', 'Organization\LocationController', [
                 'except' => [
@@ -37,6 +46,7 @@ Route::group(['prefix' => 'v1', 'as' => 'v1.'], function() {
                 ]
             ]);
         });
+
         /**
          * Request Context
          */

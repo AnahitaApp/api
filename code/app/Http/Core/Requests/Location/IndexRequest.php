@@ -5,6 +5,7 @@ namespace App\Http\Core\Requests\Location;
 
 use App\Http\Core\Requests\BaseAuthenticatedRequestAbstract;
 use App\Http\Core\Requests\Traits\HasNoPolicyParameters;
+use App\Http\Core\Requests\Traits\HasNoRules;
 use App\Models\Organization\Location;
 use App\Policies\Organization\LocationPolicy;
 
@@ -14,7 +15,7 @@ use App\Policies\Organization\LocationPolicy;
  */
 class IndexRequest extends BaseAuthenticatedRequestAbstract
 {
-    use HasNoPolicyParameters;
+    use HasNoPolicyParameters, HasNoRules;
 
     /**
      * @inheritDoc
