@@ -35,11 +35,18 @@ Route::group(['prefix' => 'v1', 'as' => 'v1.'], function() {
                 'index',
             ]
         ]);
+        Route::group(['prefix' => 'locations/{location}', 'as' => 'location.'], function () {
+            Route::resource('requested-items', 'Location\RequestedItemController', [
+                'except' => [
+                    'create', 'edit', 'show',
+                ]
+            ]);
+        });
 
         /**
          * Organization Context
          */
-        Route::group(['prefix' => 'organizations/{organization}', 'as' => 'request.'], function () {
+        Route::group(['prefix' => 'organizations/{organization}', 'as' => 'organization.'], function () {
             Route::resource('locations', 'Organization\LocationController', [
                 'except' => [
                     'create', 'edit', 'show',

@@ -3,14 +3,17 @@ declare(strict_types=1);
 
 namespace App\Models\Request;
 
+use App\Contracts\Models\HasValidationRulesContract;
 use App\Models\Asset;
 use App\Models\BaseModelAbstract;
 use App\Models\Organization\Location;
+use App\Models\Traits\HasValidationRules;
 use Eloquent;
 use Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
+use Illuminate\Validation\Rule;
 
 /**
  * Class RequestedItem
@@ -37,8 +40,10 @@ use Illuminate\Support\Carbon;
  * @method static EloquentJoinBuilder|RequestedItem query()
  * @mixin Eloquent
  */
-class RequestedItem extends BaseModelAbstract
+class RequestedItem extends BaseModelAbstract implements HasValidationRulesContract
 {
+    use HasValidationRules;
+
     /**
      * An image uploaded for this line item
      *
@@ -67,5 +72,25 @@ class RequestedItem extends BaseModelAbstract
     public function request(): BelongsTo
     {
         return $this->belongsTo(Request::class);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function buildModelValidationRules(...$params): array
+    {
+        return [
+            static::VALIDATION_RULES_BASE => [
+                'name' => [
+                    'required',
+                    'string',
+                ],
+                'asset_id' => [
+                    'required',
+                    'numeric',
+                    Rule::exists('assets', 'id'),
+                ],
+            ],
+        ];
     }
 }
