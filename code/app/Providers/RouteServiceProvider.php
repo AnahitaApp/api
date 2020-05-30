@@ -8,6 +8,7 @@ use App\Models\Organization\Organization;
 use App\Models\Organization\OrganizationManager;
 use App\Models\Payment\PaymentMethod;
 use App\Models\Request\Request;
+use App\Models\Request\RequestedItem;
 use App\Models\Request\SafetyReport;
 use App\Models\Role;
 use App\Models\Subscription\MembershipPlan;
@@ -40,6 +41,7 @@ class RouteServiceProvider extends ServiceProvider
 
         'location' => Location::class,
         'request' => Request::class,
+        'requested_item' => RequestedItem::class,
         'safety_report' => SafetyReport::class,
     ];
 
