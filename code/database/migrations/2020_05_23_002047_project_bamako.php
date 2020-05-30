@@ -39,6 +39,7 @@ class ProjectBamako extends Migration
             $table->foreign('location_id')->references('id')->on('locations');
         });
         Schema::table('requested_items', function (Blueprint $table) {
+            $table->unsignedInteger('request_id')->nullable()->change();
             $table->unsignedInteger('location_id')->nullable();
             $table->foreign('location_id')->references('id')->on('locations');
             $table->unsignedInteger('parent_requested_item_id')->nullable();
