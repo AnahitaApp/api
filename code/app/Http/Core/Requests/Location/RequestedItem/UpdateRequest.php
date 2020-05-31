@@ -57,6 +57,6 @@ class UpdateRequest extends BaseAuthenticatedRequestAbstract
      */
     public function rules(RequestedItem $model)
     {
-        return $model->getValidationRules(Asset::VALIDATION_RULES_UPDATE);
+        return $model->getValidationRules(RequestedItem::VALIDATION_RULES_UPDATE);
     }
 }
