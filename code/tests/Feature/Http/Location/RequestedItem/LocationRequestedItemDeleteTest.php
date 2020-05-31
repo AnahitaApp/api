@@ -100,7 +100,7 @@ class LocationRequestedItemDeleteTest extends TestCase
         $response = $this->json('DELETE', $this->route);
 
         $response->assertStatus(204);
-        $this->assertNull(OrganizationManager::find($model->id));
+        $this->assertNull(RequestedItem::find($model->id));
     }
 
     public function testDeleteSingleInvalidIdFails()
