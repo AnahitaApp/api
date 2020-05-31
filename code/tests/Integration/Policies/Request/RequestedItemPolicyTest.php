@@ -8,6 +8,7 @@ use App\Models\Organization\OrganizationManager;
 use App\Models\Request\RequestedItem;
 use App\Models\User\User;
 use App\Policies\Request\RequestedItemPolicy;
+use Tests\DatabaseSetupTrait;
 use Tests\TestCase;
 
 /**
@@ -16,6 +17,8 @@ use Tests\TestCase;
  */
 class RequestedItemPolicyTest extends TestCase
 {
+    use DatabaseSetupTrait;
+
     public function testAll()
     {
         $policy = new RequestedItemPolicy();
