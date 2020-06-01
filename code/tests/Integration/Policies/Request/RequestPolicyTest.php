@@ -3,9 +3,12 @@ declare(strict_types=1);
 
 namespace Tests\Integration\Policies\Request;
 
+use App\Models\Organization\Location;
+use App\Models\Organization\OrganizationManager;
 use App\Models\Request\Request;
 use App\Models\User\User;
 use App\Policies\Request\RequestPolicy;
+use Tests\DatabaseSetupTrait;
 use Tests\TestCase;
 
 /**
@@ -14,6 +17,8 @@ use Tests\TestCase;
  */
 class RequestPolicyTest extends TestCase
 {
+    use DatabaseSetupTrait;
+
     public function testAllFailsWithConflictingRequestedUser()
     {
         $user = new User();
@@ -34,6 +39,31 @@ class RequestPolicyTest extends TestCase
         $policy = new RequestPolicy();
 
         $this->assertTrue($policy->all($user, $user));
+    }
+
+    public function testAllWithoutAccessToLocationUser()
+    {
+        $user = factory(User::class)->create();
+        $location = factory(Location::class)->create();
+
+        $policy = new RequestPolicy();
+
+        $this->assertFalse($policy->all($user, null, $location));
+    }
+
+    public function testAllPassesWhenUserHasLocationAccess()
+    {
+        $user = factory(User::class)->create();
+        $location = factory(Location::class)->create();
+
+        factory(OrganizationManager::class)->create([
+            'user_id' => $user->id,
+            'organization_id' => $location->organization_id,
+        ]);
+
+        $policy = new RequestPolicy();
+
+        $this->assertTrue($policy->all($user, null, $location));
     }
 
     public function testAllPassesWithoutRequestedUser()

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Policies\Request;
 
+use App\Models\Organization\Location;
 use App\Models\Request\Request;
 use App\Models\User\User;
 use App\Policies\BasePolicyAbstract;
@@ -18,10 +19,15 @@ class RequestPolicy extends BasePolicyAbstract
      *
      * @param User $user
      * @param User|null $requestedUser
+     * @param Location|null $requestedLocation
      * @return bool
      */
-    public function all(User $user, ?User $requestedUser = null)
+    public function all(User $user, ?User $requestedUser = null, Location $requestedLocation = null)
     {
+        if ($requestedLocation) {
+            return $user->canManageOrganization($requestedLocation->organization);
+        }
+
         return $requestedUser ? $requestedUser->id === $user->id : true;
     }
 
