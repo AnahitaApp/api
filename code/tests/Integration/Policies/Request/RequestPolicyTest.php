@@ -125,6 +125,51 @@ class RequestPolicyTest extends TestCase
         $this->assertFalse($policy->update(new User(), $request));
     }
 
+    public function testUpdateFailsWithLocationUserDoesNotBelongToOrganization()
+    {
+        $policy = new RequestPolicy();
+
+        $user = factory(User::class)->create();
+        $location = factory(Location::class)->create();
+        $request = factory(Request::class)->create([
+            'location_id' => $location->id,
+        ]);
+
+        $this->assertFalse($policy->update($user, $request, $location));
+    }
+
+    public function testUpdateFailsWithLocationRequestDoesNotBelongToLocation()
+    {
+        $policy = new RequestPolicy();
+
+        $user = factory(User::class)->create();
+        $location = factory(Location::class)->create();
+        $request = factory(Request::class)->create();
+        factory(OrganizationManager::class)->create([
+            'user_id' => $user->id,
+            'organization_id' => $location->organization_id,
+        ]);
+
+        $this->assertFalse($policy->update($user, $request, $location));
+    }
+
+    public function testUpdatePassesWithLocation()
+    {
+        $policy = new RequestPolicy();
+
+        $user = factory(User::class)->create();
+        $location = factory(Location::class)->create();
+        $request = factory(Request::class)->create([
+            'location_id' => $location->id,
+        ]);
+        factory(OrganizationManager::class)->create([
+            'user_id' => $user->id,
+            'organization_id' => $location->organization_id,
+        ]);
+
+        $this->assertTrue($policy->update($user, $request, $location));
+    }
+
     public function  testUpdatePassesWhenNoOneIsCompletingRequest()
     {
         $policy = new RequestPolicy();

@@ -60,10 +60,16 @@ class RequestPolicy extends BasePolicyAbstract
      *
      * @param User $user
      * @param Request $request
+     * @param Location|null $requestedLocation
      * @return bool
      */
-    public function update(User $user, Request $request)
+    public function update(User $user, Request $request, ?Location $requestedLocation = null)
     {
-        return $request->requested_by_id == $user->id || $request->completed_by_id == null || $user->id == $request->completed_by_id;
+        if ($requestedLocation) {
+            return $request->location_id == $requestedLocation->id && $user->canManageOrganization($requestedLocation->organization);
+        }
+
+        return $request->requested_by_id == $user->id
+            || $request->completed_by_id == null || $user->id == $request->completed_by_id;
     }
 }
