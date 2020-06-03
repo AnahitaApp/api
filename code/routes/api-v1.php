@@ -36,6 +36,11 @@ Route::group(['prefix' => 'v1', 'as' => 'v1.'], function() {
             ]
         ]);
         Route::group(['prefix' => 'locations/{location}', 'as' => 'location.'], function () {
+            Route::resource('requests', 'Location\RequestController', [
+                'only' => [
+                    'index', 'update',
+                ],
+            ]);
             Route::resource('requested-items', 'Location\RequestedItemController', [
                 'except' => [
                     'create', 'edit', 'show',

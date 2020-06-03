@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Feature\Http\Request\User;
+namespace Tests\Feature\Http\User\Request;
 
 use App\Models\Request\Request;
 use App\Models\Role;
@@ -13,7 +13,7 @@ use Tests\Traits\RolesTesting;
 
 /**
  * Class RequestUpdateTest
- * @package Tests\Feature\Http\Request
+ * @package Tests\Feature\Http\User\Request
  */
 class UserRequestUpdateTest extends TestCase
 {

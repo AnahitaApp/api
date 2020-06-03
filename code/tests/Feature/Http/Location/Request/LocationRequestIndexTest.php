@@ -1,10 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Feature\Http\User\Request;
+namespace Tests\Feature\Http\Location\Request;
 
+use App\Models\Organization\Location;
+use App\Models\Organization\OrganizationManager;
 use App\Models\Request\Request;
-use App\Models\User\User;
 use Tests\DatabaseSetupTrait;
 use Tests\TestCase;
 use Tests\Traits\MocksApplicationLog;
@@ -13,14 +14,14 @@ use Tests\Traits\MocksApplicationLog;
  * Class UserRequestIndexTest
  * @package Tests\Feature\User\Asset
  */
-class UserRequestIndexTest extends TestCase
+class LocationRequestIndexTest extends TestCase
 {
     use DatabaseSetupTrait, MocksApplicationLog;
 
     /**
      * @var string
      */
-    private $path = '/v1/users/';
+    private $path = '/v1/locations/';
 
     protected function setUp(): void
     {
@@ -31,9 +32,9 @@ class UserRequestIndexTest extends TestCase
 
     public function testNotLoggedInUserBlocked()
     {
-        $user = factory(User::class)->create();
+        $location = factory(Location::class)->create();
 
-        $response = $this->json('GET', $this->path . $user->id . '/requests');
+        $response = $this->json('GET', $this->path . $location->id . '/requests');
 
         $response->assertStatus(403);
     }
@@ -41,14 +42,14 @@ class UserRequestIndexTest extends TestCase
     public function testIncorrectUserBlocked()
     {
         $this->actAsUser();
-        $user = factory(User::class)->create();
+        $location = factory(Location::class)->create();
 
-        $response = $this->json('GET', $this->path . $user->id . '/requests');
+        $response = $this->json('GET', $this->path . $location->id . '/requests');
 
         $response->assertStatus(403);
     }
 
-    public function testUserNotFound()
+    public function testNotFound()
     {
         $this->actAsUser();
 
@@ -61,7 +62,14 @@ class UserRequestIndexTest extends TestCase
     {
         $this->actAsUser();
 
-        $response = $this->json('GET', $this->path. $this->actingAs->id . '/requests');
+        $location = factory(Location::class)->create();
+
+        factory(OrganizationManager::class)->create([
+            'user_id' => $this->actingAs->id,
+            'organization_id' => $location->organization_id,
+        ]);
+
+        $response = $this->json('GET', $this->path. $location->id . '/requests');
 
         $response->assertStatus(200);
         $response->assertJson([
@@ -74,16 +82,20 @@ class UserRequestIndexTest extends TestCase
     {
         $this->actAsUser();
 
-        factory(Request::class, 6)->create();
-        factory(Request::class, 5)->create([
-            'requested_by_id' => $this->actingAs->id,
+        $location = factory(Location::class)->create();
+
+        factory(OrganizationManager::class)->create([
+            'user_id' => $this->actingAs->id,
+            'organization_id' => $location->organization_id,
         ]);
-        factory(Request::class, 10)->create([
-            'completed_by_id' => $this->actingAs->id,
+
+        factory(Request::class, 6)->create();
+        factory(Request::class, 15)->create([
+            'location_id' => $location->id,
         ]);
 
         // first page
-        $response = $this->json('GET', $this->path . $this->actingAs->id . '/requests');
+        $response = $this->json('GET', $this->path . $location->id . '/requests');
         $response->assertStatus(200);
         $response->assertJson([
             'total' => 15,
@@ -100,7 +112,7 @@ class UserRequestIndexTest extends TestCase
             ]);
 
         // second page
-        $response = $this->json('GET', $this->path . $this->actingAs->id . '/requests?page=2');
+        $response = $this->json('GET', $this->path . $location->id . '/requests?page=2');
         $response->assertStatus(200);
         $response->assertJson([
             'total' =>  15,
@@ -117,7 +129,7 @@ class UserRequestIndexTest extends TestCase
             ]);
 
         // page with limit
-        $response = $this->json('GET', $this->path . $this->actingAs->id . '/requests?page=2&limit=5');
+        $response = $this->json('GET', $this->path . $location->id . '/requests?page=2&limit=5');
         $response->assertStatus(200);
         $response->assertJson([
             'total' =>  15,
