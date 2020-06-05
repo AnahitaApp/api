@@ -55,6 +55,6 @@ class UpdateRequest extends BaseAuthenticatedRequestAbstract
      */
     public function rules(Request $request)
     {
-        return $request->getValidationRules(Request::VALIDATION_RULES_UPDATE);
+        return $request->getValidationRules(Request::VALIDATION_RULES_LOCATION_UPDATE);
     }
 }

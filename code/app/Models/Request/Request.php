@@ -65,6 +65,11 @@ class Request extends BaseModelAbstract implements HasValidationRulesContract
     use HasValidationRules;
 
     /**
+     * the validation rules we use when someone at the location is trying to update a related request
+     */
+    const VALIDATION_RULES_LOCATION_UPDATE = 'locations_update';
+
+    /**
      * @var array
      */
     protected $dates = [
@@ -175,6 +180,14 @@ class Request extends BaseModelAbstract implements HasValidationRulesContract
                 'completed' => [
                     'boolean',
                 ],
+                'location_id' => [
+                    'numeric',
+                    Rule::exists('locations', 'id'),
+                ],
+                'completed_by_id' => [
+                    'numeric',
+                    Rule::exists('users', 'id'),
+                ],
             ],
             self::VALIDATION_RULES_CREATE => [
                 self::VALIDATION_PREPEND_NOT_PRESENT => [
@@ -186,6 +199,7 @@ class Request extends BaseModelAbstract implements HasValidationRulesContract
                     'latitude',
                     'longitude',
                     'requested_items',
+                    'location_id',
                 ],
             ],
             self::VALIDATION_RULES_UPDATE => [
@@ -195,6 +209,24 @@ class Request extends BaseModelAbstract implements HasValidationRulesContract
                     'description',
                     'drop_off_location',
                     'requested_items',
+                    'location_id',
+                    'completed_by_id',
+                ],
+            ],
+            static::VALIDATION_RULES_LOCATION_UPDATE => [
+                self::VALIDATION_PREPEND_REQUIRED => [
+                    'completed_by_id',
+                ],
+                self::VALIDATION_PREPEND_NOT_PRESENT => [
+                    'latitude',
+                    'longitude',
+                    'description',
+                    'drop_off_location',
+                    'requested_items',
+                    'location_id',
+                    'accept',
+                    'completed',
+                    'cancel',
                 ],
             ],
         ];
