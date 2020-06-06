@@ -49,11 +49,11 @@ abstract class RequestControllerAbstract extends BaseControllerAbstract
 
     /**
      * @param Requests\Location\Request\UpdateRequest $request
-     * @param User $user
+     * @param Location $location
      * @param Request $requestModel
      * @return BaseModelAbstract
      */
-    public function update(Requests\Location\Request\UpdateRequest $request, User $user, Request $requestModel)
+    public function update(Requests\Location\Request\UpdateRequest $request, Location $location, Request $requestModel)
     {
         return $this->repository->update($requestModel, $request->json()->all());
     }

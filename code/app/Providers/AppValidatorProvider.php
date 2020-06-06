@@ -6,6 +6,7 @@ namespace App\Providers;
 use App\Validators\ArticleVersion\SelectedIterationBelongsToArticleValidator;
 use App\Validators\ForgotPassword\TokenIsNotExpiredValidator;
 use App\Validators\ForgotPassword\UserOwnsTokenValidator;
+use App\Validators\Location\UserCanAccessLocationValidator;
 use App\Validators\NotPresentValidator;
 use App\Validators\Request\RequestNotAcceptedValidator;
 use App\Validators\Request\RequestNotCanceledValidator;
@@ -36,5 +37,6 @@ class AppValidatorProvider extends ServiceProvider
         $validator->extend(SelectedIterationBelongsToArticleValidator::KEY, SelectedIterationBelongsToArticleValidator::class);
         $validator->extend(RequestNotAcceptedValidator::KEY, RequestNotAcceptedValidator::class);
         $validator->extend(RequestNotCanceledValidator::KEY, RequestNotCanceledValidator::class);
+        $validator->extend(UserCanAccessLocationValidator::KEY, UserCanAccessLocationValidator::class);
     }
 }
