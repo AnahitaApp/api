@@ -25,7 +25,7 @@ use Illuminate\Validation\Rule;
  * @property string $name
  * @property int|null $location_id
  * @property int|null $parent_requested_item_id
- * @property int|null $available_quantity
+ * @property int|null $quantity
  * @property int|null $max_quantity_per_request
  * @property Carbon|null $deleted_at
  * @property mixed|null $created_at
