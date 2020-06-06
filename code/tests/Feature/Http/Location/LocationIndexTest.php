@@ -92,4 +92,58 @@ class LocationIndexTest extends TestCase
             ]);
         $response->assertStatus(200);
     }
+
+    public function testGetPaginationWithLocation()
+    {
+        $this->actAs(Role::APP_USER);
+        $offCenter = factory(Location::class)->create([
+            'latitude' => 10.5,
+            'longitude' => 10,
+        ]);
+        $center = factory(Location::class)->create([
+            'latitude' => 10,
+            'longitude' => 10,
+        ]);
+        $furthest = factory(Location::class)->create([
+            'latitude' => 10,
+            'longitude' => 7,
+        ]);
+        // This is roughly 2.1 in latitude units
+        $middle = factory(Location::class)->create([
+            'latitude' => 11.5,
+            'longitude' => 11.5,
+        ]);
+        $north = factory(Location::class)->create([
+            'latitude' => 12.5,
+            'longitude' => 10
+        ]);
+        factory(Location::class)->create([
+            'latitude' => 102.5,
+            'longitude' => 10
+        ]);
+
+        // first page
+        $response = $this->json('GET', '/v1/locations?radius=500&latitude=10&longitude=10');
+        $response->assertStatus(200);
+        $response->assertJson([
+            'total' => 5,
+            'current_page' => 1,
+            'per_page' => 10,
+            'from' => 1,
+            'to' => 5,
+            'last_page' => 1
+        ])
+            ->assertJsonStructure([
+                'data' => [
+                    '*' =>  array_keys((new Location())->toArray())
+                ]
+            ]);
+        $this->assertEquals([
+            $center->id,
+            $offCenter->id,
+            $middle->id,
+            $north->id,
+            $furthest->id,
+        ], $response->original->pluck('id')->toArray());
+    }
 }

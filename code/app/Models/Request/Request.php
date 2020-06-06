@@ -201,7 +201,6 @@ class Request extends BaseModelAbstract implements HasValidationRulesContract
                     'latitude',
                     'longitude',
                     'requested_items',
-                    'location_id',
                 ],
             ],
             self::VALIDATION_RULES_UPDATE => [

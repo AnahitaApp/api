@@ -104,18 +104,7 @@ abstract class LocationControllerAbstract extends BaseControllerAbstract
         $longitude = $request->input('longitude');
 
         if ($radius && $latitude && $longitude) {
-            $filter = $this->filter($request);
-            $filter [] = [
-                'completed_by_id',
-                null,
-                null,
-            ];
-            $filter [] = [
-                'canceled_at',
-                null,
-                null,
-            ];
-            return $this->repository->findAllAroundLocation((float) $latitude, (float) $longitude, (float) $radius, $filter, $this->search($request), $this->order($request), $this->expand($request), $this->limit($request), [], (int)$request->input('page', 1));
+            return $this->repository->findAllAroundLocation((float) $latitude, (float) $longitude, (float) $radius, $this->filter($request), $this->search($request), $this->order($request), $this->expand($request), $this->limit($request), [], (int)$request->input('page', 1));
         }
 
         return $this->repository->findAll($this->filter($request), $this->search($request), $this->order($request), $this->expand($request), $this->limit($request), [], (int)$request->input('page', 1));
