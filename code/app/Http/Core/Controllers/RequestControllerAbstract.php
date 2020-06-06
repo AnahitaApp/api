@@ -4,12 +4,14 @@ declare(strict_types=1);
 namespace App\Http\Core\Controllers;
 
 use App\Contracts\Repositories\Request\RequestRepositoryContract;
+use App\Events\Request\LocationRequestedItemSelectedEvent;
 use App\Http\Core\Controllers\Traits\HasIndexRequests;
 use App\Http\Core\Requests;
 use App\Models\BaseModelAbstract;
 use App\Models\Request\Request;
 use App\Traits\CanGetAndUnset;
 use Carbon\Carbon;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Database\Eloquent\Collection;
@@ -30,12 +32,19 @@ abstract class RequestControllerAbstract extends BaseControllerAbstract
     private RequestRepositoryContract $repository;
 
     /**
+     * @var Dispatcher
+     */
+    private Dispatcher $dispatcher;
+
+    /**
      * RequestControllerAbstract constructor.
      * @param RequestRepositoryContract $repository
+     * @param Dispatcher $dispatcher
      */
-    public function __construct(RequestRepositoryContract $repository)
+    public function __construct(RequestRepositoryContract $repository, Dispatcher $dispatcher)
     {
         $this->repository = $repository;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -84,8 +93,14 @@ abstract class RequestControllerAbstract extends BaseControllerAbstract
     {
         $data = $request->json()->all();
         $data['requested_by_id'] = Auth::user()->id;
+        /** @var Request $model */
         $model = $this->repository->create($data);
         $model->load('requestedItems');
+        foreach ($model->requestedItems as $requestedItem) {
+            if ($requestedItem->parent_requested_item_id) {
+                $this->dispatcher->dispatch(new LocationRequestedItemSelectedEvent($requestedItem));
+            }
+        }
         return response($model, 201)->header('Location', route('v1.requests.show', ['request' => $model]));
     }
 
