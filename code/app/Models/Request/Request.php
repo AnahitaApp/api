@@ -9,6 +9,7 @@ use App\Models\BaseModelAbstract;
 use App\Models\Organization\Location;
 use App\Models\Traits\HasValidationRules;
 use App\Models\User\User;
+use App\Validators\Location\UserCanAccessLocationValidator;
 use Eloquent;
 use Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder;
 use Illuminate\Database\Eloquent\Builder;
@@ -187,6 +188,7 @@ class Request extends BaseModelAbstract implements HasValidationRulesContract
                 'completed_by_id' => [
                     'numeric',
                     Rule::exists('users', 'id'),
+                    UserCanAccessLocationValidator::KEY,
                 ],
             ],
             self::VALIDATION_RULES_CREATE => [

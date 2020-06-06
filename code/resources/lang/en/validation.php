@@ -143,4 +143,6 @@ return [
     \App\Validators\Request\RequestNotCanceledValidator::KEY =>
         'This request has been canceled.',
 
+    \App\Validators\Location\UserCanAccessLocationValidator::KEY =>
+        'This user cannot access this location.',
 ];

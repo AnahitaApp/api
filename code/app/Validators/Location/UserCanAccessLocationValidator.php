@@ -19,7 +19,7 @@ class UserCanAccessLocationValidator extends BaseValidatorAbstract
     /**
      * @var string
      */
-    const KEY = 'request_not_accepted';
+    const KEY = 'user_can_access_location';
 
     /**
      * @var UserRepositoryContract
