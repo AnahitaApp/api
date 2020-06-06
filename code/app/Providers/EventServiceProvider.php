@@ -8,6 +8,7 @@ use App\Events\Message\MessageCreatedEvent;
 use App\Events\Message\MessageSentEvent;
 use App\Events\Organization\OrganizationManagerCreatedEvent;
 use App\Events\Payment\PaymentReversedEvent;
+use App\Events\Request\LocationRequestedItemSelectedEvent;
 use App\Events\User\Contact\ContactCreatedEvent;
 use App\Events\User\ForgotPasswordEvent;
 use App\Events\User\SignUpEvent;
@@ -81,6 +82,8 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         // Register all application level events below
+        LocationRequestedItemSelectedEvent::class => [
+        ],
     ];
 
     /**
