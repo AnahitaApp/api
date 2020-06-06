@@ -21,7 +21,9 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $deleted_at
  * @property mixed|null $created_at
  * @property mixed|null $updated_at
+ * @property-read Collection|Location[] $locations
  * @property-read Collection|OrganizationManager[] $organizationManagers
+ * @property-read int|null $locations_count
  * @property-read int|null $organization_managers_count
  * @method static EloquentJoinBuilder|Organization newModelQuery()
  * @method static EloquentJoinBuilder|Organization newQuery()

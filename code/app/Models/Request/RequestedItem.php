@@ -23,16 +23,25 @@ use Illuminate\Validation\Rule;
  * @property int|null $asset_id
  * @property int $request_id
  * @property string $name
+ * @property int|null $location_id
+ * @property int|null $parent_requested_item_id
+ * @property int|null $available_quantity
+ * @property int|null $max_quantity_per_request
  * @property Carbon|null $deleted_at
  * @property mixed|null $created_at
  * @property mixed|null $updated_at
  * @property-read Asset $asset
+ * @property-read Location $location
  * @property-read Request $request
  * @method static Builder|RequestedItem whereAssetId($value)
+ * @method static Builder|RequestedItem whereAvailableQuantity($value)
  * @method static Builder|RequestedItem whereCreatedAt($value)
  * @method static Builder|RequestedItem whereDeletedAt($value)
  * @method static Builder|RequestedItem whereId($value)
+ * @method static Builder|RequestedItem whereLocationId($value)
+ * @method static Builder|RequestedItem whereMaxQuantityPerRequest($value)
  * @method static Builder|RequestedItem whereName($value)
+ * @method static Builder|RequestedItem whereParentRequestedItemId($value)
  * @method static Builder|RequestedItem whereRequestId($value)
  * @method static Builder|RequestedItem whereUpdatedAt($value)
  * @method static EloquentJoinBuilder|RequestedItem newModelQuery()
@@ -62,6 +71,16 @@ class RequestedItem extends BaseModelAbstract implements HasValidationRulesContr
     public function location(): BelongsTo
     {
         return $this->belongsTo(Location::class);
+    }
+
+    /**
+     * The parent model for when this is related to another requested item
+     *
+     * @return BelongsTo
+     */
+    public function parentRequestedItem(): BelongsTo
+    {
+        return $this->belongsTo(RequestedItem::class, 'parent_requested_item_id');
     }
 
     /**

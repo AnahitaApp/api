@@ -45,6 +45,7 @@ class ProjectBamako extends Migration
             $table->unsignedInteger('parent_requested_item_id')->nullable();
             $table->foreign('parent_requested_item_id')->references('id')->on('requested_items');
             $table->integer('available_quantity')->nullable();
+            $table->integer('max_quantity_per_request')->nullable();
         });
         Schema::table('assets', function (Blueprint $table) {
             $table->dropForeign('assets_user_id_foreign');

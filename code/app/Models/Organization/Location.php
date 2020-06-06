@@ -10,11 +10,54 @@ use App\Models\Request\Request;
 use App\Models\Request\RequestedItem;
 use App\Models\Traits\BelongsToOrganization;
 use App\Models\Traits\HasValidationRules;
+use Eloquent;
+use Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * Class Location
+ *
  * @package App\Models\Organization
+ * @property-read Organization $organization
+ * @property-read Collection|RequestedItem[] $requestedItems
+ * @property-read int|null $requested_items_count
+ * @property-read Collection|Request[] $requests
+ * @property-read int|null $requests_count
+ * @method static EloquentJoinBuilder|Location newModelQuery()
+ * @method static EloquentJoinBuilder|Location newQuery()
+ * @method static EloquentJoinBuilder|Location query()
+ * @mixin Eloquent
+ * @property int $id
+ * @property int $organization_id
+ * @property string $name
+ * @property string $address_line_1
+ * @property string|null $address_line_2
+ * @property string $city
+ * @property string|null $postal_code
+ * @property string|null $region
+ * @property string $country
+ * @property float|null $latitude
+ * @property float|null $longitude
+ * @property mixed|null $created_at
+ * @property mixed|null $updated_at
+ * @property Carbon|null $deleted_at
+ * @method static Builder|Location whereAddressLine1($value)
+ * @method static Builder|Location whereAddressLine2($value)
+ * @method static Builder|Location whereCity($value)
+ * @method static Builder|Location whereCountry($value)
+ * @method static Builder|Location whereCreatedAt($value)
+ * @method static Builder|Location whereDeletedAt($value)
+ * @method static Builder|Location whereId($value)
+ * @method static Builder|Location whereLatitude($value)
+ * @method static Builder|Location whereLongitude($value)
+ * @method static Builder|Location whereName($value)
+ * @method static Builder|Location whereOrganizationId($value)
+ * @method static Builder|Location wherePostalCode($value)
+ * @method static Builder|Location whereRegion($value)
+ * @method static Builder|Location whereUpdatedAt($value)
  */
 class Location extends BaseModelAbstract implements BelongsToOrganizationContract, HasValidationRulesContract
 {

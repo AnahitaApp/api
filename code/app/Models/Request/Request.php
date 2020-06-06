@@ -28,6 +28,7 @@ use Illuminate\Validation\Rule;
  * @property int $id
  * @property int $requested_by_id
  * @property int|null $completed_by_id
+ * @property int|null $location_id
  * @property float $latitude
  * @property float $longitude
  * @property string|null $description
@@ -40,6 +41,7 @@ use Illuminate\Validation\Rule;
  * @property-read Collection|Asset[] $assets
  * @property-read int|null $assets_count
  * @property-read User|null $completedBy
+ * @property-read Location $location
  * @property-read User $requestedBy
  * @property-read Collection|RequestedItem[] $requestedItems
  * @property-read int|null $requested_items_count
@@ -53,6 +55,7 @@ use Illuminate\Validation\Rule;
  * @method static Builder|Request whereDropOffLocation($value)
  * @method static Builder|Request whereId($value)
  * @method static Builder|Request whereLatitude($value)
+ * @method static Builder|Request whereLocationId($value)
  * @method static Builder|Request whereLongitude($value)
  * @method static Builder|Request whereRequestedById($value)
  * @method static Builder|Request whereUpdatedAt($value)

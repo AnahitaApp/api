@@ -4,9 +4,11 @@ declare(strict_types=1);
 namespace App\Models\User;
 
 use App\Models\Asset;
+use App\Models\Organization\Organization;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
@@ -15,6 +17,8 @@ use Illuminate\Support\Carbon;
  *
  * @package App\Models\User
  * @property int $id
+ * @property int|null $owner_id
+ * @property string $owner_type
  * @property string $url
  * @property string|null $caption
  * @property string|null $name
@@ -23,8 +27,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $updated_at
  * @property-read int|null $conferences_count
  * @property-read int|null $events_count
- * @property-read User $user
- * @property int|null $user_id
+ * @property-read Model|User|Organization $owner
  * @method static Builder|ProfileImage newModelQuery()
  * @method static Builder|ProfileImage newQuery()
  * @method static Builder|ProfileImage query()
@@ -33,9 +36,10 @@ use Illuminate\Support\Carbon;
  * @method static Builder|ProfileImage whereDeletedAt($value)
  * @method static Builder|ProfileImage whereId($value)
  * @method static Builder|ProfileImage whereName($value)
+ * @method static Builder|ProfileImage whereOwnerId($value)
+ * @method static Builder|ProfileImage whereOwnerType($value)
  * @method static Builder|ProfileImage whereUpdatedAt($value)
  * @method static Builder|ProfileImage whereUrl($value)
- * @method static Builder|ProfileImage whereUserId($value)
  * @mixin Eloquent
  */
 class ProfileImage extends Asset

@@ -4,10 +4,12 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Contracts\Models\HasValidationRulesContract;
+use App\Models\Organization\Organization;
 use App\Models\Traits\HasValidationRules;
 use App\Models\User\User;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
@@ -26,7 +28,7 @@ use Illuminate\Validation\Rule;
  * @property Carbon|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read User $user
+ * @property-read Model|User|Organization $owner
  * @method static Builder|Asset newModelQuery()
  * @method static Builder|Asset newQuery()
  * @method static Builder|Asset query()
@@ -35,9 +37,10 @@ use Illuminate\Validation\Rule;
  * @method static Builder|Asset whereDeletedAt($value)
  * @method static Builder|Asset whereId($value)
  * @method static Builder|Asset whereName($value)
+ * @method static Builder|Asset whereOwnerId($value)
+ * @method static Builder|Asset whereOwnerType($value)
  * @method static Builder|Asset whereUpdatedAt($value)
  * @method static Builder|Asset whereUrl($value)
- * @method static Builder|Asset whereUserId($value)
  * @mixin Eloquent
  */
 class Asset extends BaseModelAbstract implements HasValidationRulesContract
