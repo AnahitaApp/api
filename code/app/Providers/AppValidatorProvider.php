@@ -8,6 +8,7 @@ use App\Validators\ForgotPassword\TokenIsNotExpiredValidator;
 use App\Validators\ForgotPassword\UserOwnsTokenValidator;
 use App\Validators\Location\UserCanAccessLocationValidator;
 use App\Validators\NotPresentValidator;
+use App\Validators\Request\LocationRequestedItemHasRemainingQuantityValidator;
 use App\Validators\Request\RequestNotAcceptedValidator;
 use App\Validators\Request\RequestNotCanceledValidator;
 use App\Validators\Subscription\MembershipPlanRateIsActiveValidator;
@@ -38,5 +39,6 @@ class AppValidatorProvider extends ServiceProvider
         $validator->extend(RequestNotAcceptedValidator::KEY, RequestNotAcceptedValidator::class);
         $validator->extend(RequestNotCanceledValidator::KEY, RequestNotCanceledValidator::class);
         $validator->extend(UserCanAccessLocationValidator::KEY, UserCanAccessLocationValidator::class);
+        $validator->extend(LocationRequestedItemHasRemainingQuantityValidator::KEY, LocationRequestedItemHasRemainingQuantityValidator::class);
     }
 }

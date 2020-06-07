@@ -145,4 +145,7 @@ return [
 
     \App\Validators\Location\UserCanAccessLocationValidator::KEY =>
         'This user cannot access this location.',
+
+    \App\Validators\Request\LocationRequestedItemHasRemainingQuantityValidator::KEY =>
+        'The requested quantity is no longer available.',
 ];
