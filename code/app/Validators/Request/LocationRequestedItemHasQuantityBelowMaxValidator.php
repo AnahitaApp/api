@@ -22,6 +22,6 @@ class LocationRequestedItemHasQuantityBelowMaxValidator extends BaseLocationRequ
     public function checkParentRequestedItem(string $attribute, $value, RequestedItem $requestedItem): bool
     {
         $this->ensureValidatorAttribute('quantity', $attribute);
-        return $requestedItem->max_quantity_per_request >= $value;
+        return $requestedItem->max_quantity_per_request == null || $requestedItem->max_quantity_per_request >= $value;
     }
 }

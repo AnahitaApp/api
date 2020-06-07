@@ -47,8 +47,7 @@ abstract class BaseLocationRequestedItemValidator extends BaseValidatorAbstract
     public final function validate($attribute, $value, $parameters = [], Validator $validator = null)
     {
         $parts = explode('.', $attribute);
-        $this->ensureValidatorAttribute('requested_item', $parts[0]);
-        $this->ensureValidatorAttribute('quantity', $parts[2]);
+        $this->ensureValidatorAttribute('requested_items', $parts[0]);
 
         $parentRequestedItemId = $this->request->input($parts[0] . '.' . $parts[1] . '.parent_requested_item_id');
 
@@ -60,7 +59,7 @@ abstract class BaseLocationRequestedItemValidator extends BaseValidatorAbstract
                 return false;
             }
 
-            return $parentRequestedItem->quantity >= $value;
+            return $this->checkParentRequestedItem($parts[2], $value, $parentRequestedItem);
         }
 
         return true;

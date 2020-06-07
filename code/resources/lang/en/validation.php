@@ -148,4 +148,7 @@ return [
 
     \App\Validators\Request\LocationRequestedItemHasRemainingQuantityValidator::KEY =>
         'The requested quantity is no longer available.',
+
+    \App\Validators\Request\LocationRequestedItemHasQuantityBelowMaxValidator::KEY =>
+        'The requested quantity is above the maximum amount allowed per request,'
 ];

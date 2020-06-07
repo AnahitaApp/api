@@ -22,6 +22,6 @@ class LocationRequestedItemHasRemainingQuantityValidator extends BaseLocationReq
     public function checkParentRequestedItem(string $attribute, $value, RequestedItem $requestedItem): bool
     {
         $this->ensureValidatorAttribute('quantity', $attribute);
-        return $requestedItem->quantity >= $value;
+        return $requestedItem->quantity == null || $requestedItem->quantity >= $value;
     }
 }
