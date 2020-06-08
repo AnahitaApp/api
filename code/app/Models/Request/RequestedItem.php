@@ -107,6 +107,12 @@ class RequestedItem extends BaseModelAbstract implements HasValidationRulesContr
                     'numeric',
                     Rule::exists('assets', 'id'),
                 ],
+                'quantity' => [
+                    'numeric',
+                ],
+                'max_quantity_per_request' => [
+                    'numeric',
+                ],
             ],
             static::VALIDATION_RULES_CREATE => [
                 static::VALIDATION_PREPEND_REQUIRED => [

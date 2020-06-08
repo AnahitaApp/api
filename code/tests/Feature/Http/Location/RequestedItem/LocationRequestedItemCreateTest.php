@@ -96,6 +96,8 @@ class LocationRequestedItemCreateTest extends TestCase
         $properties = [
             'name' => 'An Item',
             'asset_id' => factory(Asset::class)->create()->id,
+            'quantity' => 200,
+            'max_quantity_per_request' => 2,
         ];
 
         $response = $this->json('POST', $this->route, $properties);
@@ -150,6 +152,36 @@ class LocationRequestedItemCreateTest extends TestCase
             'message'   => 'Sorry, something went wrong.',
             'errors'    =>  [
                 'name' => ['The name must be a string.'],
+            ]
+        ]);
+    }
+
+    public function testCreateFailsInvalidNumericFields()
+    {
+        $this->actAs(Role::ORGANIZATION_ADMIN);
+        $location = factory(Location::class)->create();
+        $this->setupRoute($location->id);
+        factory(OrganizationManager::class)->create([
+            'organization_id' => $location->organization_id,
+            'user_id' => $this->actingAs->id,
+            'role_id' => Role::ORGANIZATION_MANAGER,
+        ]);
+
+        $data = [
+            'asset_id' => 'hi',
+            'quantity' => 'hi',
+            'max_quantity_per_request' => 'hi',
+        ];
+
+        $response = $this->json('POST', $this->route, $data);
+
+        $response->assertStatus(400);
+        $response->assertJson([
+            'message'   => 'Sorry, something went wrong.',
+            'errors'    =>  [
+                'asset_id' => ['The asset id must be a number.'],
+                'quantity' => ['The quantity must be a number.'],
+                'max_quantity_per_request' => ['The max quantity per request must be a number.'],
             ]
         ]);
     }

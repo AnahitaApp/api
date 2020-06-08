@@ -152,6 +152,39 @@ class LocationRequestedItemUpdateTest extends TestCase
         ]);
     }
 
+    public function testUpdateFailsInvalidNumericFields()
+    {
+        $this->actAs(Role::ORGANIZATION_ADMIN);
+        $model = factory(RequestedItem::class)->create([
+            'name' => 'A Item',
+            'location_id' => factory(Location::class)->create()->id,
+        ]);
+        $this->setupRoute($model->location_id, $model->id);
+        factory(OrganizationManager::class)->create([
+            'organization_id' => $model->location->organization_id,
+            'user_id' => $this->actingAs->id,
+            'role_id' => Role::ORGANIZATION_ADMIN,
+        ]);
+
+        $data = [
+            'asset_id' => 'hi',
+            'quantity' => 'hi',
+            'max_quantity_per_request' => 'hi',
+        ];
+
+        $response = $this->json('PUT', $this->route, $data);
+
+        $response->assertStatus(400);
+        $response->assertJson([
+            'message'   => 'Sorry, something went wrong.',
+            'errors'    =>  [
+                'asset_id' => ['The asset id must be a number.'],
+                'quantity' => ['The quantity must be a number.'],
+                'max_quantity_per_request' => ['The max quantity per request must be a number.'],
+            ]
+        ]);
+    }
+
     public function testUpdateFailsModelFieldInvalid()
     {
         $this->actAs(Role::ORGANIZATION_ADMIN);
