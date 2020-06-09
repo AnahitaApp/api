@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Http\Request;
 
+use App\Models\Organization\Location;
+use App\Models\Request\RequestedItem;
 use App\Models\Role;
 use Tests\DatabaseSetupTrait;
 use Tests\TestCase;
@@ -42,6 +44,34 @@ class RequestCreateTest extends TestCase
             'requested_items' => [
                 [
                     'name' => 'An Item',
+                ],
+            ],
+        ];
+
+        $response = $this->json('POST', $this->route, $properties);
+
+        $response->assertStatus(201);
+
+        $response->assertJson($properties);
+    }
+
+    public function testCreateSuccessfulWithParentRequestedItems()
+    {
+        $this->actAs(Role::APP_USER);
+
+        $location = factory(Location::class)->create();
+        $requestedItem = factory(RequestedItem::class)->create([
+            'location_id' => $location->id,
+        ]);
+
+        $properties = [
+            'latitude' => 60,
+            'longitude' => 60,
+            'location_id' => $location->id,
+            'requested_items' => [
+                [
+                    'name' => 'An Item',
+                    'parent_requested_item_id' => $requestedItem->id,
                 ],
             ],
         ];
@@ -177,6 +207,8 @@ class RequestCreateTest extends TestCase
             'requested_items' => [
                 [
                     'asset_id' => '24ewf',
+                    'parent_requested_item_id' => '24ewf',
+                    'quantity' => '24ewf',
                 ],
             ],
         ];
@@ -188,6 +220,7 @@ class RequestCreateTest extends TestCase
             'message'   => 'Sorry, something went wrong.',
             'errors'    =>  [
                 'requested_items.0.asset_id' => ['The requested_items.0.asset_id must be a number.'],
+                'requested_items.0.parent_requested_item_id' => ['The requested_items.0.parent_requested_item_id must be a number.'],
             ]
         ]);
     }

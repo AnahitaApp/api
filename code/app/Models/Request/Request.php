@@ -10,6 +10,8 @@ use App\Models\Organization\Location;
 use App\Models\Traits\HasValidationRules;
 use App\Models\User\User;
 use App\Validators\Location\UserCanAccessLocationValidator;
+use App\Validators\Request\LocationRequestedItemHasQuantityBelowMaxValidator;
+use App\Validators\Request\LocationRequestedItemHasRemainingQuantityValidator;
 use Eloquent;
 use Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder;
 use Illuminate\Database\Eloquent\Builder;
@@ -172,6 +174,17 @@ class Request extends BaseModelAbstract implements HasValidationRulesContract
                 'requested_items.*.asset_id' => [
                     'numeric',
                     Rule::exists('assets', 'id'),
+                ],
+                'requested_items.*.parent_requested_item_id' => [
+                    'bail',
+                    'numeric',
+                    Rule::exists('requested_items', 'id'),
+                ],
+                'requested_items.*.quantity' => [
+                    'bail',
+                    'numeric',
+                    LocationRequestedItemHasRemainingQuantityValidator::KEY,
+                    LocationRequestedItemHasQuantityBelowMaxValidator::KEY,
                 ],
                 'accept' => [
                     'boolean',
