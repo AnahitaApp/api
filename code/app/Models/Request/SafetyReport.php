@@ -14,31 +14,30 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
- * Class SafetyReportRepositoryTest
+ * App\Models\Request\SafetyReport
  *
- * @package App\Models\Request
  * @property int $id
  * @property int $request_id
  * @property int $reporter_id
  * @property string $description
  * @property string|null $notes
- * @property Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property mixed|null $created_at
  * @property mixed|null $updated_at
- * @property-read User $reporter
- * @property-read Request $request
- * @method static Builder|SafetyReport whereCreatedAt($value)
- * @method static Builder|SafetyReport whereDeletedAt($value)
- * @method static Builder|SafetyReport whereDescription($value)
- * @method static Builder|SafetyReport whereId($value)
- * @method static Builder|SafetyReport whereNotes($value)
- * @method static Builder|SafetyReport whereReporterId($value)
- * @method static Builder|SafetyReport whereRequestId($value)
- * @method static Builder|SafetyReport whereUpdatedAt($value)
- * @method static EloquentJoinBuilder|SafetyReport newModelQuery()
- * @method static EloquentJoinBuilder|SafetyReport newQuery()
- * @method static EloquentJoinBuilder|SafetyReport query()
- * @mixin Eloquent
+ * @property-read \App\Models\User\User $reporter
+ * @property-read \App\Models\Request\Request $request
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Request\SafetyReport newModelQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Request\SafetyReport newQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Request\SafetyReport query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\SafetyReport whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\SafetyReport whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\SafetyReport whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\SafetyReport whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\SafetyReport whereNotes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\SafetyReport whereReporterId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\SafetyReport whereRequestId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\SafetyReport whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class SafetyReport extends BaseModelAbstract implements HasValidationRulesContract
 {

@@ -17,21 +17,21 @@ use Illuminate\Support\Carbon;
  * @property string $content
  * @property int $resource_id
  * @property string $resource_type
- * @property Carbon|null $deleted_at
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property-read Model|BaseModelAbstract $resource
- * @method static Builder|Resource newModelQuery()
- * @method static Builder|Resource newQuery()
- * @method static Builder|Resource query()
- * @method static Builder|Resource whereContent($value)
- * @method static Builder|Resource whereCreatedAt($value)
- * @method static Builder|Resource whereDeletedAt($value)
- * @method static Builder|Resource whereId($value)
- * @method static Builder|Resource whereResourceId($value)
- * @method static Builder|Resource whereResourceType($value)
- * @method static Builder|Resource whereUpdatedAt($value)
- * @mixin Eloquent
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property mixed|null $created_at
+ * @property mixed|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $resource
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Resource newModelQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Resource newQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Resource query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Resource whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Resource whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Resource whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Resource whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Resource whereResourceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Resource whereResourceType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Resource whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Resource extends BaseModelAbstract implements HasPolicyContract
 {

@@ -18,18 +18,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
- * Class Location
+ * App\Models\Organization\Location
  *
- * @package App\Models\Organization
- * @property-read Organization $organization
- * @property-read Collection|RequestedItem[] $requestedItems
- * @property-read int|null $requested_items_count
- * @property-read Collection|Request[] $requests
- * @property-read int|null $requests_count
- * @method static EloquentJoinBuilder|Location newModelQuery()
- * @method static EloquentJoinBuilder|Location newQuery()
- * @method static EloquentJoinBuilder|Location query()
- * @mixin Eloquent
  * @property int $id
  * @property int $organization_id
  * @property string $name
@@ -43,21 +33,30 @@ use Illuminate\Support\Carbon;
  * @property float|null $longitude
  * @property mixed|null $created_at
  * @property mixed|null $updated_at
- * @property Carbon|null $deleted_at
- * @method static Builder|Location whereAddressLine1($value)
- * @method static Builder|Location whereAddressLine2($value)
- * @method static Builder|Location whereCity($value)
- * @method static Builder|Location whereCountry($value)
- * @method static Builder|Location whereCreatedAt($value)
- * @method static Builder|Location whereDeletedAt($value)
- * @method static Builder|Location whereId($value)
- * @method static Builder|Location whereLatitude($value)
- * @method static Builder|Location whereLongitude($value)
- * @method static Builder|Location whereName($value)
- * @method static Builder|Location whereOrganizationId($value)
- * @method static Builder|Location wherePostalCode($value)
- * @method static Builder|Location whereRegion($value)
- * @method static Builder|Location whereUpdatedAt($value)
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\Organization\Organization $organization
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Request\RequestedItem[] $requestedItems
+ * @property-read int|null $requested_items_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Request\Request[] $requests
+ * @property-read int|null $requests_count
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Organization\Location newModelQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Organization\Location newQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Organization\Location query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Location whereAddressLine1($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Location whereAddressLine2($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Location whereCity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Location whereCountry($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Location whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Location whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Location whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Location whereLatitude($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Location whereLongitude($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Location whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Location whereOrganizationId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Location wherePostalCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Location whereRegion($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Location whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Location extends BaseModelAbstract implements BelongsToOrganizationContract, HasValidationRulesContract
 {

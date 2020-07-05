@@ -14,26 +14,26 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
- * Class Organization
+ * App\Models\Organization\Organization
  *
  * @property int $id
  * @property string $name
- * @property Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property mixed|null $created_at
  * @property mixed|null $updated_at
- * @property-read Collection|Location[] $locations
- * @property-read Collection|OrganizationManager[] $organizationManagers
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Organization\Location[] $locations
  * @property-read int|null $locations_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Organization\OrganizationManager[] $organizationManagers
  * @property-read int|null $organization_managers_count
- * @method static EloquentJoinBuilder|Organization newModelQuery()
- * @method static EloquentJoinBuilder|Organization newQuery()
- * @method static EloquentJoinBuilder|Organization query()
- * @method static Builder|Organization whereCreatedAt($value)
- * @method static Builder|Organization whereDeletedAt($value)
- * @method static Builder|Organization whereId($value)
- * @method static Builder|Organization whereName($value)
- * @method static Builder|Organization whereUpdatedAt($value)
- * @mixin Eloquent
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Organization\Organization newModelQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Organization\Organization newQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Organization\Organization query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Organization whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Organization whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Organization whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Organization whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Organization whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Organization extends BaseModelAbstract implements HasValidationRulesContract
 {

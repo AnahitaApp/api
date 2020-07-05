@@ -12,29 +12,28 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
- * Class Ballot
+ * App\Models\Vote\Ballot
  *
- * @package App\Models\Vote
  * @property int $id
  * @property string|null $name
  * @property string $type
- * @property Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property mixed|null $created_at
  * @property mixed|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Vote\BallotCompletion[] $ballotCompletions
  * @property-read int|null $ballot_completions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Vote\BallotSubject[] $ballotSubjects
  * @property-read int|null $ballot_subjects_count
- * @property-read Collection|BallotCompletion[] $ballotCompletions
- * @property-read Collection|BallotSubject[] $ballotSubjects
- * @method static EloquentJoinBuilder|Ballot newModelQuery()
- * @method static EloquentJoinBuilder|Ballot newQuery()
- * @method static EloquentJoinBuilder|Ballot query()
- * @method static Builder|Ballot whereCreatedAt($value)
- * @method static Builder|Ballot whereDeletedAt($value)
- * @method static Builder|Ballot whereId($value)
- * @method static Builder|Ballot whereName($value)
- * @method static Builder|Ballot whereType($value)
- * @method static Builder|Ballot whereUpdatedAt($value)
- * @mixin Eloquent
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Vote\Ballot newModelQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Vote\Ballot newQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Vote\Ballot query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Vote\Ballot whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Vote\Ballot whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Vote\Ballot whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Vote\Ballot whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Vote\Ballot whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Vote\Ballot whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Ballot extends BaseModelAbstract
 {

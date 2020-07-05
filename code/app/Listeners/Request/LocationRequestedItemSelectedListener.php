@@ -32,8 +32,10 @@ class LocationRequestedItemSelectedListener
     public function handle(LocationRequestedItemSelectedEvent $event)
     {
         $requestedItem = $event->getRequestedItem();
-        $this->requestedItemRepository->update($requestedItem->parentRequestedItem, [
-            'quantity' => $requestedItem->parentRequestedItem->quantity - $requestedItem->quantity
-        ]);
+        if ($requestedItem->parentRequestedItem && $requestedItem->parentRequestedItem->quantity) {
+            $this->requestedItemRepository->update($requestedItem->parentRequestedItem, [
+                'quantity' => $requestedItem->parentRequestedItem->quantity - $requestedItem->quantity
+            ]);
+        }
     }
 }

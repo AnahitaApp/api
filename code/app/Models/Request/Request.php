@@ -24,47 +24,46 @@ use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 
 /**
- * Class Request
+ * App\Models\Request\Request
  *
- * @package App\Models\Request
  * @property int $id
  * @property int $requested_by_id
  * @property int|null $completed_by_id
- * @property int|null $location_id
  * @property float $latitude
  * @property float $longitude
  * @property string|null $description
  * @property string|null $drop_off_location
- * @property Carbon|null $canceled_at
- * @property Carbon|null $completed_at
- * @property Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property mixed|null $created_at
  * @property mixed|null $updated_at
- * @property-read Collection|Asset[] $assets
+ * @property \Illuminate\Support\Carbon|null $canceled_at
+ * @property \Illuminate\Support\Carbon|null $completed_at
+ * @property int|null $location_id
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Asset[] $assets
  * @property-read int|null $assets_count
- * @property-read User|null $completedBy
- * @property-read Location $location
- * @property-read User $requestedBy
- * @property-read Collection|RequestedItem[] $requestedItems
+ * @property-read \App\Models\User\User|null $completedBy
+ * @property-read \App\Models\Organization\Location|null $location
+ * @property-read \App\Models\User\User $requestedBy
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Request\RequestedItem[] $requestedItems
  * @property-read int|null $requested_items_count
- * @property-read SafetyReport $safetyReport
- * @method static Builder|Request whereCanceledAt($value)
- * @method static Builder|Request whereCompletedAt($value)
- * @method static Builder|Request whereCompletedById($value)
- * @method static Builder|Request whereCreatedAt($value)
- * @method static Builder|Request whereDeletedAt($value)
- * @method static Builder|Request whereDescription($value)
- * @method static Builder|Request whereDropOffLocation($value)
- * @method static Builder|Request whereId($value)
- * @method static Builder|Request whereLatitude($value)
- * @method static Builder|Request whereLocationId($value)
- * @method static Builder|Request whereLongitude($value)
- * @method static Builder|Request whereRequestedById($value)
- * @method static Builder|Request whereUpdatedAt($value)
- * @method static EloquentJoinBuilder|Request newModelQuery()
- * @method static EloquentJoinBuilder|Request newQuery()
- * @method static EloquentJoinBuilder|Request query()
- * @mixin Eloquent
+ * @property-read \App\Models\Request\SafetyReport $safetyReport
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Request\Request newModelQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Request\Request newQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Request\Request query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\Request whereCanceledAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\Request whereCompletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\Request whereCompletedById($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\Request whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\Request whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\Request whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\Request whereDropOffLocation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\Request whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\Request whereLatitude($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\Request whereLocationId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\Request whereLongitude($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\Request whereRequestedById($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\Request whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Request extends BaseModelAbstract implements HasValidationRulesContract
 {

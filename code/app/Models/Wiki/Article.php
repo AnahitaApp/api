@@ -16,33 +16,32 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Class Article
+ * App\Models\Wiki\Article
  *
- * @package App\Models\Wiki
  * @property int $id
  * @property int $created_by_id
  * @property string $title
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property mixed|null $created_at
+ * @property mixed|null $updated_at
+ * @property-read \App\Models\User\User $createdBy
  * @property-read null|string $content
- * @property-read null|ArticleVersion $current_version
+ * @property-read null|\ArticleVersion $current_version
  * @property-read null|string $last_iteration_content
- * @property Carbon|null $deleted_at
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property-read User $createdBy
- * @property-read Collection|Iteration[] $iterations
- * @property-read Collection|ArticleVersion[] $versions
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Wiki\Iteration[] $iterations
  * @property-read int|null $iterations_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Wiki\ArticleVersion[] $versions
  * @property-read int|null $versions_count
- * @method static Builder|Article newModelQuery()
- * @method static Builder|Article newQuery()
- * @method static Builder|Article query()
- * @method static Builder|Article whereCreatedAt($value)
- * @method static Builder|Article whereCreatedById($value)
- * @method static Builder|Article whereDeletedAt($value)
- * @method static Builder|Article whereId($value)
- * @method static Builder|Article whereTitle($value)
- * @method static Builder|Article whereUpdatedAt($value)
- * @mixin Eloquent
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Wiki\Article newModelQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Wiki\Article newQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Wiki\Article query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Wiki\Article whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Wiki\Article whereCreatedById($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Wiki\Article whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Wiki\Article whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Wiki\Article whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Wiki\Article whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Article extends BaseModelAbstract implements HasPolicyContract, HasValidationRulesContract
 {

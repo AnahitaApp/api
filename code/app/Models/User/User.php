@@ -38,73 +38,72 @@ use Illuminate\Validation\Rule;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
- * Class User
+ * App\Models\User\User
  *
- * @package App\Models\User
  * @property int $id
- * @property int|null $merged_to_id
- * @property string $email the email address of the user
- * @property string $name the full name of the user
- * @property string $password the password of the user
- * @property bool $allow_users_to_add_me
- * @property int|null $identification_card_id
- * @property int|null $profile_image_id
- * @property string|null $about_me
+ * @property string $email
+ * @property string|null $name
+ * @property string $password
+ * @property mixed|null $created_at
+ * @property mixed|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property string|null $stripe_customer_key
+ * @property int|null $merged_to_id
+ * @property bool $allow_users_to_add_me
  * @property bool $receive_push_notifications
+ * @property string|null $about_me
  * @property string|null $push_notification_key
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property string|null $deleted_at
- * @property-read null|string $profile_image_url
- * @property-read ProfileImage|null $profileImage
- * @property-read Resource $resource
- * @property-read Collection|Asset[] $assets
- * @property-read Collection|BallotCompletion[] $ballotCompletions
- * @property-read Collection|Request[] $completedRequests
- * @property-read Collection|Article[] $createdArticles
- * @property-read Collection|Iteration[] $createdIterations
- * @property-read Collection|Request[] $createdRequests
- * @property-read IdentificationCard $identificationCard
- * @property-read Collection|Message[] $messages
- * @property-read Collection|OrganizationManager[] $organizationManagers
- * @property-read Collection|PaymentMethod[] $paymentMethods
- * @property-read Collection|Role[] $roles
- * @property-read Collection|SafetyReport[] $safetyReports
- * @property-read Collection|Subscription[] $subscriptions
- * @property-read Collection|Thread[] $threads
+ * @property int|null $profile_image_id
+ * @property int|null $identification_card_id
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Asset[] $assets
  * @property-read int|null $assets_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Vote\BallotCompletion[] $ballotCompletions
  * @property-read int|null $ballot_completions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Request\Request[] $completedRequests
  * @property-read int|null $completed_requests_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Wiki\Article[] $createdArticles
  * @property-read int|null $created_articles_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Wiki\Iteration[] $createdIterations
  * @property-read int|null $created_iterations_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Request\Request[] $createdRequests
  * @property-read int|null $created_requests_count
+ * @property-read null|string $profile_image_url
+ * @property-read \App\Models\User\IdentificationCard|null $identificationCard
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User\Message[] $messages
  * @property-read int|null $messages_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Organization\OrganizationManager[] $organizationManagers
  * @property-read int|null $organization_managers_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Payment\PaymentMethod[] $paymentMethods
  * @property-read int|null $payment_methods_count
+ * @property-read \App\Models\User\ProfileImage|null $profileImage
+ * @property-read \App\Models\Resource $resource
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Role[] $roles
  * @property-read int|null $roles_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Request\SafetyReport[] $safetyReports
  * @property-read int|null $safety_reports_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Subscription\Subscription[] $subscriptions
  * @property-read int|null $subscriptions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User\Thread[] $threads
  * @property-read int|null $threads_count
- * @method static Builder|User newModelQuery()
- * @method static Builder|User newQuery()
- * @method static Builder|User query()
- * @method static Builder|User whereAboutMe($value)
- * @method static Builder|User whereAllowUsersToAddMe($value)
- * @method static Builder|User whereCreatedAt($value)
- * @method static Builder|User whereDeletedAt($value)
- * @method static Builder|User whereEmail($value)
- * @method static Builder|User whereId($value)
- * @method static Builder|User whereIdentificationCardId($value)
- * @method static Builder|User whereMergedToId($value)
- * @method static Builder|User whereName($value)
- * @method static Builder|User wherePassword($value)
- * @method static Builder|User whereProfileImageId($value)
- * @method static Builder|User wherePushNotificationKey($value)
- * @method static Builder|User whereReceivePushNotifications($value)
- * @method static Builder|User whereStripeCustomerKey($value)
- * @method static Builder|User whereUpdatedAt($value)
- * @mixin Eloquent
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\User\User newModelQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\User\User newQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\User\User query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereAboutMe($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereAllowUsersToAddMe($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereIdentificationCardId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereMergedToId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereProfileImageId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User wherePushNotificationKey($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereReceivePushNotifications($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereStripeCustomerKey($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class User extends BaseModelAbstract
     implements AuthenticatableContract, JWTSubject,

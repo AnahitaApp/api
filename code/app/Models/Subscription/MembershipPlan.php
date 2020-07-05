@@ -14,29 +14,28 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Validation\Rule;
 
 /**
- * Class Plan
+ * App\Models\Subscription\MembershipPlan
  *
- * @package App\Models\MembershipPlan
  * @property int $id
- * @property float|null $current_cost
- * @property-read null|float $current_rate_id
  * @property string $name
  * @property string $duration
- * @property Carbon|null $deleted_at
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property-read Collection|MembershipPlanRate[] $membershipPlanRates
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property mixed|null $created_at
+ * @property mixed|null $updated_at
+ * @property-read null|float $current_cost
+ * @property-read null|float $current_rate_id
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Subscription\MembershipPlanRate[] $membershipPlanRates
  * @property-read int|null $membership_plan_rates_count
- * @method static Builder|MembershipPlan newQuery()
- * @method static Builder|MembershipPlan newModelQuery()
- * @method static Builder|MembershipPlan query()
- * @method static Builder|MembershipPlan whereCreatedAt($value)
- * @method static Builder|MembershipPlan whereDeletedAt($value)
- * @method static Builder|MembershipPlan whereDuration($value)
- * @method static Builder|MembershipPlan whereId($value)
- * @method static Builder|MembershipPlan whereName($value)
- * @method static Builder|MembershipPlan whereUpdatedAt($value)
- * @mixin Eloquent
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Subscription\MembershipPlan newModelQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Subscription\MembershipPlan newQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Subscription\MembershipPlan query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Subscription\MembershipPlan whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Subscription\MembershipPlan whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Subscription\MembershipPlan whereDuration($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Subscription\MembershipPlan whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Subscription\MembershipPlan whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Subscription\MembershipPlan whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class MembershipPlan extends BaseModelAbstract implements HasPolicyContract, HasValidationRulesContract
 {

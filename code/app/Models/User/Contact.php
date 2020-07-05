@@ -13,31 +13,30 @@ use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 
 /**
- * Class Contact
+ * App\Models\User\Contact
  *
- * @package App\Models\User
  * @property int $id
  * @property int $initiated_by_id
  * @property int $requested_id
- * @property Carbon|null $confirmed_at
- * @property Carbon|null $denied_at
- * @property string|null $deleted_at
- * @property Carbon|null $created_at
- * @property-read User $initiatedBy
- * @property-read User $requested
- * @property Carbon|null $updated_at
- * @method static Builder|Contact whereConfirmedAt($value)
- * @method static Builder|Contact whereCreatedAt($value)
- * @method static Builder|Contact whereDeletedAt($value)
- * @method static Builder|Contact whereDeniedAt($value)
- * @method static Builder|Contact whereId($value)
- * @method static Builder|Contact whereInitiatedById($value)
- * @method static Builder|Contact whereRequestedId($value)
- * @method static Builder|Contact whereUpdatedAt($value)
- * @method static Builder|Contact newModelQuery()
- * @method static Builder|Contact newQuery()
- * @method static Builder|Contact query()
- * @mixin Eloquent
+ * @property \Illuminate\Support\Carbon|null $confirmed_at
+ * @property \Illuminate\Support\Carbon|null $denied_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property mixed|null $created_at
+ * @property mixed|null $updated_at
+ * @property-read \App\Models\User\User $initiatedBy
+ * @property-read \App\Models\User\User $requested
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\User\Contact newModelQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\User\Contact newQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\User\Contact query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\Contact whereConfirmedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\Contact whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\Contact whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\Contact whereDeniedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\Contact whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\Contact whereInitiatedById($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\Contact whereRequestedId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\Contact whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Contact extends BaseModelAbstract implements HasValidationRulesContract
 {

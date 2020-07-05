@@ -17,36 +17,35 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Carbon;
 
 /**
- * Class PaymentMethod
+ * App\Models\Payment\PaymentMethod
  *
- * @package App\Models\Payment
  * @property int $id
  * @property int $owner_id
- * @property string $owner_type
- * @property string|null $identifier
  * @property string|null $payment_method_key
  * @property string $payment_method_type
  * @property mixed|null $created_at
  * @property mixed|null $updated_at
- * @property Carbon|null $deleted_at
- * @property-read Collection|Payment[] $payments
- * @property-read Collection|Subscription[] $subscriptions
- * @property-read HasPaymentMethodsContract|User $owner
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property string|null $identifier
+ * @property string $owner_type
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $owner
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Payment\Payment[] $payments
  * @property-read int|null $payments_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Subscription\Subscription[] $subscriptions
  * @property-read int|null $subscriptions_count
- * @method static Builder|PaymentMethod newModelQuery()
- * @method static Builder|PaymentMethod newQuery()
- * @method static Builder|PaymentMethod query()
- * @method static Builder|PaymentMethod whereCreatedAt($value)
- * @method static Builder|PaymentMethod whereDeletedAt($value)
- * @method static Builder|PaymentMethod whereId($value)
- * @method static Builder|PaymentMethod whereIdentifier($value)
- * @method static Builder|PaymentMethod whereOwnerId($value)
- * @method static Builder|PaymentMethod whereOwnerType($value)
- * @method static Builder|PaymentMethod wherePaymentMethodKey($value)
- * @method static Builder|PaymentMethod wherePaymentMethodType($value)
- * @method static Builder|PaymentMethod whereUpdatedAt($value)
- * @mixin Eloquent
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Payment\PaymentMethod newModelQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Payment\PaymentMethod newQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Payment\PaymentMethod query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment\PaymentMethod whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment\PaymentMethod whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment\PaymentMethod whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment\PaymentMethod whereIdentifier($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment\PaymentMethod whereOwnerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment\PaymentMethod whereOwnerType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment\PaymentMethod wherePaymentMethodKey($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment\PaymentMethod wherePaymentMethodType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment\PaymentMethod whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class PaymentMethod extends BaseModelAbstract implements HasValidationRulesContract
 {

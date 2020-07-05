@@ -13,30 +13,29 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * Class Iteration
+ * App\Models\Wiki\Iteration
  *
- * @package App\Models\Wiki
  * @property int $id
  * @property string $content
  * @property int $created_by_id
  * @property int $article_id
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $deleted_at
- * @property-read Article $article
- * @property-read User $createdBy
- * @property-read ArticleVersion $version
- * @method static Builder|Iteration newModelQuery()
- * @method static Builder|Iteration newQuery()
- * @method static Builder|Iteration query()
- * @method static Builder|Iteration whereArticleId($value)
- * @method static Builder|Iteration whereContent($value)
- * @method static Builder|Iteration whereCreatedAt($value)
- * @method static Builder|Iteration whereCreatedById($value)
- * @method static Builder|Iteration whereDeletedAt($value)
- * @method static Builder|Iteration whereId($value)
- * @method static Builder|Iteration whereUpdatedAt($value)
- * @mixin Eloquent
+ * @property mixed|null $created_at
+ * @property mixed|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\Wiki\Article $article
+ * @property-read \App\Models\User\User $createdBy
+ * @property-read \App\Models\Wiki\ArticleVersion $version
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Wiki\Iteration newModelQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Wiki\Iteration newQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Wiki\Iteration query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Wiki\Iteration whereArticleId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Wiki\Iteration whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Wiki\Iteration whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Wiki\Iteration whereCreatedById($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Wiki\Iteration whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Wiki\Iteration whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Wiki\Iteration whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Iteration extends BaseModelAbstract implements HasPolicyContract
 {

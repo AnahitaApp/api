@@ -14,29 +14,28 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
- * Class BallotCompletion
+ * App\Models\Vote\BallotCompletion
  *
- * @package App\Models\Vote
  * @property int $id
  * @property int $ballot_id
  * @property int $user_id
- * @property Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property mixed|null $created_at
  * @property mixed|null $updated_at
+ * @property-read \App\Models\Vote\Ballot $ballot
+ * @property-read \App\Models\User\User $user
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Vote\Vote[] $votes
  * @property-read int|null $votes_count
- * @property-read Ballot $ballot
- * @property-read User $user
- * @property-read Collection|Vote[] $votes
- * @method static EloquentJoinBuilder|BallotCompletion newModelQuery()
- * @method static EloquentJoinBuilder|BallotCompletion newQuery()
- * @method static EloquentJoinBuilder|BallotCompletion query()
- * @method static Builder|BallotCompletion whereBallotId($value)
- * @method static Builder|BallotCompletion whereCreatedAt($value)
- * @method static Builder|BallotCompletion whereDeletedAt($value)
- * @method static Builder|BallotCompletion whereId($value)
- * @method static Builder|BallotCompletion whereUpdatedAt($value)
- * @method static Builder|BallotCompletion whereUserId($value)
- * @mixin Eloquent
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Vote\BallotCompletion newModelQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Vote\BallotCompletion newQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Vote\BallotCompletion query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Vote\BallotCompletion whereBallotId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Vote\BallotCompletion whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Vote\BallotCompletion whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Vote\BallotCompletion whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Vote\BallotCompletion whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Vote\BallotCompletion whereUserId($value)
+ * @mixin \Eloquent
  */
 class BallotCompletion extends BaseModelAbstract
 {

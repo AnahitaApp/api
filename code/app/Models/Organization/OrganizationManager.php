@@ -18,30 +18,29 @@ use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 
 /**
- * Class OrganizationManager
+ * App\Models\Organization\OrganizationManager
  *
- * @package App\Models\Organization
  * @property int $id
  * @property int $user_id
  * @property int $organization_id
  * @property int $role_id
- * @property Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property mixed|null $created_at
  * @property mixed|null $updated_at
- * @property-read Organization $organization
- * @property-read Role $role
- * @property-read User $user
- * @method static EloquentJoinBuilder|OrganizationManager newModelQuery()
- * @method static EloquentJoinBuilder|OrganizationManager newQuery()
- * @method static EloquentJoinBuilder|OrganizationManager query()
- * @method static Builder|OrganizationManager whereCreatedAt($value)
- * @method static Builder|OrganizationManager whereDeletedAt($value)
- * @method static Builder|OrganizationManager whereId($value)
- * @method static Builder|OrganizationManager whereOrganizationId($value)
- * @method static Builder|OrganizationManager whereRoleId($value)
- * @method static Builder|OrganizationManager whereUpdatedAt($value)
- * @method static Builder|OrganizationManager whereUserId($value)
- * @mixin Eloquent
+ * @property-read \App\Models\Organization\Organization $organization
+ * @property-read \App\Models\Role $role
+ * @property-read \App\Models\User\User $user
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Organization\OrganizationManager newModelQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Organization\OrganizationManager newQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Organization\OrganizationManager query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\OrganizationManager whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\OrganizationManager whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\OrganizationManager whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\OrganizationManager whereOrganizationId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\OrganizationManager whereRoleId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\OrganizationManager whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\OrganizationManager whereUserId($value)
+ * @mixin \Eloquent
  */
 class OrganizationManager extends BaseModelAbstract implements HasValidationRulesContract, BelongsToOrganizationContract
 {

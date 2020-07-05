@@ -23,50 +23,47 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Validation\Rule;
 
 /**
- * Class Subscription
+ * App\Models\Subscription\Subscription
  *
- * @package App\Models\Subscription
  * @property int $id
  * @property int $membership_plan_rate_id
  * @property int $payment_method_id
- * @property Carbon|null $last_renewed_at
- * @property Carbon|null $subscribed_at
- * @property Carbon|null $expires_at
- * @property Carbon|null $canceled_at
- * @property bool $recurring
  * @property int $subscriber_id
+ * @property mixed|null $last_renewed_at
+ * @property mixed|null $subscribed_at
+ * @property mixed|null $expires_at
+ * @property mixed|null $canceled_at
+ * @property bool $recurring
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string $subscriber_type
- * @property Carbon|null $deleted_at
- * @property mixed|null $created_at
- * @property mixed|null $updated_at
  * @property-read null|string $formatted_cost
  * @property-read null|string $formatted_expires_at
- * @property-read MembershipPlanRate $membershipPlanRate
- * @property-read Collection|Payment[] $payments
- * @property-read Collection|LineItem[] $purchasedItems
- * @property-read PaymentMethod $paymentMethod
- * @property-read User $subscriber
- * @property-read int|null $payments_count
- * @property-read int|null $purchased_items_count
- * @method static Builder|Subscription newModelQuery()
- * @method static Builder|Subscription newQuery()
- * @method static Builder|Subscription query()
- * @method static Builder|Subscription whereCanceledAt($value)
- * @method static Builder|Subscription whereCreatedAt($value)
- * @method static Builder|Subscription whereDeletedAt($value)
- * @method static Builder|Subscription whereExpiresAt($value)
- * @method static Builder|Subscription whereId($value)
- * @method static Builder|Subscription whereLastRenewedAt($value)
- * @method static Builder|Subscription whereMembershipPlanRateId($value)
- * @method static Builder|Subscription wherePaymentMethodId($value)
- * @method static Builder|Subscription whereRecurring($value)
- * @method static Builder|Subscription whereSubscribedAt($value)
- * @method static Builder|Subscription whereSubscriberId($value)
- * @method static Builder|Subscription whereSubscriberType($value)
- * @method static Builder|Subscription whereUpdatedAt($value)
- * @mixin Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Payment\LineItem[] $lineItems
  * @property-read int|null $line_items_count
+ * @property-read \App\Models\Subscription\MembershipPlanRate $membershipPlanRate
+ * @property-read \App\Models\Payment\PaymentMethod $paymentMethod
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Payment\Payment[] $payments
+ * @property-read int|null $payments_count
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $subscriber
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Subscription\Subscription newModelQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Subscription\Subscription newQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Subscription\Subscription query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Subscription\Subscription whereCanceledAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Subscription\Subscription whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Subscription\Subscription whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Subscription\Subscription whereExpiresAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Subscription\Subscription whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Subscription\Subscription whereLastRenewedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Subscription\Subscription whereMembershipPlanRateId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Subscription\Subscription wherePaymentMethodId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Subscription\Subscription whereRecurring($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Subscription\Subscription whereSubscribedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Subscription\Subscription whereSubscriberId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Subscription\Subscription whereSubscriberType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Subscription\Subscription whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Subscription extends BaseModelAbstract implements HasValidationRulesContract, HasPaymentsContract
 {

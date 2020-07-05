@@ -16,38 +16,38 @@ use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 
 /**
- * Class RequestedItem
+ * App\Models\Request\RequestedItem
  *
- * @package App\Models\Request
  * @property int $id
  * @property int|null $asset_id
- * @property int $request_id
- * @property string $name
+ * @property int|null $request_id
+ * @property string|null $name
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property mixed|null $created_at
+ * @property mixed|null $updated_at
  * @property int|null $location_id
  * @property int|null $parent_requested_item_id
  * @property int|null $quantity
  * @property int|null $max_quantity_per_request
- * @property Carbon|null $deleted_at
- * @property mixed|null $created_at
- * @property mixed|null $updated_at
- * @property-read Asset $asset
- * @property-read Location $location
- * @property-read Request $request
- * @method static Builder|RequestedItem whereAssetId($value)
- * @method static Builder|RequestedItem whereAvailableQuantity($value)
- * @method static Builder|RequestedItem whereCreatedAt($value)
- * @method static Builder|RequestedItem whereDeletedAt($value)
- * @method static Builder|RequestedItem whereId($value)
- * @method static Builder|RequestedItem whereLocationId($value)
- * @method static Builder|RequestedItem whereMaxQuantityPerRequest($value)
- * @method static Builder|RequestedItem whereName($value)
- * @method static Builder|RequestedItem whereParentRequestedItemId($value)
- * @method static Builder|RequestedItem whereRequestId($value)
- * @method static Builder|RequestedItem whereUpdatedAt($value)
- * @method static EloquentJoinBuilder|RequestedItem newModelQuery()
- * @method static EloquentJoinBuilder|RequestedItem newQuery()
- * @method static EloquentJoinBuilder|RequestedItem query()
- * @mixin Eloquent
+ * @property-read \App\Models\Asset|null $asset
+ * @property-read \App\Models\Organization\Location|null $location
+ * @property-read \App\Models\Request\RequestedItem|null $parentRequestedItem
+ * @property-read \App\Models\Request\Request|null $request
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Request\RequestedItem newModelQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Request\RequestedItem newQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Request\RequestedItem query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\RequestedItem whereAssetId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\RequestedItem whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\RequestedItem whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\RequestedItem whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\RequestedItem whereLocationId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\RequestedItem whereMaxQuantityPerRequest($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\RequestedItem whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\RequestedItem whereParentRequestedItemId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\RequestedItem whereQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\RequestedItem whereRequestId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Request\RequestedItem whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class RequestedItem extends BaseModelAbstract implements HasValidationRulesContract
 {

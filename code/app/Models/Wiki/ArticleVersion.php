@@ -16,29 +16,28 @@ use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 
 /**
- * Class ArticleVersion
+ * App\Models\Wiki\ArticleVersion
  *
- * @package App\Models\Wiki
  * @property int $id
  * @property int $article_id
  * @property int $iteration_id
  * @property string|null $name
- * @property Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property mixed|null $created_at
  * @property mixed|null $updated_at
- * @property-read Article $article
- * @property-read Iteration $iteration
- * @method static EloquentJoinBuilder|ArticleVersion newModelQuery()
- * @method static EloquentJoinBuilder|ArticleVersion newQuery()
- * @method static EloquentJoinBuilder|ArticleVersion query()
- * @method static Builder|ArticleVersion whereArticleId($value)
- * @method static Builder|ArticleVersion whereCreatedAt($value)
- * @method static Builder|ArticleVersion whereDeletedAt($value)
- * @method static Builder|ArticleVersion whereId($value)
- * @method static Builder|ArticleVersion whereIterationId($value)
- * @method static Builder|ArticleVersion whereName($value)
- * @method static Builder|ArticleVersion whereUpdatedAt($value)
- * @mixin Eloquent
+ * @property-read \App\Models\Wiki\Article $article
+ * @property-read \App\Models\Wiki\Iteration $iteration
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Wiki\ArticleVersion newModelQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Wiki\ArticleVersion newQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Wiki\ArticleVersion query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Wiki\ArticleVersion whereArticleId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Wiki\ArticleVersion whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Wiki\ArticleVersion whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Wiki\ArticleVersion whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Wiki\ArticleVersion whereIterationId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Wiki\ArticleVersion whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Wiki\ArticleVersion whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class ArticleVersion extends BaseModelAbstract implements HasValidationRulesContract
 {

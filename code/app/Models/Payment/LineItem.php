@@ -14,31 +14,30 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Carbon;
 
 /**
- * Class PurchasedItem
+ * App\Models\Payment\LineItem
  *
- * @package App\Models\Payment
  * @property int $id
  * @property int $payment_id
- * @property int $item_id
+ * @property int|null $item_id
  * @property string $item_type
  * @property float $amount
- * @property Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property mixed|null $created_at
  * @property mixed|null $updated_at
- * @property-read Subscription|Model|Eloquent $item
- * @property-read Payment $payment
- * @method static EloquentJoinBuilder|LineItem newModelQuery()
- * @method static EloquentJoinBuilder|LineItem newQuery()
- * @method static EloquentJoinBuilder|LineItem query()
- * @method static Builder|LineItem whereAmount($value)
- * @method static Builder|LineItem whereCreatedAt($value)
- * @method static Builder|LineItem whereDeletedAt($value)
- * @method static Builder|LineItem whereId($value)
- * @method static Builder|LineItem whereItemId($value)
- * @method static Builder|LineItem whereItemType($value)
- * @method static Builder|LineItem wherePaymentId($value)
- * @method static Builder|LineItem whereUpdatedAt($value)
- * @mixin Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $item
+ * @property-read \App\Models\Payment\Payment $payment
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Payment\LineItem newModelQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Payment\LineItem newQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Payment\LineItem query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment\LineItem whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment\LineItem whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment\LineItem whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment\LineItem whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment\LineItem whereItemId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment\LineItem whereItemType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment\LineItem wherePaymentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Payment\LineItem whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class LineItem extends BaseModelAbstract
 {
