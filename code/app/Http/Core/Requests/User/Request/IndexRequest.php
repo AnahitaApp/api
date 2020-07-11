@@ -59,6 +59,7 @@ class IndexRequest extends BaseAuthenticatedRequestAbstract
             'completedBy',
             'requestedBy',
             'requestedItems',
+            'requestedItems.asset',
         ];
     }
 }
