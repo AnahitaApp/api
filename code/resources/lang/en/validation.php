@@ -132,7 +132,7 @@ return [
     'not_present' => 'The :attribute field is not allowed or can not be set for this request.',
     \App\Validators\Subscription\MembershipPlanRateIsActiveValidator::KEY =>
         'The membership plan rate must be active for you to purchase it.',
-    \App\Validators\Subscription\PaymentMethodIsOwnedByUserValidator::KEY =>
+    \App\Validators\Subscription\PaymentMethodIsOwnedByEntityValidator::KEY =>
         'This payment method does not belong to this user.',
     \App\Validators\ArticleVersion\SelectedIterationBelongsToArticleValidator::KEY =>
         'The selected iteration id does not seem to be from the related article.',

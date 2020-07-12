@@ -6,18 +6,12 @@ namespace App\Models\Subscription;
 use App\Contracts\Models\HasPaymentsContract;
 use App\Contracts\Models\HasValidationRulesContract;
 use App\Models\BaseModelAbstract;
-use App\Models\Payment\Payment;
 use App\Models\Payment\PaymentMethod;
-use App\Models\Payment\LineItem;
 use App\Models\Traits\HasPayments;
 use App\Models\Traits\HasValidationRules;
-use App\Models\User\User;
 use App\Validators\Subscription\MembershipPlanRateIsActiveValidator;
-use App\Validators\Subscription\PaymentMethodIsOwnedByUserValidator;
-use Carbon\Carbon;
+use App\Validators\Subscription\PaymentMethodIsOwnedByEntityValidator;
 use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Validation\Rule;
@@ -180,7 +174,7 @@ class Subscription extends BaseModelAbstract implements HasValidationRulesContra
                 'payment_method_id' => [
                     'integer',
                     Rule::exists('payment_methods', 'id'),
-                    PaymentMethodIsOwnedByUserValidator::KEY,
+                    PaymentMethodIsOwnedByEntityValidator::KEY,
                 ],
                 'recurring' => [
                     'boolean',

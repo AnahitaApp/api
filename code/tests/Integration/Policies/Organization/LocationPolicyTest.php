@@ -45,7 +45,7 @@ class LocationPolicyTest extends TestCase
         factory(OrganizationManager::class)->create([
             'organization_id' => $organization->id,
             'user_id' => $user->id,
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
         ]);
 
         $this->assertTrue($policy->create($user, $organization));
@@ -71,7 +71,7 @@ class LocationPolicyTest extends TestCase
         factory(OrganizationManager::class)->create([
             'organization_id' => $organization->id,
             'user_id' => $user->id,
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
         ]);
 
         $this->assertFalse($policy->update($user, $organization, $location));
@@ -90,7 +90,7 @@ class LocationPolicyTest extends TestCase
         factory(OrganizationManager::class)->create([
             'organization_id' => $organization->id,
             'user_id' => $user->id,
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
         ]);
 
         $this->assertTrue($policy->update($user, $organization, $location));
@@ -113,7 +113,7 @@ class LocationPolicyTest extends TestCase
         $user = factory(User::class)->create();
         factory(OrganizationManager::class)->create([
             'user_id' => $user->id,
-            'role_id' => Role::ORGANIZATION_MANAGER,
+            'role_id' => Role::MANAGER,
         ]);
 
         $location = factory(Location::class)->create();
@@ -130,7 +130,7 @@ class LocationPolicyTest extends TestCase
         factory(OrganizationManager::class)->create([
             'organization_id' => $organization->id,
             'user_id' => $user->id,
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
         ]);
 
         $location = factory(Location::class)->create([

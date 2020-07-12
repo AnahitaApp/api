@@ -72,12 +72,12 @@ class OrganizationLocationManagerUpdateTest extends TestCase
 
     public function testNotUserNotOrganizationAdminBlocked()
     {
-        $this->actAs(Role::ORGANIZATION_MANAGER);
+        $this->actAs(Role::MANAGER);
         $organization = factory(Organization::class)->create();
         factory(OrganizationManager::class)->create([
             'organization_id' => $organization->id,
             'user_id' => $this->actingAs->id,
-            'role_id' => Role::ORGANIZATION_MANAGER,
+            'role_id' => Role::MANAGER,
         ]);
         $model = factory(Location::class)->create();
         $this->setupRoute($model->organization_id, $model->id);
@@ -87,12 +87,12 @@ class OrganizationLocationManagerUpdateTest extends TestCase
 
     public function testUpdateSuccessful()
     {
-        $this->actAs(Role::ORGANIZATION_ADMIN);
+        $this->actAs(Role::ADMINISTRATOR);
         $organization = factory(Organization::class)->create();
         factory(OrganizationManager::class)->create([
             'organization_id' => $organization->id,
             'user_id' => $this->actingAs->id,
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
         ]);
         $model = factory(Location::class)->create([
             'organization_id' => $organization->id,
@@ -116,12 +116,12 @@ class OrganizationLocationManagerUpdateTest extends TestCase
 
     public function testUpdateFailsInvalidStringFields()
     {
-        $this->actAs(Role::ORGANIZATION_ADMIN);
+        $this->actAs(Role::ADMINISTRATOR);
         $model = factory(Location::class)->create();
         factory(OrganizationManager::class)->create([
             'organization_id' => $model->organization_id,
             'user_id' => $this->actingAs->id,
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
         ]);
         $this->setupRoute($model->organization_id, $model->id);
 
@@ -154,12 +154,12 @@ class OrganizationLocationManagerUpdateTest extends TestCase
 
     public function testUpdateFailsNotPresentFieldsPresent()
     {
-        $this->actAs(Role::ORGANIZATION_ADMIN);
+        $this->actAs(Role::ADMINISTRATOR);
         $model = factory(Location::class)->create();
         factory(OrganizationManager::class)->create([
             'organization_id' => $model->organization_id,
             'user_id' => $this->actingAs->id,
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
         ]);
         $this->setupRoute($model->organization_id, $model->id);
 

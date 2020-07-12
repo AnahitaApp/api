@@ -63,12 +63,12 @@ class OrganizationOrganizationManagerIndexTest extends TestCase
 
     public function testGetPaginationResult()
     {
-        $this->actAs(Role::ORGANIZATION_MANAGER);
+        $this->actAs(Role::MANAGER);
         $organization = factory(Organization::class)->create();
         factory(OrganizationManager::class)->create([
             'organization_id' => $organization->id,
             'user_id' => $this->actingAs->id,
-            'role_id' => Role::ORGANIZATION_MANAGER,
+            'role_id' => Role::MANAGER,
         ]);
         $this->setupRoute($organization->id);
         factory(OrganizationManager::class, 14)->create([

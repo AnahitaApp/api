@@ -40,7 +40,7 @@ abstract class BaseBelongsToOrganizationPolicyAbstract extends BasePolicyAbstrac
      */
     public function create(User $user, Organization $organization)
     {
-        $role = $this->requiresAdminForManagement ? Role::ORGANIZATION_ADMIN : Role::ORGANIZATION_MANAGER;
+        $role = $this->requiresAdminForManagement ? Role::ADMINISTRATOR : Role::MANAGER;
         return $user->canManageOrganization($organization, $role);
     }
 
@@ -67,7 +67,7 @@ abstract class BaseBelongsToOrganizationPolicyAbstract extends BasePolicyAbstrac
      */
     public function update(User $user, Organization $organization, BelongsToOrganizationContract $model)
     {
-        $role = $this->requiresAdminForManagement ? Role::ORGANIZATION_ADMIN : Role::ORGANIZATION_MANAGER;
+        $role = $this->requiresAdminForManagement ? Role::ADMINISTRATOR : Role::MANAGER;
         return $model->organization_id == $organization->id && $user->canManageOrganization($organization, $role);
     }
 
@@ -81,7 +81,7 @@ abstract class BaseBelongsToOrganizationPolicyAbstract extends BasePolicyAbstrac
      */
     public function delete(User $user, Organization $organization, BelongsToOrganizationContract $model)
     {
-        $role = $this->requiresAdminForManagement ? Role::ORGANIZATION_ADMIN : Role::ORGANIZATION_MANAGER;
+        $role = $this->requiresAdminForManagement ? Role::ADMINISTRATOR : Role::MANAGER;
         return $model->organization_id == $organization->id && $user->canManageOrganization($organization, $role);
     }
 }

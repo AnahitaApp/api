@@ -39,12 +39,12 @@ class CreateOrganizations extends Migration
         $organizationAdmin = new \App\Models\Role([
             'name' => 'Organization ADmin',
         ]);
-        $organizationAdmin->id = \App\Models\Role::ORGANIZATION_ADMIN;
+        $organizationAdmin->id = \App\Models\Role::ADMINISTRATOR;
         $organizationAdmin->save();
         $organizationManager = new \App\Models\Role([
             'name' => 'Organization Manager',
         ]);
-        $organizationManager->id = \App\Models\Role::ORGANIZATION_MANAGER;
+        $organizationManager->id = \App\Models\Role::MANAGER;
         $organizationManager->save();
     }
 

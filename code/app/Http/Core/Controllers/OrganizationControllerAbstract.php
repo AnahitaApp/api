@@ -3,12 +3,15 @@ declare(strict_types=1);
 
 namespace App\Http\Core\Controllers;
 
+use App\Contracts\Repositories\Organization\OrganizationManagerRepositoryContract;
 use App\Contracts\Repositories\Organization\OrganizationRepositoryContract;
 use App\Http\Core\Controllers\Traits\HasIndexRequests;
 use App\Http\Core\Requests;
 use App\Models\BaseModelAbstract;
 use App\Models\Organization\Organization;
+use App\Models\Role;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class OrganizationControllerAbstract
@@ -21,15 +24,23 @@ abstract class OrganizationControllerAbstract extends BaseControllerAbstract
     /**
      * @var OrganizationRepositoryContract
      */
-    protected $repository;
+    protected OrganizationRepositoryContract $repository;
+
+    /**
+     * @var OrganizationManagerRepositoryContract
+     */
+    protected OrganizationManagerRepositoryContract $organizationManagerRepository;
 
     /**
      * OrganizationController constructor.
      * @param OrganizationRepositoryContract $repository
+     * @param OrganizationManagerRepositoryContract $organizationManagerRepository
      */
-    public function __construct(OrganizationRepositoryContract $repository)
+    public function __construct(OrganizationRepositoryContract $repository,
+                                OrganizationManagerRepositoryContract $organizationManagerRepository)
     {
         $this->repository = $repository;
+        $this->organizationManagerRepository = $organizationManagerRepository;
     }
 
     /**
@@ -64,6 +75,11 @@ abstract class OrganizationControllerAbstract extends BaseControllerAbstract
     public function store(Requests\Organization\StoreRequest $request)
     {
         $model = $this->repository->create($request->json()->all());
+        $this->organizationManagerRepository->create([
+            'organization_id' => $model->id,
+            'role_id' => Role::ADMINISTRATOR,
+            'user_id' => Auth::user()->id,
+        ]);
         return response($model, 201)->header('Location', route('v1.organizations.show', ['organization' => $model]));
     }
 

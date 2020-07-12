@@ -37,8 +37,8 @@ class Role extends BaseModelAbstract implements HasPolicyContract
     const SUPER_ADMIN = 2;
     const ARTICLE_VIEWER = 3;
     const ARTICLE_EDITOR = 4;
-    const ORGANIZATION_ADMIN = 10;
-    const ORGANIZATION_MANAGER = 11;
+    const ADMINISTRATOR = 10;
+    const MANAGER = 11;
     // Add more roles here start with 100 in order to avoid application collision
 
     /**
@@ -55,9 +55,9 @@ class Role extends BaseModelAbstract implements HasPolicyContract
     /**
      * All roles that are related to an organization
      */
-    const ORGANIZATION_ROLES = [
-        self::ORGANIZATION_ADMIN,
-        self::ORGANIZATION_MANAGER,
+    const ENTITY_ROLES = [
+        self::ADMINISTRATOR,
+        self::MANAGER,
         // Add more organization roles here
     ];
 

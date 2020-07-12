@@ -70,12 +70,12 @@ class OrganizationLocationCreateTest extends TestCase
 
     public function testNotUserNotOrganizationAdminBlocked()
     {
-        $this->actAs(Role::ORGANIZATION_MANAGER);
+        $this->actAs(Role::MANAGER);
         $organization = factory(Organization::class)->create();
         factory(OrganizationManager::class)->create([
             'organization_id' => $organization->id,
             'user_id' => $this->actingAs->id,
-            'role_id' => Role::ORGANIZATION_MANAGER,
+            'role_id' => Role::MANAGER,
         ]);
         $this->setupRoute($organization->id);
         $response = $this->json('POST', $this->route);
@@ -84,12 +84,12 @@ class OrganizationLocationCreateTest extends TestCase
 
     public function testCreateSuccessful()
     {
-        $this->actAs(Role::ORGANIZATION_ADMIN);
+        $this->actAs(Role::ADMINISTRATOR);
         $organization = factory(Organization::class)->create();
         factory(OrganizationManager::class)->create([
             'organization_id' => $organization->id,
             'user_id' => $this->actingAs->id,
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
         ]);
         $this->setupRoute($organization->id);
 
@@ -109,12 +109,12 @@ class OrganizationLocationCreateTest extends TestCase
 
     public function testCreateFailsMissingRequiredFields()
     {
-        $this->actAs(Role::ORGANIZATION_ADMIN);
+        $this->actAs(Role::ADMINISTRATOR);
         $organization = factory(Organization::class)->create();
         factory(OrganizationManager::class)->create([
             'organization_id' => $organization->id,
             'user_id' => $this->actingAs->id,
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
         ]);
         $this->setupRoute($organization->id);
 
@@ -134,12 +134,12 @@ class OrganizationLocationCreateTest extends TestCase
 
     public function testCreateFailsInvalidStringFields()
     {
-        $this->actAs(Role::ORGANIZATION_ADMIN);
+        $this->actAs(Role::ADMINISTRATOR);
         $organization = factory(Organization::class)->create();
         factory(OrganizationManager::class)->create([
             'organization_id' => $organization->id,
             'user_id' => $this->actingAs->id,
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
         ]);
         $this->setupRoute($organization->id);
 
@@ -172,12 +172,12 @@ class OrganizationLocationCreateTest extends TestCase
 
     public function testCreateFailsBlockedFieldsPresent()
     {
-        $this->actAs(Role::ORGANIZATION_ADMIN);
+        $this->actAs(Role::ADMINISTRATOR);
         $organization = factory(Organization::class)->create();
         factory(OrganizationManager::class)->create([
             'organization_id' => $organization->id,
             'user_id' => $this->actingAs->id,
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
         ]);
         $this->setupRoute($organization->id);
 

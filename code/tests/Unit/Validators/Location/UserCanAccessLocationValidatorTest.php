@@ -87,7 +87,7 @@ class UserCanAccessLocationValidatorTest extends TestCase
         $user = new User([
             'organizationManagers' => new Collection([
                 new OrganizationManager([
-                    'role_id' => Role::ORGANIZATION_MANAGER,
+                    'role_id' => Role::MANAGER,
                     'organization_id' => 3241,
                 ])
             ]),

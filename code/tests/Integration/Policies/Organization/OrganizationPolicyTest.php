@@ -51,7 +51,7 @@ class OrganizationPolicyTest extends TestCase
         factory(OrganizationManager::class)->create([
             'organization_id' => $organization->id,
             'user_id' => $user->id,
-            'role_id' => Role::ORGANIZATION_MANAGER,
+            'role_id' => Role::MANAGER,
         ]);
 
         $this->assertTrue($policy->view($user, $organization));
@@ -75,7 +75,7 @@ class OrganizationPolicyTest extends TestCase
         factory(OrganizationManager::class)->create([
             'organization_id' => $organization->id,
             'user_id' => $user->id,
-            'role_id' => Role::ORGANIZATION_MANAGER,
+            'role_id' => Role::MANAGER,
         ]);
 
         $this->assertTrue($policy->update($user, $organization));
@@ -99,7 +99,7 @@ class OrganizationPolicyTest extends TestCase
         factory(OrganizationManager::class)->create([
             'organization_id' => $organization->id,
             'user_id' => $user->id,
-            'role_id' => Role::ORGANIZATION_MANAGER,
+            'role_id' => Role::MANAGER,
         ]);
 
         $this->assertFalse($policy->delete($user, $organization));
@@ -114,7 +114,7 @@ class OrganizationPolicyTest extends TestCase
         factory(OrganizationManager::class)->create([
             'organization_id' => $organization->id,
             'user_id' => $user->id,
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
         ]);
 
         $this->assertTrue($policy->delete($user, $organization));

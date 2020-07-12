@@ -62,10 +62,10 @@ class OrganizationOrganizationManagerDeleteTest extends TestCase
 
     public function testOrganizationManagerBlocked()
     {
-        $this->actAs(Role::ORGANIZATION_MANAGER);
+        $this->actAs(Role::MANAGER);
 
         $model = factory(OrganizationManager::class)->create([
-            'role_id' => Role::ORGANIZATION_MANAGER,
+            'role_id' => Role::MANAGER,
             'user_id' => $this->actingAs->id,
         ]);
         $this->setupRoute($model->organization_id, $model->id);
@@ -76,10 +76,10 @@ class OrganizationOrganizationManagerDeleteTest extends TestCase
 
     public function testDeleteSingle()
     {
-        $this->actAs(Role::ORGANIZATION_ADMIN);
+        $this->actAs(Role::ADMINISTRATOR);
 
         $model = factory(OrganizationManager::class)->create([
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
             'user_id' => $this->actingAs->id,
         ]);
         $this->setupRoute($model->organization_id, $model->id);

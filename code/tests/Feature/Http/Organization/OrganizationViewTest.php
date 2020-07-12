@@ -45,14 +45,14 @@ class OrganizationViewTest extends TestCase
 
     public function testGetSingleSuccess()
     {
-        $this->actAs(Role::ORGANIZATION_MANAGER);
+        $this->actAs(Role::MANAGER);
         /** @var Organization $model */
         $model = factory(Organization::class)->create([
             'id'    =>  1,
         ]);
         factory(OrganizationManager::class)->create([
             'user_id' => $this->actingAs->id,
-            'role_id' => Role::ORGANIZATION_MANAGER,
+            'role_id' => Role::MANAGER,
             'organization_id' => $model->id,
         ]);
 

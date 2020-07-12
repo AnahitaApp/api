@@ -63,9 +63,9 @@ class OrganizationLocationDeleteTest extends TestCase
 
     public function testDeleteSingle()
     {
-        $this->actAs(Role::ORGANIZATION_ADMIN);
+        $this->actAs(Role::ADMINISTRATOR);
         $organizationManager= factory(OrganizationManager::class)->create([
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
             'user_id' => $this->actingAs->id,
         ]);
         $model = factory(Location::class)->create([

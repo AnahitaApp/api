@@ -77,12 +77,12 @@ class LocationRequestedItemUpdateTest extends TestCase
 
     public function testNotUserNotOrganizationAdminBlocked()
     {
-        $this->actAs(Role::ORGANIZATION_MANAGER);
+        $this->actAs(Role::MANAGER);
         $organization = factory(Organization::class)->create();
         factory(OrganizationManager::class)->create([
             'organization_id' => $organization->id,
             'user_id' => $this->actingAs->id,
-            'role_id' => Role::ORGANIZATION_MANAGER,
+            'role_id' => Role::MANAGER,
         ]);
         $model = factory(RequestedItem::class)->create([
             'location_id' => factory(Location::class)->create()->id,
@@ -94,12 +94,12 @@ class LocationRequestedItemUpdateTest extends TestCase
 
     public function testUpdateSuccessful()
     {
-        $this->actAs(Role::ORGANIZATION_ADMIN);
+        $this->actAs(Role::ADMINISTRATOR);
         $organization = factory(Organization::class)->create();
         factory(OrganizationManager::class)->create([
             'organization_id' => $organization->id,
             'user_id' => $this->actingAs->id,
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
         ]);
         $model = factory(RequestedItem::class)->create([
             'name' => 'A Item',
@@ -125,7 +125,7 @@ class LocationRequestedItemUpdateTest extends TestCase
 
     public function testUpdateFailsInvalidStringFields()
     {
-        $this->actAs(Role::ORGANIZATION_ADMIN);
+        $this->actAs(Role::ADMINISTRATOR);
         $model = factory(RequestedItem::class)->create([
             'name' => 'A Item',
             'location_id' => factory(Location::class)->create()->id,
@@ -134,7 +134,7 @@ class LocationRequestedItemUpdateTest extends TestCase
         factory(OrganizationManager::class)->create([
             'organization_id' => $model->location->organization_id,
             'user_id' => $this->actingAs->id,
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
         ]);
 
         $data = [
@@ -154,7 +154,7 @@ class LocationRequestedItemUpdateTest extends TestCase
 
     public function testUpdateFailsInvalidNumericFields()
     {
-        $this->actAs(Role::ORGANIZATION_ADMIN);
+        $this->actAs(Role::ADMINISTRATOR);
         $model = factory(RequestedItem::class)->create([
             'name' => 'A Item',
             'location_id' => factory(Location::class)->create()->id,
@@ -163,7 +163,7 @@ class LocationRequestedItemUpdateTest extends TestCase
         factory(OrganizationManager::class)->create([
             'organization_id' => $model->location->organization_id,
             'user_id' => $this->actingAs->id,
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
         ]);
 
         $data = [
@@ -187,7 +187,7 @@ class LocationRequestedItemUpdateTest extends TestCase
 
     public function testUpdateFailsModelFieldInvalid()
     {
-        $this->actAs(Role::ORGANIZATION_ADMIN);
+        $this->actAs(Role::ADMINISTRATOR);
         $model = factory(RequestedItem::class)->create([
             'name' => 'A Item',
             'location_id' => factory(Location::class)->create()->id,
@@ -196,7 +196,7 @@ class LocationRequestedItemUpdateTest extends TestCase
         factory(OrganizationManager::class)->create([
             'organization_id' => $model->location->organization_id,
             'user_id' => $this->actingAs->id,
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
         ]);
 
         $data = [

@@ -4,43 +4,42 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Contracts\Models\HasValidationRulesContract;
-use App\Models\Organization\Organization;
 use App\Models\Traits\HasValidationRules;
 use App\Models\User\User;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 
 /**
- * App\Models\Asset
+ * Class Asset
  *
+ * @package App\Models
  * @property int $id
  * @property int|null $owner_id
+ * @property string|null $owner_type
+ * @property string $url
  * @property string|null $name
  * @property string|null $caption
- * @property string $url
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property mixed|null $created_at
- * @property mixed|null $updated_at
- * @property string $owner_type
- * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $owner
- * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Asset newModelQuery()
- * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Asset newQuery()
- * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Asset query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Asset whereCaption($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Asset whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Asset whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Asset whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Asset whereName($value)
+ * @property Carbon|null $deleted_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read User $owner
+ * @method static Builder|Asset newModelQuery()
+ * @method static Builder|Asset newQuery()
+ * @method static Builder|Asset query()
+ * @method static Builder|Asset whereCaption($value)
+ * @method static Builder|Asset whereCreatedAt($value)
+ * @method static Builder|Asset whereDeletedAt($value)
+ * @method static Builder|Asset whereId($value)
+ * @method static Builder|Asset whereName($value)
+ * @method static Builder|Asset whereUpdatedAt($value)
+ * @method static Builder|Asset whereUrl($value)
+ * @method static Builder|Asset whereUserId($value)
+ * @mixin Eloquent
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Asset whereOwnerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Asset whereOwnerType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Asset whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Asset whereUrl($value)
- * @mixin \Eloquent
  */
 class Asset extends BaseModelAbstract implements HasValidationRulesContract
 {
@@ -59,6 +58,20 @@ class Asset extends BaseModelAbstract implements HasValidationRulesContract
     public function owner()
     {
         return $this->morphTo();
+    }
+
+    /**
+     * All mime types that can be uploaded to the server for this asset
+     *
+     * @return array
+     */
+    protected function getAvailableMimeTypes(): array
+    {
+        return [
+            'image/jpeg',
+            'image/png',
+            'image/gif',
+        ];
     }
 
     /**
@@ -86,11 +99,7 @@ class Asset extends BaseModelAbstract implements HasValidationRulesContract
 
                 // Set in the request object, and not set from the user request
                 'mime_type' => [
-                    Rule::in([
-                        'image/jpeg',
-                        'image/png',
-                        'image/gif',
-                    ]),
+                    Rule::in($this->getAvailableMimeTypes()),
                 ],
             ],
             self::VALIDATION_RULES_CREATE => [

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use App\Contracts\Models\IsAnEntity;
 use App\Models\Asset;
 use App\Models\User\User;
 
@@ -14,43 +15,45 @@ class AssetPolicy extends BasePolicyAbstract
 {
     /**
      * @param User $loggedInUser
-     * @param User $requestedUser
+     * @param IsAnEntity $entity
      * @return bool
      */
-    public function all(User $loggedInUser, User $requestedUser)
+    public function all(User $loggedInUser, IsAnEntity $entity)
     {
-        return $loggedInUser->id == $requestedUser->id;
+        return $entity->canUserManageEntity($loggedInUser);
     }
 
     /**
      * @param User $loggedInUser
-     * @param User $requestedUser
+     * @param IsAnEntity $entity
      * @return bool
      */
-    public function create(User $loggedInUser, User $requestedUser)
+    public function create(User $loggedInUser, IsAnEntity $entity)
     {
-        return $loggedInUser->id == $requestedUser->id;
+        return $entity->canUserManageEntity($loggedInUser);
     }
 
     /**
      * @param User $loggedInUser
-     * @param User $requestedUser
+     * @param IsAnEntity $entity
      * @param Asset $asset
      * @return bool
      */
-    public function update(User $loggedInUser, User $requestedUser, Asset $asset)
+    public function update(User $loggedInUser, IsAnEntity $entity, Asset $asset)
     {
-        return $loggedInUser->id == $requestedUser->id && $asset->owner_type == 'user' && $asset->owner_id == $loggedInUser->id;
+        return $asset->owner_type == $entity->morphRelationName() && $asset->owner_id == $entity->id
+            && $entity->canUserManageEntity($loggedInUser);
     }
 
     /**
      * @param User $loggedInUser
-     * @param User $requestedUser
+     * @param IsAnEntity $entity
      * @param Asset $asset
      * @return bool
      */
-    public function delete(User $loggedInUser, User $requestedUser, Asset $asset)
+    public function delete(User $loggedInUser, IsAnEntity $entity, Asset $asset)
     {
-        return $loggedInUser->id == $requestedUser->id && $asset->owner_type == 'user' && $asset->owner_id == $loggedInUser->id;
+        return $asset->owner_type == $entity->morphRelationName() && $asset->owner_id == $entity->id
+            && $entity->canUserManageEntity($loggedInUser);
     }
 }

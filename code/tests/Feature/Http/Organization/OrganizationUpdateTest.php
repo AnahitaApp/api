@@ -47,7 +47,7 @@ class OrganizationUpdateTest extends TestCase
 
     public function testPatchSuccessful()
     {
-        $this->actAs(Role::ORGANIZATION_ADMIN);
+        $this->actAs(Role::ADMINISTRATOR);
 
         /** @var Organization $organization */
         $organization = factory(Organization::class)->create([
@@ -55,7 +55,7 @@ class OrganizationUpdateTest extends TestCase
         ]);
         factory(OrganizationManager::class)->create([
             'user_id' => $this->actingAs->id,
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
             'organization_id' => $organization->id,
         ]);
 

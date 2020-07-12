@@ -71,12 +71,12 @@ class OrganizationOrganizationManagerUpdateTest extends TestCase
 
     public function testNotUserNotOrganizationAdminBlocked()
     {
-        $this->actAs(Role::ORGANIZATION_MANAGER);
+        $this->actAs(Role::MANAGER);
         $organization = factory(Organization::class)->create();
         factory(OrganizationManager::class)->create([
             'organization_id' => $organization->id,
             'user_id' => $this->actingAs->id,
-            'role_id' => Role::ORGANIZATION_MANAGER,
+            'role_id' => Role::MANAGER,
         ]);
         $model = factory(OrganizationManager::class)->create();
         $this->setupRoute($model->organization_id, $model->id);
@@ -86,21 +86,21 @@ class OrganizationOrganizationManagerUpdateTest extends TestCase
 
     public function testUpdateSuccessful()
     {
-        $this->actAs(Role::ORGANIZATION_ADMIN);
+        $this->actAs(Role::ADMINISTRATOR);
         $organization = factory(Organization::class)->create();
         factory(OrganizationManager::class)->create([
             'organization_id' => $organization->id,
             'user_id' => $this->actingAs->id,
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
         ]);
         $model = factory(OrganizationManager::class)->create([
             'organization_id' => $organization->id,
-            'role_id' => Role::ORGANIZATION_MANAGER,
+            'role_id' => Role::MANAGER,
         ]);
         $this->setupRoute($model->organization_id, $model->id);
 
         $properties = [
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
         ];
 
         $response = $this->json('PUT', $this->route, $properties);
@@ -110,15 +110,15 @@ class OrganizationOrganizationManagerUpdateTest extends TestCase
         /** @var OrganizationManager $updated */
         $updated = OrganizationManager::find($model->id);
 
-        $this->assertEquals( Role::ORGANIZATION_ADMIN, $updated->role_id);
+        $this->assertEquals( Role::ADMINISTRATOR, $updated->role_id);
     }
 
     public function testUpdateFailsMissingRequiredFields()
     {
-        $this->actAs(Role::ORGANIZATION_ADMIN);
+        $this->actAs(Role::ADMINISTRATOR);
         $model = factory(OrganizationManager::class)->create([
             'user_id' => $this->actingAs->id,
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
         ]);
         $this->setupRoute($model->organization_id, $model->id);
 
@@ -135,10 +135,10 @@ class OrganizationOrganizationManagerUpdateTest extends TestCase
 
     public function testUpdateFailsInvalidNumericalFields()
     {
-        $this->actAs(Role::ORGANIZATION_ADMIN);
+        $this->actAs(Role::ADMINISTRATOR);
         $model = factory(OrganizationManager::class)->create([
             'user_id' => $this->actingAs->id,
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
         ]);
         $this->setupRoute($model->organization_id, $model->id);
 
@@ -159,10 +159,10 @@ class OrganizationOrganizationManagerUpdateTest extends TestCase
 
     public function testUpdateFailsInvalidRoleId()
     {
-        $this->actAs(Role::ORGANIZATION_ADMIN);
+        $this->actAs(Role::ADMINISTRATOR);
         $model = factory(OrganizationManager::class)->create([
             'user_id' => $this->actingAs->id,
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
         ]);
         $this->setupRoute($model->organization_id, $model->id);
 

@@ -12,6 +12,15 @@ use Tests\TestCase;
  */
 class ProfileImageTest extends TestCase
 {
+    public function testOrganization()
+    {
+        $model = new ProfileImage();
+        $relation = $model->organization();
+
+        $this->assertEquals('assets.id', $relation->getQualifiedParentKeyName());
+        $this->assertEquals('organizations.profile_image_id', $relation->getQualifiedForeignKeyName());
+    }
+
     public function testUser()
     {
         $model = new ProfileImage();

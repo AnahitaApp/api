@@ -11,7 +11,7 @@ $factory->define(App\Models\Organization\OrganizationManager::class, function (F
     return [
         'user_id' => factory(App\Models\User\User::class)->create()->id,
         'organization_id' => factory(App\Models\Organization\Organization::class)->create()->id,
-        'role_id' => \App\Models\Role::ORGANIZATION_ADMIN,
+        'role_id' => \App\Models\Role::ADMINISTRATOR,
     ];
 });
 $factory->define(App\Models\Organization\Location::class, function (Faker $faker) {

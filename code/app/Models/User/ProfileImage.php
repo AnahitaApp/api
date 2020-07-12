@@ -6,11 +6,7 @@ namespace App\Models\User;
 use App\Models\Asset;
 use App\Models\Organization\Organization;
 use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Carbon;
 
 /**
  * App\Models\User\ProfileImage
@@ -42,6 +38,14 @@ use Illuminate\Support\Carbon;
  */
 class ProfileImage extends Asset
 {
+    /**
+     * @return HasOne
+     */
+    public function organization(): HasOne
+    {
+        return $this->hasOne(Organization::class);
+    }
+
     /**
      * @return HasOne
      */

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Policies\Subscription;
 
+use App\Contracts\Models\IsAnEntity;
+use App\Models\Role;
 use App\Models\Subscription\Subscription;
 use App\Models\User\User;
 use App\Policies\BasePolicyAbstract;
@@ -17,25 +19,26 @@ class SubscriptionPolicy extends BasePolicyAbstract
      * Only Available for super admins
      *
      * @param User $loggedInUser
-     * @param User $requestedUser
+     * @param IsAnEntity $entity
      * @return bool
      */
-    public function create(User $loggedInUser, User $requestedUser)
+    public function create(User $loggedInUser, IsAnEntity $entity)
     {
-        return $loggedInUser->id == $requestedUser->id;
+        return $entity->canUserManageEntity($loggedInUser, Role::ADMINISTRATOR);
     }
 
     /**
      * Only available to super admins
      *
      * @param User $loggedInUser
-     * @param User $requestedUser
+     * @param IsAnEntity $entity
      * @param Subscription $subscription
      * @return bool
      */
-    public function update(User $loggedInUser, User $requestedUser, Subscription $subscription)
+    public function update(User $loggedInUser, IsAnEntity $entity, Subscription $subscription)
     {
-        return $loggedInUser->id == $requestedUser->id &&
-            $requestedUser->id == $subscription->subscriber_id && $subscription->subscriber_type == 'user';
+        return $entity->canUserManageEntity($loggedInUser, Role::ADMINISTRATOR)
+            && $subscription->subscriber_type == $entity->morphRelationName()
+            && $subscription->subscriber_id == $entity->id;
     }
 }

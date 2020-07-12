@@ -45,7 +45,7 @@ class OrganizationPolicy extends BasePolicyAbstract
      */
     public function view(User $user, Organization $organization)
     {
-        return $user->canManageOrganization($organization, Role::ORGANIZATION_MANAGER);
+        return $user->canManageOrganization($organization, Role::MANAGER);
     }
 
     /**
@@ -57,7 +57,7 @@ class OrganizationPolicy extends BasePolicyAbstract
      */
     public function update(User $user, Organization $organization)
     {
-        return $user->canManageOrganization($organization, Role::ORGANIZATION_MANAGER);
+        return $user->canManageOrganization($organization, Role::MANAGER);
     }
 
     /**
@@ -69,6 +69,6 @@ class OrganizationPolicy extends BasePolicyAbstract
      */
     public function delete(User $user, Organization $organization)
     {
-        return $user->canManageOrganization($organization, Role::ORGANIZATION_ADMIN);
+        return $user->canManageOrganization($organization, Role::ADMINISTRATOR);
     }
 }

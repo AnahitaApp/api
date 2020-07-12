@@ -24,7 +24,7 @@ class OrganizationManagerPolicy extends BasePolicyAbstract
      */
     public function all(User $user, Organization $organization)
     {
-        return $user->canManageOrganization($organization, Role::ORGANIZATION_MANAGER);
+        return $user->canManageOrganization($organization, Role::MANAGER);
     }
 
     /**
@@ -36,7 +36,7 @@ class OrganizationManagerPolicy extends BasePolicyAbstract
      */
     public function create(User $user, Organization $organization)
     {
-        return $user->canManageOrganization($organization, Role::ORGANIZATION_ADMIN);
+        return $user->canManageOrganization($organization, Role::ADMINISTRATOR);
     }
 
     /**
@@ -50,7 +50,7 @@ class OrganizationManagerPolicy extends BasePolicyAbstract
     public function update(User $user, Organization $organization, OrganizationManager $organizationManager)
     {
         return $organization->id === $organizationManager->organization_id &&
-            $user->canManageOrganization($organization, Role::ORGANIZATION_ADMIN);
+            $user->canManageOrganization($organization, Role::ADMINISTRATOR);
     }
 
     /**
@@ -64,6 +64,6 @@ class OrganizationManagerPolicy extends BasePolicyAbstract
     public function delete(User $user, Organization $organization, OrganizationManager $organizationManager)
     {
         return $organization->id === $organizationManager->organization_id &&
-            $user->canManageOrganization($organization, Role::ORGANIZATION_ADMIN);
+            $user->canManageOrganization($organization, Role::ADMINISTRATOR);
     }
 }

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Contracts\Services;
 
+use App\Contracts\Models\IsAnEntity;
 use App\Models\Payment\Payment;
 use App\Models\Payment\PaymentMethod;
 use App\Models\User\User;
@@ -23,13 +24,13 @@ interface StripePaymentServiceContract
     public function captureCharge(float $amount, PaymentMethod $paymentMethod, string $description, string $customerKey = null);
 
     /**
-     * @param User $user
+     * @param IsAnEntity $entity
      * @param PaymentMethod $paymentMethod
      * @param string $description
      * @param array $lineItems
      * @return mixed
      */
-    public function createPayment(User $user, PaymentMethod $paymentMethod, string $description, array $lineItems) : Payment;
+    public function createPayment(IsAnEntity $entity, PaymentMethod $paymentMethod, string $description, array $lineItems) : Payment;
 
     /**
      * Reverses a payment, and then triggers an accompanying PaymentReversed Event

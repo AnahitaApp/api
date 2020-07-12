@@ -6,6 +6,7 @@ namespace App\Models\User;
 use App\Contracts\Models\CanBeIndexedContract;
 use App\Contracts\Models\HasPaymentMethodsContract;
 use App\Contracts\Models\HasValidationRulesContract;
+use App\Contracts\Models\IsAnEntity;
 use App\Models\Asset;
 use App\Models\Organization\Organization;
 use App\Models\Organization\OrganizationManager;
@@ -108,7 +109,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends BaseModelAbstract
     implements AuthenticatableContract, JWTSubject,
             HasPolicyContract, HasValidationRulesContract, HasPaymentMethodsContract,
-            CanBeIndexedContract
+            CanBeIndexedContract, IsAnEntity
 {
     use Authenticatable, HasValidationRules, HasPaymentMethods, HasSubscriptions, CanBeIndexed;
 
@@ -316,11 +317,11 @@ class User extends BaseModelAbstract
      *          The admin role will only check for the admin role.
      * @return bool
      */
-    public function canManageOrganization(Organization $organization, $role = Role::ORGANIZATION_MANAGER): bool
+    public function canManageOrganization(Organization $organization, $role = Role::MANAGER): bool
     {
         $roles = is_array($role) ? $role : [$role];
-        if (!in_array(Role::ORGANIZATION_ADMIN, $roles)) {
-            $roles[] = Role::ORGANIZATION_ADMIN;
+        if (!in_array(Role::ADMINISTRATOR, $roles)) {
+            $roles[] = Role::ADMINISTRATOR;
         }
         return $this->organizationManagers->first(fn (OrganizationManager $organizationManager) =>
             in_array($organizationManager->role_id, $roles) && $organizationManager->organization_id === $organization->id
@@ -335,6 +336,14 @@ class User extends BaseModelAbstract
     public function getProfileImageUrlAttribute()
     {
         return $this->profileImage ? $this->profileImage->url : null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function canUserManageEntity(User $user, int $role = null): bool
+    {
+        return $this->id == $user->id;
     }
 
     /**

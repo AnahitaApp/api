@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Contracts\Models\IsAnEntity;
 use App\Contracts\Repositories\Payment\LineItemRepositoryContract;
 use App\Contracts\Repositories\Payment\PaymentRepositoryContract;
 use App\Contracts\Services\StripePaymentServiceContract;
@@ -11,7 +12,6 @@ use App\Exceptions\NotImplementedException;
 use App\Models\BaseModelAbstract;
 use App\Models\Payment\Payment;
 use App\Models\Payment\PaymentMethod;
-use App\Models\User\User;
 use Carbon\Carbon;
 use Cartalyst\Stripe\Api\Charges;
 use Cartalyst\Stripe\Api\Refunds;
@@ -93,13 +93,13 @@ class StripePaymentService implements StripePaymentServiceContract
     }
 
     /**
-     * @param User $user
+     * @param IsAnEntity $entity
      * @param PaymentMethod $paymentMethod
      * @param string $description
      * @param array $lineItems
      * @return BaseModelAbstract|Payment
      */
-    public function createPayment(User $user, PaymentMethod $paymentMethod, string $description, array $lineItems) : Payment
+    public function createPayment(IsAnEntity $entity, PaymentMethod $paymentMethod, string $description, array $lineItems) : Payment
     {
         $amount = 0;
         foreach ($lineItems as $lineItem) {
@@ -108,11 +108,11 @@ class StripePaymentService implements StripePaymentServiceContract
         $paymentData = [
             'amount' => $amount,
             'line_items' => $lineItems,
-            'user_id' => $user->id,
+            'user_id' => $entity->id,
         ];
 
         if ($amount > 0) {
-            $chargeData = $this->captureCharge($amount, $paymentMethod, $description, $user->stripe_customer_key);
+            $chargeData = $this->captureCharge($amount, $paymentMethod, $description, $entity->stripe_customer_key);
             if (isset ($chargeData['id'])) {
                 $paymentData['transaction_key'] = $chargeData['id'];
             }
@@ -138,7 +138,7 @@ class StripePaymentService implements StripePaymentServiceContract
         $this->lineItemRepository->create([
             'amount' => -$payment->amount,
             'item_type' => 'refund',
-        ]);
+        ], $payment);
         $this->paymentRepository->update($payment, [
             'refunded_at' => Carbon::now(),
             'amount' => 0,
@@ -163,7 +163,7 @@ class StripePaymentService implements StripePaymentServiceContract
             $this->lineItemRepository->create([
                 'amount' => -$amount,
                 'item_type' => 'refund',
-            ]);
+            ], $payment);
             $this->paymentRepository->update($payment, [
                 'amount' => $payment->amount - $amount,
             ]);

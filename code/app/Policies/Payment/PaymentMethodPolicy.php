@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace App\Policies\Payment;
 
+use App\Contracts\Models\IsAnEntity;
 use App\Models\Payment\PaymentMethod;
+use App\Models\Role;
 use App\Models\User\User;
 use App\Policies\BasePolicyAbstract;
 
@@ -16,26 +18,27 @@ class PaymentMethodPolicy extends BasePolicyAbstract
     /**
      * Any logged in users can create a payment methods
      *
-     * @param User $user
-     * @param User $requestedUser
+     * @param User $loggedInUser
+     * @param IsAnEntity $entity
      * @return bool
      */
-    public function create(User $user, User $requestedUser)
+    public function create(User $loggedInUser, IsAnEntity $entity)
     {
-        return $user->id == $requestedUser->id;
+        return $entity->canUserManageEntity($loggedInUser, Role::ADMINISTRATOR);
     }
 
     /**
      * Any logged in users can delete their own payment method
      *
-     * @param User $user
-     * @param User $requestedUser
+     * @param User $loggedInUser
+     * @param IsAnEntity $entity
      * @param PaymentMethod $paymentMethod
      * @return bool
      */
-    public function delete(User $user, User $requestedUser, PaymentMethod $paymentMethod)
+    public function delete(User $loggedInUser, IsAnEntity $entity, PaymentMethod $paymentMethod)
     {
-        return $user->id == $requestedUser->id &&
-            $requestedUser->id == $paymentMethod->owner_id && 'user' == $paymentMethod->owner_type;
+        return $entity->canUserManageEntity($loggedInUser, Role::ADMINISTRATOR)
+            && $paymentMethod->owner_type == $entity->morphRelationName()
+            && $paymentMethod->owner_id == $entity->id;
     }
 }

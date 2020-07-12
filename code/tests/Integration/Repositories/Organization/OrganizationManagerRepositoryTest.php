@@ -73,26 +73,26 @@ class OrganizationManagerRepositoryTest extends TestCase
         /** @var OrganizationManager $model */
         $model = $this->repository->create([
             'user_id' => $user->id,
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
         ], $organization);
 
         $this->assertEquals($organization->id, $model->organization_id);
         $this->assertEquals($user->id, $model->user_id);
-        $this->assertEquals(Role::ORGANIZATION_ADMIN, $model->role_id);
+        $this->assertEquals(Role::ADMINISTRATOR, $model->role_id);
     }
 
     public function testUpdateSuccess()
     {
         $model = factory(OrganizationManager::class)->create([
-            'role_id' => Role::ORGANIZATION_ADMIN,
+            'role_id' => Role::ADMINISTRATOR,
         ]);
         $this->repository->update($model, [
-            'role_id' => Role::ORGANIZATION_MANAGER,
+            'role_id' => Role::MANAGER,
         ]);
 
         /** @var OrganizationManager $updated */
         $updated = OrganizationManager::find($model->id);
-        $this->assertEquals(Role::ORGANIZATION_MANAGER, $updated->role_id);
+        $this->assertEquals(Role::MANAGER, $updated->role_id);
     }
 
     public function testDeleteSuccess()
