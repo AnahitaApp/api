@@ -83,31 +83,11 @@ Route::group(['middleware' => 'jwt.auth.protected'], function() {
         ],
     ]);
     Route::group(['prefix' => 'users/{user}', 'as' => 'user.'], function () {
-        Route::resource('assets', 'User\AssetController', [
-            'only' => [
-                'index', 'store', 'update', 'destroy',
-            ],
-        ]);
+        require 'entity-routes.php';
 
         Route::resource('contacts', 'User\ContactController', [
             'only' => [
                 'index', 'store', 'update',
-            ],
-        ]);
-
-        Route::resource('payment-methods', 'User\PaymentMethodController', [
-            'only' => [
-                'store', 'destroy',
-            ],
-        ]);
-        Route::resource('profile-images', 'User\ProfileImageController', [
-            'only' => [
-                'store',
-            ],
-        ]);
-        Route::resource('subscriptions', 'User\SubscriptionController', [
-            'only' => [
-                'store', 'update',
             ],
         ]);
 
@@ -144,6 +124,8 @@ Route::group(['middleware' => 'jwt.auth.protected'], function() {
         ]
     ]);
     Route::group(['prefix' => 'organizations/{organization}', 'as' => 'organization.'], function () {
+        require 'entity-routes.php';
+
         Route::resource('organization-managers', 'Organization\OrganizationManagerController', [
             'except' => [
                 'create', 'edit', 'show',
