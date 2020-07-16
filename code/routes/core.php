@@ -114,6 +114,13 @@ Route::group(['middleware' => 'jwt.auth.protected'], function() {
             'create', 'edit'
         ]
     ]);
+    Route::group(['prefix' => 'membership-plans/{membership_plan}', 'as' => 'membership-plan.'], function () {
+        Route::resource('rates', 'MembershipPlan\MembershipPlanRateController', [
+            'only' => [
+                'index',
+            ]
+        ]);
+    });
 
     /**
      * Organization Context

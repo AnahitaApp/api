@@ -1,9 +1,7 @@
 <?php
 declare(strict_types=1);
 
-
 namespace App\Repositories\Traits;
-
 
 use App\Models\BaseModelAbstract;
 use Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder;
@@ -17,6 +15,26 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
  */
 trait HasLocationTrait
 {
+    /**
+     * Applies the location radius query mathematics onto the query
+     *
+     * @param float $latitude
+     * @param float $longitude
+     * @param float $radius in KM
+     * @param EloquentJoinBuilder $query
+     * @return EloquentJoinBuilder
+     */
+    public function applyGeoQuery(float $latitude, float $longitude, float $radius, $query)
+    {
+        $distanceFormula = "( 6371 * acos( cos( radians($latitude) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($longitude) ) + sin( radians($latitude) ) * sin(radians(latitude)) ) )";
+        $query->whereRaw("$distanceFormula < $radius");
+        $query->orderByRaw($distanceFormula);
+
+        $query->groupBy($this->model->getTable() . '.id');
+
+        return $query;
+    }
+
     /**
      * Finds all requests around a specific location
      *
@@ -36,11 +54,7 @@ trait HasLocationTrait
     {
         $query = $this->buildFindAllQuery($filters, $searches, $orderBy, $with, $belongsToArray);
 
-        $distanceFormula = "( 6371 * acos( cos( radians($latitude) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians($longitude) ) + sin( radians($latitude) ) * sin(radians(latitude)) ) )";
-        $query->whereRaw("$distanceFormula < $radius");
-        $query->orderByRaw($distanceFormula);
-
-        $query->groupBy($this->model->getTable() . '.id');
+        $query = $this->applyGeoQuery($latitude, $longitude, $radius, $query);
 
         return $query->paginate($limit, $columns = ['*'], $pageName = 'page', $page);
     }

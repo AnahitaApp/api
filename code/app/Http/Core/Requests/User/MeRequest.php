@@ -45,6 +45,7 @@ class MeRequest extends BaseAuthenticatedRequestAbstract
     public function allowedExpands(): array
     {
         return [
+            'organizationManagers',
             'paymentMethods',
             'roles',
             'subscriptions',
