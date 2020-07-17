@@ -46,6 +46,7 @@ class MeRequest extends BaseAuthenticatedRequestAbstract
     {
         return [
             'organizationManagers',
+            'organizationManagers.organization',
             'paymentMethods',
             'roles',
             'subscriptions',
