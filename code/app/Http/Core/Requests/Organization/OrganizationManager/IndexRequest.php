@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Http\Core\Requests\Organization\OrganizationManager;
 
 use App\Http\Core\Requests\BaseAuthenticatedRequestAbstract;
-use App\Http\Core\Requests\Traits\HasNoExpands;
 use App\Http\Core\Requests\Traits\HasNoRules;
 use App\Models\Organization\OrganizationManager;
 use App\Policies\Organization\OrganizationManagerPolicy;
@@ -15,7 +14,7 @@ use App\Policies\Organization\OrganizationManagerPolicy;
  */
 class IndexRequest extends BaseAuthenticatedRequestAbstract
 {
-    use HasNoRules, HasNoExpands;
+    use HasNoRules;
 
     /**
      * Get the policy action for the guard
@@ -46,6 +45,18 @@ class IndexRequest extends BaseAuthenticatedRequestAbstract
     {
         return [
             $this->route('organization'),
+        ];
+    }
+
+    /**
+     * All expands that are available for this request
+     *
+     * @return array|string[]
+     */
+    public function allowedExpands(): array
+    {
+        return [
+            'user',
         ];
     }
 }
