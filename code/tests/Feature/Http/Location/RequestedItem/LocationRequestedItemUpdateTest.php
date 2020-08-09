@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Http\Location\RequestedItem;
 
+use App\Models\Asset;
 use App\Models\Organization\Organization;
 use App\Models\Organization\Location;
 use App\Models\Organization\OrganizationManager;
@@ -133,6 +134,7 @@ class LocationRequestedItemUpdateTest extends TestCase
             'role_id' => Role::ADMINISTRATOR,
         ]);
         $model = factory(RequestedItem::class)->create([
+            'asset_id' => factory(Asset::class)->create()->id,
             'quantity' => 12,
             'max_quantity_per_request' => 12,
             'location_id' => factory(Location::class)->create([
@@ -142,6 +144,7 @@ class LocationRequestedItemUpdateTest extends TestCase
         $this->setupRoute($model->location_id, $model->id);
 
         $properties = [
+            'asset_id' => null,
             'quantity' => null,
             'max_quantity_per_request' => null,
         ];
