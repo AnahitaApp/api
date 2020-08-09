@@ -123,6 +123,40 @@ class LocationRequestedItemUpdateTest extends TestCase
         $this->assertEquals( 'An Item', $updated->name);
     }
 
+    public function testUpdateSuccessfulSetsFieldsNull()
+    {
+        $this->actAs(Role::ADMINISTRATOR);
+        $organization = factory(Organization::class)->create();
+        factory(OrganizationManager::class)->create([
+            'organization_id' => $organization->id,
+            'user_id' => $this->actingAs->id,
+            'role_id' => Role::ADMINISTRATOR,
+        ]);
+        $model = factory(RequestedItem::class)->create([
+            'quantity' => 12,
+            'max_quantity_per_request' => 12,
+            'location_id' => factory(Location::class)->create([
+                'organization_id' => $organization->id,
+            ])->id,
+        ]);
+        $this->setupRoute($model->location_id, $model->id);
+
+        $properties = [
+            'quantity' => null,
+            'max_quantity_per_request' => null,
+        ];
+
+        $response = $this->json('PUT', $this->route, $properties);
+
+        $response->assertStatus(200);
+
+        /** @var RequestedItem $updated */
+        $updated = RequestedItem::find($model->id);
+
+        $this->assertNull($updated->quantity);
+        $this->assertNull($updated->max_quantity_per_request);
+    }
+
     public function testUpdateFailsInvalidStringFields()
     {
         $this->actAs(Role::ADMINISTRATOR);

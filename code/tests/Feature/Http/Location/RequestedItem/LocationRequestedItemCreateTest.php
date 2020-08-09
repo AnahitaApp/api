@@ -97,7 +97,7 @@ class LocationRequestedItemCreateTest extends TestCase
             'name' => 'An Item',
             'asset_id' => factory(Asset::class)->create()->id,
             'quantity' => 200,
-            'max_quantity_per_request' => 2,
+            'max_quantity_per_request' => null,
         ];
 
         $response = $this->json('POST', $this->route, $properties);
