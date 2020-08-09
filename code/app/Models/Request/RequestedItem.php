@@ -120,7 +120,6 @@ class RequestedItem extends BaseModelAbstract implements HasValidationRulesContr
             static::VALIDATION_RULES_CREATE => [
                 static::VALIDATION_PREPEND_REQUIRED => [
                     'name',
-                    'asset_id',
                 ],
             ],
         ];

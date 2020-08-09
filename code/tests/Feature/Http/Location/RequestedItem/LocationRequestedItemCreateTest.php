@@ -125,7 +125,6 @@ class LocationRequestedItemCreateTest extends TestCase
             'message'   => 'Sorry, something went wrong.',
             'errors'    =>  [
                 'name' => ['The name field is required.'],
-                'asset_id' => ['The asset id field is required.'],
             ]
         ]);
     }
