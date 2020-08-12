@@ -6,6 +6,7 @@ namespace App\Http\Core\Controllers;
 use App\Contracts\Repositories\Organization\LocationRepositoryContract;
 use App\Http\Core\Controllers\Traits\HasIndexRequests;
 use App\Http\Core\Requests;
+use App\Models\Organization\Location;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 /**
@@ -108,5 +109,17 @@ abstract class LocationControllerAbstract extends BaseControllerAbstract
         }
 
         return $this->repository->findAll($this->filter($request), $this->search($request), $this->order($request), $this->expand($request), $this->limit($request), [], (int)$request->input('page', 1));
+    }
+
+    /**
+     * The show request
+     *
+     * @param Requests\Location\RetrieveRequest $request
+     * @param Location $location
+     * @return Location
+     */
+    public function show(Requests\Location\RetrieveRequest $request, Location $location)
+    {
+        return $location->load($this->expand($request));
     }
 }

@@ -32,7 +32,7 @@ Route::group(['prefix' => 'v1', 'as' => 'v1.'], function() {
          */
         Route::resource('locations', 'LocationController', [
             'only' => [
-                'index',
+                'index', 'show',
             ]
         ]);
         Route::group(['prefix' => 'locations/{location}', 'as' => 'location.'], function () {

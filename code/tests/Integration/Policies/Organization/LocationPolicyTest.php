@@ -27,6 +27,13 @@ class LocationPolicyTest extends TestCase
         $this->assertTrue($policy->all(new User(), new Organization()));
     }
 
+    public function testViewPasses()
+    {
+        $policy = new LocationPolicy();
+
+        $this->assertTrue($policy->view(new User(), new Organization(), new Location()));
+    }
+
     public function testCreateBlocksWhenNotOrganizationManager()
     {
         $policy = new LocationPolicy();
