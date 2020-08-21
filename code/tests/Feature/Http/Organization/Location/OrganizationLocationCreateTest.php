@@ -97,7 +97,8 @@ class OrganizationLocationCreateTest extends TestCase
             'name' => 'A Location',
             'address_line_1' => '123 Fake Street',
             'city' => 'A City',
-            'country' => 'A Country'
+            'country' => 'A Country',
+            'delivery_available' => true,
         ];
 
         $response = $this->json('POST', $this->route, $properties);
@@ -166,6 +167,32 @@ class OrganizationLocationCreateTest extends TestCase
                 'postal_code' => ['The postal code must be a string.'],
                 'region' => ['The region must be a string.'],
                 'country' => ['The country must be a string.'],
+            ]
+        ]);
+    }
+
+    public function testCreateFailsInvalidBooleanFields()
+    {
+        $this->actAs(Role::ADMINISTRATOR);
+        $organization = factory(Organization::class)->create();
+        factory(OrganizationManager::class)->create([
+            'organization_id' => $organization->id,
+            'user_id' => $this->actingAs->id,
+            'role_id' => Role::ADMINISTRATOR,
+        ]);
+        $this->setupRoute($organization->id);
+
+        $data = [
+            'delivery_available' => 'hi',
+        ];
+
+        $response = $this->json('POST', $this->route, $data);
+
+        $response->assertStatus(400);
+        $response->assertJson([
+            'message'   => 'Sorry, something went wrong.',
+            'errors'    =>  [
+                'delivery_available' => ['The delivery available field must be true or false.'],
             ]
         ]);
     }

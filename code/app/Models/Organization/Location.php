@@ -34,6 +34,7 @@ use Illuminate\Support\Carbon;
  * @property mixed|null $created_at
  * @property mixed|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property bool $delivery_available
  * @property-read \App\Models\Organization\Organization $organization
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Request\RequestedItem[] $requestedItems
  * @property-read int|null $requested_items_count
@@ -48,6 +49,7 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Location whereCountry($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Location whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Location whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Location whereDeliveryAvailable($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Location whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Location whereLatitude($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Location whereLongitude($value)
@@ -112,6 +114,9 @@ class Location extends BaseModelAbstract implements BelongsToOrganizationContrac
                 ],
                 'country' => [
                     'string',
+                ],
+                'delivery_available' => [
+                    'boolean',
                 ],
                 'latitude' => [
                     'not_present',

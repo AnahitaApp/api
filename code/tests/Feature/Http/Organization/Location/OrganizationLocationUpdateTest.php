@@ -16,7 +16,7 @@ use Tests\Traits\RolesTesting;
  * Class OrganizationUpdateTest
  * @package Tests\Feature\Http\Organization\Location
  */
-class OrganizationLocationManagerUpdateTest extends TestCase
+class OrganizationLocationUpdateTest extends TestCase
 {
     use DatabaseSetupTrait, MocksApplicationLog, RolesTesting;
 
@@ -148,6 +148,32 @@ class OrganizationLocationManagerUpdateTest extends TestCase
                 'postal_code' => ['The postal code must be a string.'],
                 'region' => ['The region must be a string.'],
                 'country' => ['The country must be a string.'],
+            ]
+        ]);
+    }
+
+    public function testUpdateFailsInvalidBooleanFields()
+    {
+        $this->actAs(Role::ADMINISTRATOR);
+        $model = factory(Location::class)->create();
+        factory(OrganizationManager::class)->create([
+            'organization_id' => $model->organization_id,
+            'user_id' => $this->actingAs->id,
+            'role_id' => Role::ADMINISTRATOR,
+        ]);
+        $this->setupRoute($model->organization_id, $model->id);
+
+        $data = [
+            'delivery_available' => 'hi',
+        ];
+
+        $response = $this->json('PUT', $this->route, $data);
+
+        $response->assertStatus(400);
+        $response->assertJson([
+            'message'   => 'Sorry, something went wrong.',
+            'errors'    =>  [
+                'delivery_available' => ['The delivery available field must be true or false.'],
             ]
         ]);
     }

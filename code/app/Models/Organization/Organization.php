@@ -28,24 +28,32 @@ use Illuminate\Support\Carbon;
  *
  * @property int $id
  * @property string $name
- * @property int|null $profile_image_id
- * @property Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property mixed|null $created_at
  * @property mixed|null $updated_at
+ * @property int|null $profile_image_id
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Asset[] $assets
+ * @property-read int|null $assets_count
  * @property-read null|string $profile_image_url
- * @property-read Collection|OrganizationManager[] $organizationManagers
- * @property-read ProfileImage|null $profileImage
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Organization\Location[] $locations
+ * @property-read int|null $locations_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Organization\OrganizationManager[] $organizationManagers
  * @property-read int|null $organization_managers_count
- * @method static EloquentJoinBuilder|Organization newModelQuery()
- * @method static EloquentJoinBuilder|Organization newQuery()
- * @method static EloquentJoinBuilder|Organization query()
- * @method static Builder|Organization whereCreatedAt($value)
- * @method static Builder|Organization whereDeletedAt($value)
- * @method static Builder|Organization whereId($value)
- * @method static Builder|Organization whereName($value)
- * @method static Builder|Organization whereProfileImageId($value)
- * @method static Builder|Organization whereUpdatedAt($value)
- * @mixin Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Payment\PaymentMethod[] $paymentMethods
+ * @property-read int|null $payment_methods_count
+ * @property-read \App\Models\User\ProfileImage|null $profileImage
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Subscription\Subscription[] $subscriptions
+ * @property-read int|null $subscriptions_count
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Organization\Organization newModelQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Organization\Organization newQuery()
+ * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\Organization\Organization query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Organization whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Organization whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Organization whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Organization whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Organization whereProfileImageId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Organization\Organization whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Organization extends BaseModelAbstract
     implements HasValidationRulesContract, IsAnEntity, HasPaymentMethodsContract

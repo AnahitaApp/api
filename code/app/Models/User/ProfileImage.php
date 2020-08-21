@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property mixed|null $created_at
  * @property mixed|null $updated_at
  * @property string $owner_type
+ * @property-read \App\Models\Organization\Organization $organization
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $owner
  * @property-read \App\Models\User\User $user
  * @method static \Fico7489\Laravel\EloquentJoin\EloquentJoinBuilder|\App\Models\User\ProfileImage newModelQuery()
