@@ -15,7 +15,7 @@ use App\Policies\Request\RequestedItemPolicy;
  */
 class IndexRequest extends BaseAuthenticatedRequestAbstract
 {
-    use HasNoRules, HasNoExpands;
+    use HasNoRules;
 
     /**
      * Get the policy action for the guard
@@ -46,6 +46,17 @@ class IndexRequest extends BaseAuthenticatedRequestAbstract
     {
         return [
             $this->route('location'),
+        ];
+    }
+
+    /**
+     * All expands that are allowed on this route
+     * @return array|string[]
+     */
+    public function allowedExpands(): array
+    {
+        return [
+            'asset',
         ];
     }
 }
