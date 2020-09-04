@@ -105,7 +105,13 @@ abstract class BaseRepositoryAbstract implements BaseRepositoryContract
 
         foreach ($where as $key => $query) {
             if (is_array($query)) {
-                $result->whereJoin(...$query);
+                if ($query[1] == 'IS NULL') {
+                    $result->whereNull($query[0]);
+                } else if ($query[1] == 'IS NOT NULL') {
+                    $result->whereNotNull($query[0]);
+                } else {
+                    $result->whereJoin(...$query);
+                }
             } else {
                 $result->whereJoin($key, '=', $query);
             }
