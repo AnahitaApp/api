@@ -78,8 +78,8 @@ class SearchFilterParsingMiddleware
         if (count($parts) == 1) {
             switch ($parts[0]) {
                 case 'notnull':
-                    $searchType = '<>';
-                    $searchTerm = '';
+                    $searchType = 'IS NOT NULL';
+                    $searchTerm = null;
                     break;
 
                 case 'null':
