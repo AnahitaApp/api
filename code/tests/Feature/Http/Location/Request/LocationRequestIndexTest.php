@@ -6,6 +6,8 @@ namespace Tests\Feature\Http\Location\Request;
 use App\Models\Organization\Location;
 use App\Models\Organization\OrganizationManager;
 use App\Models\Request\Request;
+use App\Models\User\User;
+use Carbon\Carbon;
 use Tests\DatabaseSetupTrait;
 use Tests\TestCase;
 use Tests\Traits\MocksApplicationLog;
@@ -161,8 +163,16 @@ class LocationRequestIndexTest extends TestCase
         factory(Request::class, 15)->create([
             'location_id' => $location->id,
         ]);
+        factory(Request::class, 3)->create([
+            'location_id' => $location->id,
+            'canceled_at' => Carbon::now(),
+        ]);
+        factory(Request::class, 4)->create([
+            'location_id' => $location->id,
+            'completed_by_id' => factory(User::class)->create()->id,
+        ]);
 
-        $response = $this->json('GET', $this->path . $location->id . '/requests?order[created_at]=ASC&expand[requestedBy]=*&expand[requestedItems]=*&filter[completed_by_id]=null');
+        $response = $this->json('GET', $this->path . $location->id . '/requests?order[created_at]=ASC&expand[requestedBy]=*&expand[requestedItems]=*&filter[completed_by_id]=null&filter[canceled_at]=null');
         $response->assertStatus(200);
         $response->assertJson([
             'total' => 15,
