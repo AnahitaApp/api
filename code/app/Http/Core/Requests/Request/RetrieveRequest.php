@@ -59,6 +59,7 @@ class RetrieveRequest extends BaseAuthenticatedRequestAbstract
             'assets',
             'requestedItems',
             'requestedItems.asset',
+            'requestedItems.parentRequestedItem',
         ];
     }
 }
