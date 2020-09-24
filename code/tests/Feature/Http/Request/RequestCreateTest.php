@@ -65,8 +65,6 @@ class RequestCreateTest extends TestCase
         ]);
 
         $properties = [
-            'latitude' => 60,
-            'longitude' => 60,
             'location_id' => $location->id,
             'requested_items' => [
                 [
@@ -93,8 +91,6 @@ class RequestCreateTest extends TestCase
         $response->assertJson([
             'message'   => 'Sorry, something went wrong.',
             'errors'    =>  [
-                'latitude' => ['The latitude field is required.'],
-                'longitude' => ['The longitude field is required.'],
                 'requested_items' => ['The requested items field is required.'],
             ]
         ]);

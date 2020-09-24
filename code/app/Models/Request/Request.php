@@ -213,8 +213,6 @@ class Request extends BaseModelAbstract implements HasValidationRulesContract
                     'cancel',
                 ],
                 self::VALIDATION_PREPEND_REQUIRED => [
-                    'latitude',
-                    'longitude',
                     'requested_items',
                 ],
             ],
