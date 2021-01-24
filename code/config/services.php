@@ -33,4 +33,7 @@ return [
         'secret' => env('STRIPE_SECRET', 'sk_test'),
     ],
 
+    'fcm' => [
+        'key' => env('FCM_KEY', ''),
+    ],
 ];
